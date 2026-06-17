@@ -21,32 +21,24 @@
   --b-pvn: #c77dff; --b-pvn-d: rgba(199,125,255,0.1);
   --b-dif: #ff4d6d; --b-dif-d: rgba(255,77,109,0.1);
   --b-fin: #4cc9f0; --b-fin-d: rgba(76,201,240,0.1);
+  --b-cus: #ff9e00; --b-cus-d: rgba(255,158,0,0.1);
 }
-
-/* MODIFICAÇÕES PARA O MODO CLARO */
-body.light-mode {
-  --bg: #f4f6f9; --sf: #ffffff; --sf2: #f8f9fa; --sf3: #e9ecef;
-  --bd: #dbe2ef; --bd2: #bbc7db;
-  --tx: #1e2229; --tx2: #4f5b66; --tx3: #7f8c99;
-  --ac: #00aa77; --ac-d: rgba(0,170,119,0.1);
+:root[data-theme="light"] {
+  --bg: #f5f6f8; --sf: #ffffff; --sf2: #f0f1f4; --sf3: #e4e6eb;
+  --bd: #dde1e8; --bd2: #c7ccd6;
+  --ac: #00b386; --ac-d: rgba(0,179,134,0.08);
+  --tx: #1a1f2c; --tx2: #5c6b84; --tx3: #8a99ad;
 }
-body.light-mode .nav-item:hover, body.light-mode .nav-item.active { background: var(--sf3); }
-body.light-mode .cell-in { color: var(--tx); }
-body.light-mode .cell-in:focus { background: var(--sf); }
-body.light-mode .row-concorrente { color: var(--tx) !important; }
-
 body {
   background: var(--bg); color: var(--tx); font-family: var(--sans);
   height: 100vh; overflow: hidden; display: flex; flex-direction: column;
   --sans: 'DM Sans', sans-serif; --mono: 'Space Mono', monospace;
-  transition: background 0.3s, color 0.3s;
 }
 
 /* TOPBAR */
 .topbar {
   background: var(--sf); border-bottom: 1px solid var(--bd); height: 60px;
   display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; flex-shrink: 0;
-  transition: background 0.3s, border-color 0.3s;
 }
 .brand-group { display: flex; align-items: center; gap: 0.75rem; }
 .logo {
@@ -57,15 +49,6 @@ body {
 .title-group .main-t { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--ac); letter-spacing: 1px; }
 .title-group .sub-t { font-size: 0.65rem; color: var(--tx3); text-transform: uppercase; letter-spacing: 2px; }
 
-/* BOTÃO TEMA LUA/SOL */
-.theme-toggle {
-  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx2);
-  width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; font-size: 0.95rem;
-  transition: all 0.2s; margin-right: 1rem;
-}
-.theme-toggle:hover { background: var(--sf3); color: var(--tx); border-color: var(--bd2); }
-
 /* APP LAYOUT */
 .app-container { flex: 1; display: flex; overflow: hidden; }
 
@@ -73,7 +56,6 @@ body {
 .sidebar {
   width: 260px; background: var(--sf); border-right: 1px solid var(--bd);
   display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem 1rem; flex-shrink: 0;
-  transition: background 0.3s, border-color 0.3s;
 }
 .sb-section-title { font-family: var(--mono); font-size: 0.7rem; color: var(--tx3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; padding-left: 0.5rem; }
 .nav-list { display: flex; flex-direction: column; gap: 0.35rem; list-style: none; }
@@ -91,13 +73,12 @@ body {
 /* WORKSPACE */
 .workspace { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem; gap: 1rem; }
 .view-panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
-.view-panel.active { display: flex !important; }
+.view-panel.active { display: flex; }
 
 /* LAYOUT DA MATRIZ HORIZONTAL */
 .table-actions {
   background: var(--sf); border: 1px solid var(--bd); border-radius: 12px 12px 0 0;
   padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; border-bottom: none;
-  transition: background 0.3s, border-color 0.3s;
 }
 .table-title { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
 .table-title span { color: var(--tx3); font-size: 0.7rem; font-weight: normal; }
@@ -105,12 +86,12 @@ body {
 /* CONTAINER DO SCROLL */
 .spreadsheet-frame {
   flex: 1; background: var(--sf); border: 1px solid var(--bd); border-radius: 0 0 12px 12px;
-  overflow: auto; position: relative; transition: background 0.3s, border-color 0.3s;
+  overflow: auto; position: relative;
 }
 
 /* TABELA ESTILO SPREADSHEET INDÚSTRIA */
 .ss-table { border-collapse: collapse; text-align: left; font-size: 0.78rem; width: max-content; min-width: 100%; }
-.ss-table th, .ss-table td { padding: 0.45rem 0.6rem; border: 1px solid var(--bd); text-align: center; transition: border-color 0.3s; }
+.ss-table th, .ss-table td { padding: 0.45rem 0.6rem; border: 1px solid var(--bd); text-align: center; }
 
 /* Fixar coluna de dias na esquerda ao rolar */
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
@@ -131,13 +112,14 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 .h-pvn { background: var(--b-pvn-d) !important; color: var(--b-pvn) !important; border-bottom: 2px solid var(--b-pvn) !important; }
 .h-dif { background: var(--b-dif-d) !important; color: var(--b-dif) !important; border-bottom: 2px solid var(--b-dif) !important; }
 .h-fin { background: var(--b-fin-d) !important; color: var(--b-fin) !important; border-bottom: 2px solid var(--b-fin) !important; }
+.h-cus { background: var(--b-cus-d) !important; color: var(--b-cus) !important; border-bottom: 2px solid var(--b-cus) !important; }
 
 /* Estilização das Células de Input */
 .cell-in {
   width: 65px; background: transparent; border: none; color: var(--tx); text-align: center;
   font-family: var(--mono); font-size: 0.78rem; outline: none; padding: 2px; border-radius: 4px;
 }
-.cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1px var(--ac); color: var(--tx); }
+.cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1px var(--ac); color: #fff; }
 .cell-in.disabled { pointer-events: none; opacity: 0.8; }
 
 /* Subtítulo informativo de scroll no rodapé */
@@ -147,20 +129,17 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 }
 
 .btn-save {
-  background: var(--ac); color: #0a0c10; border: none; font-family: var(--mono);
+  background: var(--ac); color: var(--bg); border: none; font-family: var(--mono);
   font-weight: 700; font-size: 0.75rem; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px;
 }
 .btn-save:hover { opacity: 0.9; }
 
 /* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS */
 .row-proprio { color: #00e5a0 !important; font-weight: 500; }
-body.light-mode .row-proprio { color: #00aa77 !important; }
 .row-concorrente { color: #eef0f4 !important; }
 .badge-tipo { padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
 .badge-tipo.proprio { background: rgba(0,229,160,0.1); color: #00e5a0; }
-body.light-mode .badge-tipo.proprio { background: rgba(0,170,119,0.1); color: #00aa77; }
 .badge-tipo.concorrente { background: rgba(255,255,255,0.05); color: var(--tx2); }
-body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
 .link-foto { color: #4895ef; text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
 .link-foto:hover { color: var(--ac); }
 
@@ -170,29 +149,89 @@ body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
   border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 280px;
   display: none; flex-direction: column; overflow: hidden; pointer-events: none;
 }
-.popover-hdr { background: #121620; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--bd); display: flex; align-items: center; justify-content: space-between; font-size: 0.7rem; font-family: var(--mono); color: #eef0f4; }
+.popover-hdr { background: #121620; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--bd); display: flex; align-items: center; justify-content: space-between; font-size: 0.7rem; font-family: var(--mono); }
 .popover-body { padding: 0.5rem; display: flex; align-items: center; justify-content: center; background: #0a0c10; }
 .popover-body img { width: 100%; height: auto; border-radius: 6px; object-fit: cover; }
-.popover-ftr { padding: 0.5rem 0.75rem; background: #121620; font-size: 0.65rem; color: #5c6b84; border-top: 1px solid var(--bd); }
+.popover-ftr { padding: 0.5rem 0.75rem; background: #121620; font-size: 0.65rem; color: var(--tx3); border-top: 1px solid var(--bd); }
 
 .placeholder-panel { padding: 2rem; background: var(--sf); border-radius: 12px; border: 1px solid var(--bd); text-align: center; color: var(--tx2); }
 
-/* ESTILOS EXCLUSIVOS DO PAINEL DE KPI */
-.kpi-container { display: flex; flex-direction: column; gap: 1rem; width: 100%; height: 100%; overflow-y: auto; }
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; width: 100%; flex-shrink: 0; }
-.kpi-card { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; text-align: left; transition: background 0.3s, border-color 0.3s; }
-.kpi-title { font-size: 0.75rem; color: var(--tx2); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.5px; }
-.kpi-value { font-size: 1.6rem; font-weight: 700; color: var(--tx); font-family: var(--mono); }
-.kpi-sub { font-size: 0.7rem; color: var(--tx3); }
-.kpi-section-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; width: 100%; flex: 1; }
-.kpi-block { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; min-height: 200px; text-align: left; transition: background 0.3s, border-color 0.3s; }
-.kpi-block-title { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; color: var(--ac); margin-bottom: 1rem; border-bottom: 1px solid var(--bd); padding-bottom: 0.5rem; }
-.kpi-list { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; list-style: none; }
-.kpi-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.5rem; color: var(--tx); }
+.topbar-right { display: flex; align-items: center; gap: 0.85rem; }
+.theme-toggle {
+  width: 36px; height: 36px; background: var(--sf2); border: 1px solid var(--bd); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; color: var(--tx2); cursor: pointer;
+  font-size: 0.95rem; transition: all 0.15s; flex-shrink: 0;
+}
+.theme-toggle:hover { color: var(--ac); border-color: var(--ac); }
+
+/* MÓDULO CUSTO & MARGEM */
+.custo-subnav { display: flex; gap: 0.5rem; }
+.subnav-btn {
+  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx2); font-family: var(--mono);
+  font-size: 0.72rem; font-weight: 700; padding: 0.5rem 0.9rem; border-radius: 8px; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.15s;
+}
+.subnav-btn:hover { color: var(--tx); }
+.subnav-btn.active { background: var(--b-cus-d); border-color: var(--b-cus); color: var(--b-cus); }
+
+.print-modes { display: flex; gap: 0.5rem; }
+.btn-print {
+  background: var(--sf2); color: var(--tx); border: 1px solid var(--bd2); font-family: var(--mono);
+  font-weight: 700; font-size: 0.72rem; padding: 0.5rem 0.85rem; border-radius: 6px; cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-print:hover { border-color: var(--b-cus); color: var(--b-cus); }
+
+.custo-view { display: none; flex: 1; overflow: hidden; flex-direction: column; gap: 1rem; }
+.custo-view.active { display: flex; }
+
+.dist-grid {
+  flex: 1; overflow: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem; padding: 0.25rem; align-content: start;
+}
+.dist-card { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.65rem; }
+.dist-card-hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--bd); padding-bottom: 0.6rem; }
+.dist-card-hdr .dist-nome { font-family: var(--mono); font-weight: 700; font-size: 0.85rem; color: var(--b-cus); }
+.dist-card-hdr .dist-postos { font-size: 0.62rem; color: var(--tx3); font-family: var(--mono); text-align: right; }
+.dist-fuel-row { display: flex; align-items: center; gap: 0.5rem; }
+.dist-fuel-row label { font-size: 0.72rem; color: var(--tx2); font-family: var(--mono); font-weight: 700; width: 55px; flex-shrink: 0; }
+.dist-fuel-row input {
+  flex: 1; background: var(--sf2); border: 1px solid var(--bd); color: var(--tx); text-align: right;
+  padding: 0.4rem 0.55rem; border-radius: 6px; font-family: var(--mono); font-size: 0.78rem; outline: none; min-width: 0;
+}
+.dist-fuel-row input:focus { border-color: var(--b-cus); box-shadow: 0 0 0 1px var(--b-cus); }
+.dist-fuel-row .reaj-tag { font-size: 0.62rem; font-family: var(--mono); min-width: 52px; text-align: right; flex-shrink: 0; }
+
+.custo-override {
+  width: 64px; background: var(--sf2); border: 1px dashed var(--bd2); color: var(--b-cus); text-align: center;
+  font-family: var(--mono); font-size: 0.72rem; border-radius: 4px; padding: 4px 2px; outline: none;
+}
+.custo-override:focus { border-style: solid; border-color: var(--b-cus); }
+
+.badge-margem { padding: 3px 8px; border-radius: 5px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); display: inline-block; }
+.badge-ok { background: var(--ac-d); color: var(--ac); }
+.badge-atencao { background: var(--b-pre-d); color: var(--b-pre); }
+.badge-critico { background: var(--b-dif-d); color: var(--b-dif); }
+
+#quadro-impressao { display: none; }
+@media print {
+  body * { visibility: hidden; }
+  #quadro-impressao, #quadro-impressao * { visibility: visible; }
+  #quadro-impressao { display: block; position: absolute; left: 0; top: 0; width: 100%; background: #fff; color: #000; padding: 24px; }
+  #quadro-impressao table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
+  #quadro-impressao th, #quadro-impressao td { border: 1px solid #999; padding: 6px 8px; text-align: center; font-size: 12px; }
+  #quadro-impressao h3 { font-family: Arial, sans-serif; margin-bottom: 6px; }
+  #quadro-impressao h4 { font-family: Arial, sans-serif; }
+  #quadro-impressao .qi-data { font-size: 11px; color: #444; margin-bottom: 14px; }
+}
 </style>
+<script>
+(function(){try{var t=localStorage.getItem('jb_theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
+</script>
 </head>
 <body>
 
+  <!-- TOPBAR -->
   <header class="topbar">
     <div class="brand-group">
       <div class="logo">JB</div>
@@ -201,9 +240,9 @@ body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
         <div class="sub-t">// Enterprise Resource Center</div>
       </div>
     </div>
-    <div style="display: flex; align-items: center;">
-      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Alternar Modo Claro/Escuro">
-        <i class="fa-solid fa-moon"></i>
+    <div class="topbar-right">
+      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro">
+        <i class="fa-solid fa-sun" id="theme-icon"></i>
       </button>
       <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--tx2);">
         Ref: <span style="color: var(--ac);">JUN 2026</span>
@@ -212,14 +251,32 @@ body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
   </header>
 
   <div class="app-container">
+    <!-- SIDEBAR COMPLETA -->
     <aside class="sidebar">
       <div>
         <div class="sb-section-title">Filtro Operacional</div>
         <select class="sel-posto" id="global-posto">
-          <option value="P. ALEX">P. ALEX</option>
-          <option value="P. MANGABEIRAS">P. MANGABEIRAS</option>
-          <option value="P. TOPAZIO">P. TOPAZIO</option>
-          <option value="P. TUNEL">P. TUNEL</option>
+          <option value="POSTO J.A.">POSTO J.A.</option>
+          <option value="TOPAZIO">TOPAZIO</option>
+          <option value="MANGABEIRAS">MANGABEIRAS</option>
+          <option value="ALEX">ALEX</option>
+          <option value="ITAPOA">ITAPOA</option>
+          <option value="PLANALTO">PLANALTO</option>
+          <option value="LOURA">LOURA</option>
+          <option value="BRUNA">BRUNA</option>
+          <option value="ANA LUCIA">ANA LUCIA</option>
+          <option value="JOCA">JOCA</option>
+          <option value="JOAQUIM">JOAQUIM</option>
+          <option value="MIRAGEM">MIRAGEM</option>
+          <option value="TRANCOSO">TRANCOSO</option>
+          <option value="S. COLIBRI">S. COLIBRI</option>
+          <option value="BIANCA">BIANCA</option>
+          <option value="FELIPAO">FELIPAO</option>
+          <option value="BERNARDO">BERNARDO</option>
+          <option value="S. LUIZ">S. LUIZ</option>
+          <option value="BAHAMAS">BAHAMAS</option>
+          <option value="S. BERNARDO">S. BERNARDO</option>
+          <option value="BOMBOM FIL.">BOMBOM FIL.</option>
         </select>
       </div>
 
@@ -228,14 +285,17 @@ body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
         <ul class="nav-list">
           <li class="nav-item active" onclick="switchMainTab('tab-medicao', this)"><i class="fa-solid fa-calculator"></i> Medição Diária</li>
           <li class="nav-item" onclick="switchMainTab('tab-precos', this)"><i class="fa-solid fa-tags"></i> Coleta de Preços</li>
+          <li class="nav-item" onclick="switchMainTab('tab-custo', this)"><i class="fa-solid fa-coins"></i> Custo & Margem</li>
           <li class="nav-item" onclick="switchMainTab('tab-pedidos-carga', this)"><i class="fa-solid fa-truck-ramp-box"></i> Pedidos de Carga</li>
           <li class="nav-item" onclick="switchMainTab('tab-kpi', this)"><i class="fa-solid fa-chart-pie"></i> Painel de KPI</li>
         </ul>
       </nav>
     </aside>
 
+    <!-- WORKSPACE VIEWPORT -->
     <main class="workspace">
       
+      <!-- ABA PRINCIPAL 1: MEDIÇÃO DIÁRIA -->
       <section id="tab-medicao" class="view-panel active">
         <div class="table-actions">
           <div class="table-title">Matriz Integrada de Suprimentos <span>• Visão Horizontal Completa</span></div>
@@ -266,11 +326,14 @@ body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
                 <th style="color:var(--b-fin)">GC</th><th style="color:var(--b-fin)">GA</th><th style="color:var(--b-fin)">ET</th><th style="color:var(--b-fin)">S10</th>
               </tr>
             </thead>
-            <tbody id="matriz-corpo"></tbody>
+            <tbody id="matriz-corpo">
+              <!-- Inserido dinamicamente via JS -->
+            </tbody>
           </table>
         </div>
       </section>
 
+      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS -->
       <section id="tab-precos" class="view-panel">
         <div class="table-actions">
           <div class="table-title">Histórico de Coletas — Coleta de Preços <span>• Painel Auditor Integrado</span></div>
@@ -286,123 +349,137 @@ body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
                 <th>Latitude</th><th>Longitude</th><th>Foto</th>
               </tr>
             </thead>
-            <tbody>
-              <tr class="row-proprio">
-                <td>15/06/2026</td><td>07:42</td><td>P. ALEX</td><td>RAFAEL</td><td>-</td>
-                <td><span class="badge-tipo proprio">Próprio</span></td><td>Ipiranga</td><td>Grupo JBretas</td><td>Mauricio</td>
-                <td>3,79</td><td>5,89</td><td>6,19</td><td>6,89</td><td>-</td><td>-19.923.411</td><td>-43.942.102</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-ALEX-PROP-1506.jpg')" onmouseleave="hidePhoto()"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
-              </tr>
-              <tr class="row-concorrente">
-                <td>15/06/2026</td><td>08:15</td><td>P. ALEX</td><td>RAFAEL</td><td>POSTO ALTERNATIVO</td>
-                <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Bandeira Branca</td><td>Independente</td><td>Mauricio</td>
-                <td>3,67</td><td>5,77</td><td>6,07</td><td>6,77</td><td>-</td><td>-19.925.120</td><td>-43.944.350</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-ALEX-CONC-1506.jpg')" onmouseleave="hidePhoto()"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
-              </tr>
+            <tbody id="coleta-corpo">
               <tr class="row-concorrente">
                 <td>14/06/2026</td><td>09:15</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>POSTO DUAS PONTES</td>
                 <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Bandeira Branca</td><td>Independente</td><td>Mauricio</td>
                 <td>3,87</td><td>5,97</td><td>6,27</td><td>6,97</td><td>-</td><td>-19.900.247</td><td>-43.903.849</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')" onmouseleave="hidePhoto()"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+              </tr>
+              <tr class="row-proprio">
+                <td>15/06/2026</td><td>11:45</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>P. BOMBOM MATRIZ</td>
+                <td><span class="badge-tipo proprio">Próprio</span></td><td>Ipiranga</td><td>Independente</td><td>Mauricio</td>
+                <td>3,67</td><td>5,79</td><td>6,09</td><td>-</td><td>-</td><td>-19.921.819</td><td>-43.922.651</td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-PROPRIO.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-PROPRIO.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+              </tr>
+              <tr class="row-concorrente">
+                <td>16/06/2026</td><td>09:15</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>POSTO REDE AQUI</td>
+                <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Shell</td><td>Independente</td><td>Mauricio</td>
+                <td>3,99</td><td>5,49</td><td>5,89</td><td>-</td><td>-</td><td>-19.921.819</td><td>-43.922.651</td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-SHELL.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-SHELL.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <section id="tab-pedidos-carga" class="view-panel">
-        <div class="placeholder-panel" style="border-left: 4px solid var(--b-pre);">
-          <h2><i class="fa-solid fa-truck-ramp-box"></i> Painel de Aprovação de Carga (ADM)</h2>
-          <p style="margin-top: 1rem; color: var(--tx2);">Gerenciamento de volumes sugeridos e injeção automática no banco de dados.</p>
+      <!-- ABA PRINCIPAL 3: CUSTO & MARGEM -->
+      <section id="tab-custo" class="view-panel">
+        <div class="table-actions">
+          <div class="table-title">Custo & Margem <span>• Lançamento por Distribuidora e Apuração por Posto</span></div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div class="custo-subnav">
+              <button class="subnav-btn active" id="btn-sub-lanc" onclick="switchCustoSub('lancamento')">Lançar Custo</button>
+              <button class="subnav-btn" id="btn-sub-marg" onclick="switchCustoSub('margem')">Margem por Posto</button>
+            </div>
+            <div class="print-modes">
+              <button class="btn-print" onclick="imprimirQuadro('interno')"><i class="fa-solid fa-print"></i> Quadro Interno</button>
+              <button class="btn-print" onclick="imprimirQuadro('posto')"><i class="fa-solid fa-print"></i> Quadro do Posto</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="custo-view active" id="view-lancamento">
+          <div class="dist-grid" id="dist-grid"></div>
+        </div>
+
+        <div class="custo-view" id="view-margem">
+          <div class="spreadsheet-frame">
+            <table class="ss-table">
+              <thead>
+                <tr>
+                  <th>Posto</th><th>Distribuidora</th><th>Combustível</th>
+                  <th class="h-cus">Custo Efetivo</th><th>Ajuste Posto</th>
+                  <th class="h-ven">Venda Atual</th><th class="h-dif">Margem</th><th>Reajuste (vs. ontem)</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="margem-corpo"></tbody>
+            </table>
+          </div>
         </div>
       </section>
 
-      <section id="tab-kpi" class="view-panel">
-        <div class="kpi-container">
-          <div class="kpi-grid">
-            <div class="kpi-card" style="border-left: 4px solid var(--b-ven)">
-              <span class="kpi-title">Volume Total Comercializado</span>
-              <div class="kpi-value">1.428.500 L</div>
-              <span class="kpi-sub">Acumulado mensal da rede</span>
-            </div>
-            <div class="kpi-card" style="border-left: 4px solid var(--b-med)">
-              <span class="kpi-title">Margem Média da Rede</span>
-              <div class="kpi-value" style="color: var(--ac)">R$ 0,51 / L</div>
-              <span class="kpi-sub">Meta estabelecida: R$ 0,48 / L</span>
-            </div>
-            <div class="kpi-card" style="border-left: 4px solid var(--b-pre)">
-              <span class="kpi-title">Diferença Operacional Total</span>
-              <div class="kpi-value" style="color: var(--b-dif)">-420 L</div>
-              <span class="kpi-sub">Variação física vs contábil (Rede)</span>
-            </div>
-          </div>
+      <!-- ABA PRINCIPAL 4: PEDIDOS DE CARGA -->
+      <section id="tab-pedidos-carga" class="view-panel">
+        <div class="placeholder-panel" style="border-left: 4px solid var(--b-pre);">
+          <h2><i class="fa-solid fa-truck-ramp-box"></i> Painel de Aprovação de Carga (ADM)</h2>
+          <p style="margin-top: 1rem; color: var(--tx2);">Aqui o administrativo visualiza as sugestões enviadas pela logística no <b>📦 PRÉ-PEDIDO</b>, realiza ajustes finos se necessário, e ao clicar em "Aprovar", os volumes são injetados automaticamente na coluna <b>📋 PEDIDO FINAL</b> da tela anterior.</p>
+        </div>
+      </section>
 
-          <div class="kpi-section-layout">
-            <div class="kpi-block">
-              <div class="kpi-block-title"><i class="fa-solid fa-trophy"></i> Eficiência Operacional — Frentistas (Top Margem)</div>
-              <ul class="kpi-list">
-                <li class="kpi-item"><span>1. Carlos Silva (P. ALEX)</span><strong style="color:var(--ac)">104.2% da Meta</strong></li>
-                <li class="kpi-item"><span>2. Marcos Souza (P. TOPAZIO)</span><strong>98.5% da Meta</strong></li>
-                <li class="kpi-item"><span>3. Amanda Costa (P. TUNEL)</span><strong>95.1% da Meta</strong></li>
-              </ul>
-            </div>
-            <div class="kpi-block">
-              <div class="kpi-block-title" style="color: var(--b-dif)"><i class="fa-solid fa-triangle-exclamation"></i> Alertas Ativos de Estoque Crítico</div>
-              <ul class="kpi-list">
-                <li class="kpi-item"><span>P. MANGABEIRAS — Etanol (ET)</span><span style="color:var(--b-dif); font-weight:bold;">Autonomia &lt; 12h</span></li>
-                <li class="kpi-item"><span>P. ALEX — Diesel S10</span><span style="color:var(--b-pre); font-weight:bold;">Tanque a 15% da capacidade</span></li>
-              </ul>
-            </div>
-          </div>
+      <!-- ABA PRINCIPAL 5: PAINEL DE KPI -->
+      <section id="tab-kpi" class="view-panel">
+        <div class="placeholder-panel">
+          <h2><i class="fa-solid fa-chart-pie"></i> Painel de KPI</h2>
+          <p style="margin-top: 1rem;">Métricas de frentistas, estoques consolidados e auditoria de margens.</p>
         </div>
       </section>
 
     </main>
   </div>
 
+  <!-- COMPONENTE FLUTUANTE (POPOVER DE IMAGEM ESTILO GOOGLE SHEETS) -->
   <div id="global-photo-popover" class="photo-popover">
-    <div class="popover-hdr"><span id="popover-filename">Arquivo</span></div>
+    <div class="popover-hdr">
+      <span id="popover-filename"><i class="fa-solid fa-image"></i> Arquivo</span>
+      <div style="display:flex; gap:8px; color:var(--tx2)">
+        <i class="fa-regular fa-copy"></i>
+        <i class="fa-solid fa-pen"></i>
+      </div>
+    </div>
     <div class="popover-body">
       <img src="https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=400&q=80" alt="Bomba">
     </div>
+    <div class="popover-ftr">
+      <i class="fa-regular fa-user"></i> Pertence a você<br>
+      <span style="font-size:0.6rem; color:var(--tx3)">Nenhuma mudança desde a última visualização</span>
+    </div>
+  </div>
+
+  <!-- CONTAINER EXCLUSIVO DE IMPRESSÃO -->
+  <div id="quadro-impressao">
+    <div id="qi-conteudo"></div>
   </div>
 
   <script>
-    // Gerador de Mock horizontal dinâmico
     function renderMatrizHorizontal() {
       const tbody = document.getElementById('matriz-corpo');
       let html = '';
-      for (let d = 1; d <= 5; d++) {
+      for (let d = 1; d <= 10; d++) {
         let diaStr = String(d).padStart(2, '0') + '/06';
         html += `
           <tr>
             <td class="sticky-col">${diaStr}</td>
-            
             <td><input type="text" class="cell-in" value="14.250"></td>
             <td><input type="text" class="cell-in" value="4.100"></td>
             <td><input type="text" class="cell-in" value="8.200"></td>
             <td><input type="text" class="cell-in" value="11.400"></td>
-            
-            <td><input type="text" class="cell-in" style="color:var(--b-ven);" value="2.850"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven);" value="650"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven);" value="1.200"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven);" value="3.100"></td>
-            
-            <td><input type="text" class="cell-in" style="color:var(--b-pre);" value="15.000"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre);" value="0"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre);" value="5.000"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre);" value="10.000"></td>
-            
+            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="2.850"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="650"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="1.200"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="3.100"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="15.000"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="0"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="5.000"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="10.000"></td>
             <td><input type="text" class="cell-in disabled" value="11.400"></td>
             <td><input type="text" class="cell-in disabled" value="3.450"></td>
             <td><input type="text" class="cell-in disabled" value="7.000"></td>
             <td><input type="text" class="cell-in disabled" value="8.300"></td>
-            
             <td><span style="color:var(--b-ven); font-family:var(--mono); font-weight:bold;">+120</span></td>
             <td><span style="color:var(--b-dif); font-family:var(--mono); font-weight:bold;">-10</span></td>
             <td><span style="color:var(--b-ven); font-family:var(--mono); font-weight:bold;">+45</span></td>
             <td><span style="color:var(--b-dif); font-family:var(--mono); font-weight:bold;">-110</span></td>
-            
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="15.000"></td>
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="0"></td>
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="5.000"></td>
@@ -413,17 +490,14 @@ body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
       tbody.innerHTML = html;
     }
 
-    // Controle do Popover de Imagem
     const popover = document.getElementById('global-photo-popover');
     const popoverName = document.getElementById('popover-filename');
 
     function showPhoto(event, title) {
       popoverName.innerHTML = `<i class="fa-solid fa-image"></i> ${title}`;
       popover.style.display = 'flex';
-      
       const mouseX = event.clientX;
       const mouseY = event.clientY;
-      
       popover.style.left = (mouseX - 300) + 'px'; 
       popover.style.top = (mouseY - 80) + 'px';
     }
@@ -432,52 +506,216 @@ body.light-mode .badge-tipo.concorrente { background: rgba(0,0,0,0.05); }
       popover.style.display = 'none';
     }
 
-    // Troca de Módulos Corrigida (Evita acúmulo de abas na tela)
     function switchMainTab(tabId, element) {
-      // 1. Remove a classe active e força display none inline em todas as seções
-      document.querySelectorAll('.view-panel').forEach(p => {
-        p.classList.remove('active');
-        p.style.setProperty('display', 'none', 'important');
-      });
-      
-      // 2. Remove o destaque dos itens do menu
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      
-      // 3. Ativa a aba alvo aplicando o display correto e a classe active
-      const target = document.getElementById(tabId);
-      if (tabId === 'tab-kpi') {
-        target.style.setProperty('display', 'block', 'important');
-      } else {
-        target.style.setProperty('display', 'flex', 'important');
-      }
-      target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
       element.classList.add('active');
     }
 
-    // Função para Alternar o Tema Claro/Escuro
-    function toggleTheme() {
-      const body = document.body;
-      const btn = document.getElementById('theme-btn');
-      
-      body.classList.toggle('light-mode');
-      
-      if (body.classList.contains('light-mode')) {
-        btn.innerHTML = '<i class="fa-solid fa-sun" style="color: #f9c74f;"></i>';
-      } else {
-        btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+    // ===== DADOS INJETADOS DIRETAMENTE DA PLANILHA DO USUÁRIO =====
+
+    const distribuidoras = [
+      {
+        id: 'dist_padrao_1', nome: 'Base de Custos Principal',
+        postos: ['POSTO J.A.', 'TOPAZIO', 'MANGABEIRAS', 'ITAPOA', 'PLANALTO', 'LOURA', 'BRUNA'],
+        custoHoje: { 'ETANOL': 3.3490, 'G COMUM': 5.3595, 'G ADITIVADA': 5.4995, 'DIESEL S10': 6.2225 },
+        custoOntem: { 'ETANOL': 3.3490, 'G COMUM': 5.3695, 'G ADITIVADA': 5.5088, 'DIESEL S10': 6.2475 }
+      },
+      {
+        id: 'dist_padrao_2', nome: 'Base de Custos Secundária',
+        postos: ['ANA LUCIA', 'JOCA', 'JOAQUIM', 'MIRAGEM', 'TRANCOSO', 'S. COLIBRI', 'BIANCA', 'FELIPAO'],
+        custoHoje: { 'ETANOL': 3.3495, 'G COMUM': 5.3791, 'G ADITIVADA': 5.5142, 'DIESEL S10': 6.2218 },
+        custoOntem: { 'ETANOL': 3.3495, 'G COMUM': 5.3791, 'G ADITIVADA': 5.5142, 'DIESEL S10': 6.2218 }
       }
+    ];
+
+    const vendaAtual = {
+      'POSTO J.A.':   { 'ETANOL': 4.490, 'G COMUM': 6.690, 'G ADITIVADA': 6.990, 'DIESEL S10': 6.990 },
+      'ITAPOA':       { 'ETANOL': 3.890, 'G COMUM': 5.870, 'G ADITIVADA': 6.170, 'DIESEL S10': 6.990 },
+      'PLANALTO':     { 'ETANOL': 3.890, 'G COMUM': 5.890, 'G ADITIVADA': 6.190, 'DIESEL S10': 6.790 },
+      'LOURA':        { 'ETANOL': 3.590, 'G COMUM': 5.850, 'G ADITIVADA': 6.150, 'DIESEL S10': 6.840 },
+      'TOPAZIO':      { 'ETANOL': 3.790, 'G COMUM': 5.790, 'G ADITIVADA': 6.090, 'DIESEL S10': 6.750 },
+      'MANGABEIRAS':  { 'ETANOL': 4.490, 'G COMUM': 6.690, 'G ADITIVADA': 6.990, 'DIESEL S10': 6.990 },
+      'ALEX':         { 'ETANOL': 3.990, 'G COMUM': 6.290, 'G ADITIVADA': 6.590, 'DIESEL S10': 6.990 },
+      'ANA LUCIA':    { 'ETANOL': 3.890, 'G COMUM': 5.950, 'DIESEL S10': 6.880 },
+      'JOCA':         { 'ETANOL': 3.990, 'G COMUM': 5.990, 'DIESEL S10': 6.990 },
+      'JOAQUIM':      { 'ETANOL': 3.850, 'G COMUM': 5.870, 'G ADITIVADA': 6.170, 'DIESEL S10': 6.640 },
+      'MIRAGEM':      { 'ETANOL': 3.890, 'G COMUM': 5.890, 'G ADITIVADA': 6.190, 'DIESEL S10': 6.990 },
+      'TRANCOSO':     { 'ETANOL': 3.990, 'G COMUM': 5.990, 'G ADITIVADA': 6.290, 'DIESEL S10': 6.890 },
+      'S. COLIBRI':   { 'ETANOL': 3.670, 'G COMUM': 5.870, 'G ADITIVADA': 6.170, 'DIESEL S10': 6.750 },
+      'BIANCA':       { 'ETANOL': 4.380, 'G COMUM': 6.280, 'G ADITIVADA': 6.580, 'DIESEL S10': 6.990 },
+      'FELIPAO':      { 'ETANOL': 4.550, 'G COMUM': 6.490, 'DIESEL S10': 6.890 },
+      'BERNARDO':     { 'ETANOL': 4.270, 'G COMUM': 6.170, 'DIESEL S10': 6.550 },
+      'BAHAMAS':      { 'ETANOL': 3.870, 'G COMUM': 5.850, 'G ADITIVADA': 6.150 },
+      'S. BERNARDO':  { 'ETANOL': 3.550, 'G COMUM': 5.670, 'G ADITIVADA': 5.970 },
+      'BOMBOM FIL.':  { 'ETANOL': 3.790, 'G COMUM': 5.790, 'G ADITIVADA': 6.090, 'DIESEL S10': 6.750 }
+    };
+
+    const custoOverride = {};
+    const margemMinima = { 'ETANOL': 0.4000, 'G COMUM': 0.4500, 'G ADITIVADA': 0.4500, 'DIESEL S10': 0.4500 };
+
+    function getDistribuidoraDoPosto(posto) {
+      return distribuidoras.find(d => d.postos.includes(posto)) || distribuidoras[0];
+    }
+
+    function getCustoEfetivo(posto, comb) {
+      const key = posto + '_' + comb;
+      if (custoOverride[key] !== undefined) return custoOverride[key];
+      const dist = getDistribuidoraDoPosto(posto);
+      return dist && dist.custoHoje[comb] !== undefined ? dist.custoHoje[comb] : 5.00; 
+    }
+
+    function getReajuste(posto, comb) {
+      const dist = getDistribuidoraDoPosto(posto);
+      if (!dist || dist.custoHoje[comb] === undefined) return 0;
+      return dist.custoHoje[comb] - dist.custoOntem[comb];
+    }
+
+    function statusMargem(margem, comb) {
+      const min = margemMinima[comb] !== undefined ? margemMinima[comb] : 0.40;
+      if (margem >= min) return 'ok';
+      if (margem >= min * 0.6) return 'atencao';
+      return 'critico';
+    }
+
+    function corReajuste(v) { return v > 0 ? 'var(--b-dif)' : (v < 0 ? 'var(--ac)' : 'var(--tx3)'); }
+
+    function renderLancamento() {
+      const grid = document.getElementById('dist-grid');
+      let html = '';
+      distribuidoras.forEach(dist => {
+        html += '<div class="dist-card"><div class="dist-card-hdr">' +
+          '<span class="dist-nome">' + dist.nome + '</span>' +
+          '<span class="dist-postos">' + dist.postos.slice(0,3).join(' • ') + '...</span></div>';
+        Object.keys(dist.custoHoje).forEach(comb => {
+          const reaj = dist.custoHoje[comb] - dist.custoOntem[comb];
+          const reajTxt = (reaj > 0 ? '+' : '') + reaj.toFixed(4);
+          html += '<div class="dist-fuel-row"><label>' + comb + '</label>' +
+            '<input type="text" value="' + dist.custoHoje[comb].toFixed(4) + '" data-dist="' + dist.id + '" data-comb="' + comb + '" onchange="atualizarCustoBase(this)">' +
+            '<span class="reaj-tag" style="color:' + corReajuste(reaj) + '">' + reajTxt + '</span></div>';
+        });
+        html += '</div>';
+      });
+      grid.innerHTML = html;
+    }
+
+    function atualizarCustoBase(input) {
+      const dist = distribuidoras.find(d => d.id === input.dataset.dist);
+      const comb = input.dataset.comb;
+      const valor = parseFloat(input.value.replace(',', '.'));
+      if (isNaN(valor)) { renderLancamento(); return; }
+      dist.custoOntem[comb] = dist.custoHoje[comb];
+      dist.custoHoje[comb] = valor;
+      renderLancamento();
+      renderMargemPostos();
+    }
+
+    function renderMargemPostos() {
+      const tbody = document.getElementById('margem-corpo');
+      let html = '';
+      Object.keys(vendaAtual).forEach(posto => {
+        const dist = getDistribuidoraDoPosto(posto);
+        Object.keys(vendaAtual[posto]).forEach(comb => {
+          const custo = getCustoEfetivo(posto, comb);
+          const venda = vendaAtual[posto][comb];
+          const margem = venda - custo;
+          const reaj = getReajuste(posto, comb);
+          const status = statusMargem(margem, comb);
+          const key = posto + '_' + comb;
+          const overrideVal = custoOverride[key] !== undefined ? custoOverride[key].toFixed(4) : '';
+          const corMargem = status === 'ok' ? 'var(--ac)' : (status === 'atencao' ? 'var(--b-pre)' : 'var(--b-dif)');
+          const statusTxt = status === 'ok' ? 'OK' : (status === 'atencao' ? 'Atenção' : 'Crítico');
+          html += '<tr><td>' + posto + '</td><td>' + (dist ? dist.nome : '-') + '</td><td>' + comb + '</td>' +
+            '<td style="color:var(--b-cus); font-family:var(--mono);">R$ ' + custo.toFixed(4) + '</td>' +
+            '<td><input type="text" class="custo-override" placeholder="—" value="' + overrideVal + '" data-posto="' + posto + '" data-comb="' + comb + '" onchange="ajustarCustoPosto(this)"></td>' +
+            '<td style="font-family:var(--mono);">R$ ' + venda.toFixed(4) + '</td>' +
+            '<td style="font-family:var(--mono); font-weight:bold; color:' + corMargem + '">R$ ' + margem.toFixed(4) + '</td>' +
+            '<td style="font-family:var(--mono); color:' + corReajuste(reaj) + '">' + (reaj > 0 ? '+' : '') + reaj.toFixed(4) + '</td>' +
+            '<td><span class="badge-margem badge-' + status + '">' + statusTxt + '</span></td></tr>';
+        });
+      });
+      tbody.innerHTML = html;
+    }
+
+    function ajustarCustoPosto(input) {
+      const key = input.dataset.posto + '_' + input.dataset.comb;
+      const valor = parseFloat(input.value.replace(',', '.'));
+      if (isNaN(valor) || input.value.trim() === '') {
+        delete custoOverride[key];
+      } else {
+        custoOverride[key] = valor;
+      }
+      renderMargemPostos();
+    }
+
+    function switchCustoSub(view) {
+      document.querySelectorAll('.custo-view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.subnav-btn').forEach(b => b.classList.remove('active'));
+      if (view === 'lancamento') {
+        document.getElementById('view-lancamento').classList.add('active');
+        document.getElementById('btn-sub-lanc').classList.add('active');
+      } else {
+        document.getElementById('view-margem').classList.add('active');
+        document.getElementById('btn-sub-marg').classList.add('active');
+      }
+    }
+
+    function imprimirQuadro(modo) {
+      const cont = document.getElementById('qi-conteudo');
+      const hoje = new Date().toLocaleDateString('pt-BR');
+      let html = '';
+      if (modo === 'interno') {
+        html += '<h3>Quadro interno de custo &amp; margem — ADM</h3><div class="qi-data">Data de referência: ' + hoje + '</div>';
+        Object.keys(vendaAtual).forEach(posto => {
+          const dist = getDistribuidoraDoPosto(posto);
+          html += '<h4>' + posto + ' <span style="font-weight:normal;font-size:11px;color:#555;">(' + (dist ? dist.nome : '-') + ')</span></h4>';
+          html += '<table><tr><th>Combustível</th><th>Custo</th><th>Venda</th><th>Margem</th><th>Reajuste</th></tr>';
+          Object.keys(vendaAtual[posto]).forEach(comb => {
+            const custo = getCustoEfetivo(posto, comb);
+            const venda = vendaAtual[posto][comb];
+            const margem = venda - custo;
+            const reaj = getReajuste(posto, comb);
+            html += '<tr><td>' + comb + '</td><td>R$ ' + custo.toFixed(4) + '</td><td>R$ ' + venda.toFixed(4) + '</td><td>R$ ' + margem.toFixed(4) + '</td><td>' + (reaj > 0 ? '+' : '') + reaj.toFixed(4) + '</td></tr>';
+          });
+          html += '</table>';
+        });
+      } else {
+        html += '<h3>Quadro de preços — vigência ' + hoje + '</h3><div class="qi-data">Conforme exigência de exibição ao consumidor (sem custo/margem)</div>';
+        Object.keys(vendaAtual).forEach(posto => {
+          html += '<h4>' + posto + '</h4><table><tr><th>Combustível</th><th>Preço (R$/L)</th></tr>';
+          Object.keys(vendaAtual[posto]).forEach(comb => {
+            html += '<tr><td>' + comb + '</td><td>R$ ' + vendaAtual[posto][comb].toFixed(3) + '</td></tr>';
+          });
+          html += '</table>';
+        });
+      }
+      cont.innerHTML = html;
+      window.print();
+    }
+
+    function toggleTheme() {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('jb_theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('jb_theme', 'light');
+      }
+      updateThemeIcon();
+    }
+
+    function updateThemeIcon() {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      document.getElementById('theme-icon').className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       renderMatrizHorizontal();
-      
-      // Garante estado inicial limpo exibindo apenas a medição diária
-      document.querySelectorAll('.view-panel').forEach(p => {
-        p.style.setProperty('display', 'none', 'important');
-      });
-      const defaultTab = document.getElementById('tab-medicao');
-      defaultTab.style.setProperty('display', 'flex', 'important');
-      defaultTab.classList.add('active');
+      renderLancamento();
+      renderMargemPostos();
+      updateThemeIcon();
     });
   </script>
 </body>

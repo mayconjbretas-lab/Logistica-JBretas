@@ -45,7 +45,7 @@ body {
 /* APP LAYOUT */
 .app-container { flex: 1; display: flex; overflow: hidden; }
 
-/* SIDEBAR MÓDULOS (Conforme image_537391.png) */
+/* SIDEBAR MÓDULOS */
 .sidebar {
   width: 260px; background: var(--sf); border-right: 1px solid var(--bd);
   display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem 1rem; flex-shrink: 0;
@@ -98,7 +98,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
   background: var(--sf2); color: var(--tx2); font-family: var(--mono); font-size: 0.65rem; font-weight: bold;
 }
 
-/* Blocos de Cores do Header (Estilo Captura de Tela) */
+/* Blocos de Cores do Header */
 .h-med { background: var(--b-med-d) !important; color: var(--b-med) !important; border-bottom: 2px solid var(--b-med) !important; }
 .h-ven { background: var(--b-ven-d) !important; color: var(--b-ven) !important; border-bottom: 2px solid var(--b-ven) !important; }
 .h-pre { background: var(--b-pre-d) !important; color: var(--b-pre) !important; border-bottom: 2px solid var(--b-pre) !important; }
@@ -126,7 +126,26 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 }
 .btn-save:hover { opacity: 0.9; }
 
-/* Outros painéis placeholder */
+/* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS (CONFORME PLANILHA DO USUÁRIO) */
+.row-proprio { color: #00e5a0 !important; font-weight: 500; }
+.row-concorrente { color: #eef0f4 !important; }
+.badge-tipo { padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
+.badge-tipo.proprio { background: rgba(0,229,160,0.1); color: #00e5a0; }
+.badge-tipo.concorrente { background: rgba(255,255,255,0.05); color: var(--tx2); }
+.link-foto { color: #4895ef; text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
+.link-foto:hover { color: var(--ac); }
+
+/* DESIGN COMPONENTE POPOVER FLUTUANTE DE IMAGEM GOOGLE SHEETS */
+.photo-popover {
+  position: fixed; z-index: 999; background: #1a1f2c; border: 1px solid var(--bd2);
+  border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 280px;
+  display: none; flex-direction: column; overflow: hidden; pointer-events: none;
+}
+.popover-hdr { background: #121620; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--bd); display: flex; align-items: center; justify-content: space-between; font-size: 0.7rem; font-family: var(--mono); }
+.popover-body { padding: 0.5rem; display: flex; align-items: center; justify-content: center; background: #0a0c10; }
+.popover-body img { width: 100%; height: auto; border-radius: 6px; object-fit: cover; }
+.popover-ftr { padding: 0.5rem 0.75rem; background: #121620; font-size: 0.65rem; color: var(--tx3); border-top: 1px solid var(--bd); }
+
 .placeholder-panel { padding: 2rem; background: var(--sf); border-radius: 12px; border: 1px solid var(--bd); text-align: center; color: var(--tx2); }
 </style>
 </head>
@@ -147,7 +166,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
   </header>
 
   <div class="app-container">
-    <!-- SIDEBAR COMPLETA (Conforme image_537391.png) -->
+    <!-- SIDEBAR COMPLETA -->
     <aside class="sidebar">
       <div>
         <div class="sb-section-title">Filtro Operacional</div>
@@ -173,7 +192,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
     <!-- WORKSPACE VIEWPORT -->
     <main class="workspace">
       
-      <!-- ABA PRINCIPAL 1: MEDIÇÃO DIÁRIA (MATRIZ COMPLETA LADO A LADO) -->
+      <!-- ABA PRINCIPAL 1: MEDIÇÃO DIÁRIA -->
       <section id="tab-medicao" class="view-panel active">
         <div class="table-actions">
           <div class="table-title">Matriz Integrada de Suprimentos <span>• Visão Horizontal Completa</span></div>
@@ -186,7 +205,6 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
         <div class="spreadsheet-frame">
           <table class="ss-table">
             <thead>
-              <!-- Linha 1: Títulos Principais dos Blocos -->
               <tr>
                 <th rowspan="2" class="sticky-col" style="background: var(--sf2); border-bottom: 2px solid var(--bd2)">DIA</th>
                 <th colspan="4" class="h-med">🛢️ MEDIÇÃO (L)</th>
@@ -196,19 +214,12 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
                 <th colspan="4" class="h-dif">Δ DIFERENÇA (R - P)</th>
                 <th colspan="4" class="h-fin">📋 PEDIDO FINAL (APROVADO)</th>
               </tr>
-              <!-- Linha 2: Sub-colunas por Combustível -->
               <tr>
-                <!-- Medição -->
                 <th style="color:var(--b-med)">GC</th><th style="color:var(--b-med)">GA</th><th style="color:var(--b-med)">ET</th><th style="color:var(--b-med)">S10</th>
-                <!-- Venda -->
                 <th style="color:var(--b-ven)">GC</th><th style="color:var(--b-ven)">GA</th><th style="color:var(--b-ven)">ET</th><th style="color:var(--b-ven)">S10</th>
-                <!-- Pré-Pedido -->
                 <th style="color:var(--b-pre)">GC</th><th style="color:var(--b-pre)">GA</th><th style="color:var(--b-pre)">ET</th><th style="color:var(--b-pre)">S10</th>
-                <!-- Previsão -->
                 <th style="color:var(--b-pvn)">GC</th><th style="color:var(--b-pvn)">GA</th><th style="color:var(--b-pvn)">ET</th><th style="color:var(--b-pvn)">S10</th>
-                <!-- Diferença -->
                 <th style="color:var(--b-dif)">GC</th><th style="color:var(--b-dif)">GA</th><th style="color:var(--b-dif)">ET</th><th style="color:var(--b-dif)">S10</th>
-                <!-- Pedido Final -->
                 <th style="color:var(--b-fin)">GC</th><th style="color:var(--b-fin)">GA</th><th style="color:var(--b-fin)">ET</th><th style="color:var(--b-fin)">S10</th>
               </tr>
             </thead>
@@ -219,15 +230,47 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
         </div>
       </section>
 
-      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS -->
+      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS (CONFORME SOLICITADO AGORA) -->
       <section id="tab-precos" class="view-panel">
-        <div class="placeholder-panel">
-          <h2><i class="fa-solid fa-tags"></i> Coleta de Preços</h2>
-          <p style="margin-top: 1rem;">Interface de monitoramento de concorrência ativa.</p>
+        <div class="table-actions">
+          <div class="table-title">Histórico de Coletas — Coleta de Preços <span>• Painel Auditor Integrado</span></div>
+          <div class="scroll-indicator"><i class="fa-solid fa-camera"></i> Passe o mouse ou clique em "Ver Foto" para auditar</div>
+        </div>
+        
+        <div class="spreadsheet-frame">
+          <table class="ss-table">
+            <thead>
+              <tr>
+                <th>Data</th><th>Hora</th><th>Posto</th><th>Gerente</th><th>Posto Alvo</th><th>Tipo</th><th>Bandeira</th><th>Rede</th><th>Supervisor</th>
+                <th style="color:var(--b-pre)">ET</th><th style="color:var(--b-ven)">GC</th><th style="color:var(--b-med)">GA</th><th style="color:var(--b-dif)">S10</th><th style="color:var(--b-pvn)">S500</th>
+                <th>Latitude</th><th>Longitude</th><th>Foto</th>
+              </tr>
+            </thead>
+            <tbody id="coleta-corpo">
+              <tr class="row-concorrente">
+                <td>14/06/2026</td><td>09:15</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>POSTO DUAS PONTES</td>
+                <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Bandeira Branca</td><td>Independente</td><td>Mauricio</td>
+                <td>3,87</td><td>5,97</td><td>6,27</td><td>6,97</td><td>-</td><td>-19.900.247</td><td>-43.903.849</td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+              </tr>
+              <tr class="row-proprio">
+                <td>15/06/2026</td><td>11:45</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>P. BOMBOM MATRIZ</td>
+                <td><span class="badge-tipo proprio">Próprio</span></td><td>Ipiranga</td><td>Independente</td><td>Mauricio</td>
+                <td>3,67</td><td>5,79</td><td>6,09</td><td>-</td><td>-</td><td>-19.921.819</td><td>-43.922.651</td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-PROPRIO.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-PROPRIO.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+              </tr>
+              <tr class="row-concorrente">
+                <td>16/06/2026</td><td>09:15</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>POSTO REDE AQUI</td>
+                <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Shell</td><td>Independente</td><td>Mauricio</td>
+                <td>3,99</td><td>5,49</td><td>5,89</td><td>-</td><td>-</td><td>-19.921.819</td><td>-43.922.651</td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-SHELL.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-SHELL.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <!-- ABA PRINCIPAL 3: PEDIDOS DE CARGA (MÓDULO DE APROVAÇÃO ADM) -->
+      <!-- ABA PRINCIPAL 3: PEDIDOS DE CARGA -->
       <section id="tab-pedidos-carga" class="view-panel">
         <div class="placeholder-panel" style="border-left: 4px solid var(--b-pre);">
           <h2><i class="fa-solid fa-truck-ramp-box"></i> Painel de Aprovação de Carga (ADM)</h2>
@@ -246,51 +289,55 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
     </main>
   </div>
 
+  <!-- COMPONENTE FLUTUANTE (POPOVER DE IMAGEM ESTILO GOOGLE SHEETS) -->
+  <div id="global-photo-popover" class="photo-popover">
+    <div class="popover-hdr">
+      <span id="popover-filename"><i class="fa-solid fa-image"></i> Arquivo</span>
+      <div style="display:flex; gap:8px; color:var(--tx2)">
+        <i class="fa-regular fa-copy"></i>
+        <i class="fa-solid fa-pen"></i>
+      </div>
+    </div>
+    <div class="popover-body">
+      <!-- Simulação da foto real capturada da bomba de combustível -->
+      <img src="https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=400&q=80" alt="Bomba">
+    </div>
+    <div class="popover-ftr">
+      <i class="fa-regular fa-user"></i> Pertence a você<br>
+      <span style="font-size:0.6rem; color:var(--tx3)">Nenhuma mudança desde a última visualização</span>
+    </div>
+  </div>
+
   <script>
-    // Gerador de linhas completas para o mês
+    // Gerador de linhas para a Matriz de Medição
     function renderMatrizHorizontal() {
       const tbody = document.getElementById('matriz-corpo');
       let html = '';
-
       for (let d = 1; d <= 10; d++) {
         let diaStr = String(d).padStart(2, '0') + '/06';
-        
         html += `
           <tr>
-            <!-- Coluna de Dias Fixa -->
             <td class="sticky-col">${diaStr}</td>
-            
-            <!-- MEDIÇÃO (L) -->
             <td><input type="text" class="cell-in" value="14.250"></td>
             <td><input type="text" class="cell-in" value="4.100"></td>
             <td><input type="text" class="cell-in" value="8.200"></td>
             <td><input type="text" class="cell-in" value="11.400"></td>
-            
-            <!-- VENDA DIÁRIA (L) -->
             <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="2.850"></td>
             <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="650"></td>
             <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="1.200"></td>
             <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="3.100"></td>
-            
-            <!-- PRÉ-PEDIDO (Campo Editável pela logística) -->
             <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="15.000"></td>
             <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="0"></td>
             <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="5.000"></td>
             <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="10.000"></td>
-            
-            <!-- PREVISÃO AMANHÃ (L) -->
             <td><input type="text" class="cell-in disabled" value="11.400"></td>
             <td><input type="text" class="cell-in disabled" value="3.450"></td>
             <td><input type="text" class="cell-in disabled" value="7.000"></td>
             <td><input type="text" class="cell-in disabled" value="8.300"></td>
-            
-            <!-- Δ DIFERENÇA -->
             <td><span style="color:var(--b-ven); font-family:var(--mono); font-weight:bold;">+120</span></td>
             <td><span style="color:var(--b-dif); font-family:var(--mono); font-weight:bold;">-10</span></td>
             <td><span style="color:var(--b-ven); font-family:var(--mono); font-weight:bold;">+45</span></td>
             <td><span style="color:var(--b-dif); font-family:var(--mono); font-weight:bold;">-110</span></td>
-            
-            <!-- PEDIDO FINAL (Somente leitura para a logística, alimentado pelo ADM) -->
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="15.000"></td>
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="0"></td>
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="5.000"></td>
@@ -299,6 +346,26 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
         `;
       }
       tbody.innerHTML = html;
+    }
+
+    // Controle do Popover de Imagem (Aparece ao passar o mouse ou clicar)
+    const popover = document.getElementById('global-photo-popover');
+    const popoverName = document.getElementById('popover-filename');
+
+    function showPhoto(event, title) {
+      popoverName.innerHTML = `<i class="fa-solid fa-image"></i> ${title}`;
+      popover.style.display = 'flex';
+      
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
+      
+      // Centraliza e posiciona dinamicamente perto do gatilho do ponteiro
+      popover.style.left = (mouseX - 300) + 'px'; 
+      popover.style.top = (mouseY - 80) + 'px';
+    }
+
+    function hidePhoto() {
+      popover.style.display = 'none';
     }
 
     // Troca de Módulos pela Sidebar Principal

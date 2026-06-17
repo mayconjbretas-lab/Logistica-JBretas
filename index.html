@@ -66,7 +66,7 @@ body {
 /* WORKSPACE */
 .workspace { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem; gap: 1rem; }
 .view-panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
-.view-panel.active { display: flex; }
+.view-panel.active { display: flex !important; }
 
 /* LAYOUT DA MATRIZ HORIZONTAL */
 .table-actions {
@@ -149,13 +149,14 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 .placeholder-panel { padding: 2rem; background: var(--sf); border-radius: 12px; border: 1px solid var(--bd); text-align: center; color: var(--tx2); }
 
 /* ESTILOS EXCLUSIVOS DO PAINEL DE KPI */
-.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; width: 100%; }
+.kpi-container { display: flex; flex-direction: column; gap: 1rem; width: 100%; height: 100%; overflow-y: auto; }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; width: 100%; flex-shrink: 0; }
 .kpi-card { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; text-align: left; }
 .kpi-title { font-size: 0.75rem; color: var(--tx2); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.5px; }
 .kpi-value { font-size: 1.6rem; font-weight: 700; color: var(--tx); font-family: var(--mono); }
 .kpi-sub { font-size: 0.7rem; color: var(--tx3); }
-.kpi-section-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; flex: 1; min-height: 0; }
-.kpi-block { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; overflow: hidden; text-align: left; }
+.kpi-section-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; width: 100%; flex: 1; }
+.kpi-block { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; min-height: 200px; text-align: left; }
 .kpi-block-title { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; color: var(--ac); margin-bottom: 1rem; border-bottom: 1px solid var(--bd); padding-bottom: 0.5rem; }
 .kpi-list { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; list-style: none; }
 .kpi-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.5rem; color: var(--tx); }
@@ -283,39 +284,41 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       </section>
 
       <section id="tab-kpi" class="view-panel">
-        <div class="kpi-grid">
-          <div class="kpi-card" style="border-left: 4px solid var(--b-ven)">
-            <span class="kpi-title">Volume Total Comercializado</span>
-            <div class="kpi-value">1.428.500 L</div>
-            <span class="kpi-sub">Acumulado mensal da rede</span>
+        <div class="kpi-container">
+          <div class="kpi-grid">
+            <div class="kpi-card" style="border-left: 4px solid var(--b-ven)">
+              <span class="kpi-title">Volume Total Comercializado</span>
+              <div class="kpi-value">1.428.500 L</div>
+              <span class="kpi-sub">Acumulado mensal da rede</span>
+            </div>
+            <div class="kpi-card" style="border-left: 4px solid var(--b-med)">
+              <span class="kpi-title">Margem Média da Rede</span>
+              <div class="kpi-value" style="color: var(--ac)">R$ 0,51 / L</div>
+              <span class="kpi-sub">Meta estabelecida: R$ 0,48 / L</span>
+            </div>
+            <div class="kpi-card" style="border-left: 4px solid var(--b-pre)">
+              <span class="kpi-title">Diferença Operacional Total</span>
+              <div class="kpi-value" style="color: var(--b-dif)">-420 L</div>
+              <span class="kpi-sub">Variação física vs contábil (Rede)</span>
+            </div>
           </div>
-          <div class="kpi-card" style="border-left: 4px solid var(--b-med)">
-            <span class="kpi-title">Margem Média da Rede</span>
-            <div class="kpi-value" style="color: var(--ac)">R$ 0,51 / L</div>
-            <span class="kpi-sub">Meta estabelecida: R$ 0,48 / L</span>
-          </div>
-          <div class="kpi-card" style="border-left: 4px solid var(--b-pre)">
-            <span class="kpi-title">Diferença Operacional Total</span>
-            <div class="kpi-value" style="color: var(--b-dif)">-420 L</div>
-            <span class="kpi-sub">Variação física vs contábil (Rede)</span>
-          </div>
-        </div>
 
-        <div class="kpi-section-layout">
-          <div class="kpi-block">
-            <div class="kpi-block-title"><i class="fa-solid fa-trophy"></i> Eficiência Operacional — Frentistas (Top Margem)</div>
-            <ul class="kpi-list">
-              <li class="kpi-item"><span>1. Carlos Silva (P. ALEX)</span><strong style="color:var(--ac)">104.2% da Meta</strong></li>
-              <li class="kpi-item"><span>2. Marcos Souza (P. TOPAZIO)</span><strong>98.5% da Meta</strong></li>
-              <li class="kpi-item"><span>3. Amanda Costa (P. TUNEL)</span><strong>95.1% da Meta</strong></li>
-            </ul>
-          </div>
-          <div class="kpi-block">
-            <div class="kpi-block-title" style="color: var(--b-dif)"><i class="fa-solid fa-triangle-exclamation"></i> Alertas Ativos de Estoque Crítico</div>
-            <ul class="kpi-list">
-              <li class="kpi-item"><span>P. MANGABEIRAS — Etanol (ET)</span><span style="color:var(--b-dif); font-weight:bold;">Autonomia &lt; 12h</span></li>
-              <li class="kpi-item"><span>P. ALEX — Diesel S10</span><span style="color:var(--b-pre); font-weight:bold;">Tanque a 15% da capacidade</span></li>
-            </ul>
+          <div class="kpi-section-layout">
+            <div class="kpi-block">
+              <div class="kpi-block-title"><i class="fa-solid fa-trophy"></i> Eficiência Operacional — Frentistas (Top Margem)</div>
+              <ul class="kpi-list">
+                <li class="kpi-item"><span>1. Carlos Silva (P. ALEX)</span><strong style="color:var(--ac)">104.2% da Meta</strong></li>
+                <li class="kpi-item"><span>2. Marcos Souza (P. TOPAZIO)</span><strong>98.5% da Meta</strong></li>
+                <li class="kpi-item"><span>3. Amanda Costa (P. TUNEL)</span><strong>95.1% da Meta</strong></li>
+              </ul>
+            </div>
+            <div class="kpi-block">
+              <div class="kpi-block-title" style="color: var(--b-dif)"><i class="fa-solid fa-triangle-exclamation"></i> Alertas Ativos de Estoque Crítico</div>
+              <ul class="kpi-list">
+                <li class="kpi-item"><span>P. MANGABEIRAS — Etanol (ET)</span><span style="color:var(--b-dif); font-weight:bold;">Autonomia &lt; 12h</span></li>
+                <li class="kpi-item"><span>P. ALEX — Diesel S10</span><span style="color:var(--b-pre); font-weight:bold;">Tanque a 15% da capacidade</span></li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -381,7 +384,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
     const popoverName = document.getElementById('popover-filename');
 
     function showPhoto(event, title) {
-      popoverName.innerHTML = `<i class=\"fa-solid fa-image\"></i> ${title}`;
+      popoverName.innerHTML = `<i class="fa-solid fa-image"></i> ${title}`;
       popover.style.display = 'flex';
       
       const mouseX = event.clientX;
@@ -395,17 +398,23 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       popover.style.display = 'none';
     }
 
-    // Troca de Módulos pela Sidebar Principal
+    // Troca de Módulos Corrigida (Evita acúmulo de abas na tela)
     function switchMainTab(tabId, element) {
-      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      // 1. Remove a classe active e força display none inline em todas as seções
+      document.querySelectorAll('.view-panel').forEach(p => {
+        p.classList.remove('active');
+        p.style.setProperty('display', 'none', 'important');
+      });
+      
+      // 2. Remove o destaque dos itens do menu
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       
+      // 3. Ativa a aba alvo aplicando o display correto e a classe active
       const target = document.getElementById(tabId);
-      // Correção de display block/flex dependendo do layout da aba
       if (tabId === 'tab-kpi') {
-        target.style.display = 'block';
+        target.style.setProperty('display', 'block', 'important');
       } else {
-        target.style.display = 'flex';
+        target.style.setProperty('display', 'flex', 'important');
       }
       target.classList.add('active');
       element.classList.add('active');
@@ -414,9 +423,13 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
     window.addEventListener('DOMContentLoaded', () => {
       renderMatrizHorizontal();
       
-      // Inicialização correta de exibição
-      document.querySelectorAll('.view-panel').forEach(p => p.style.display = 'none');
-      document.getElementById('tab-medicao').style.display = 'flex';
+      // Garante estado inicial limpo exibindo apenas a medição diária
+      document.querySelectorAll('.view-panel').forEach(p => {
+        p.style.setProperty('display', 'none', 'important');
+      });
+      const defaultTab = document.getElementById('tab-medicao');
+      defaultTab.style.setProperty('display', 'flex', 'important');
+      defaultTab.classList.add('active');
     });
   </script>
 </body>

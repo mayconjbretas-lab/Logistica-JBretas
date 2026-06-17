@@ -575,7 +575,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       return '<span class="badge-tipo ' + cls + '">' + (tipo || '-') + '</span>';
     }
 
-    function fmtPreco(v) { return (v === null || v === undefined) ? '-' : String(v).toFixed(2).replace('.', ','); }
+    function fmtPreco(v) { return (v === null || v === undefined || isNaN(v)) ? '-' : Number(v).toFixed(2).replace('.', ','); }
 
     function montarLinhasColeta(registros) {
       const tbody = document.getElementById('coleta-corpo');

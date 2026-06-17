@@ -14,6 +14,7 @@
   --ac: #00e5a0; --ac-d: rgba(0,229,160,0.1);
   --tx: #eef0f4; --tx2: #8a99ad; --tx3: #5c6b84;
   --gc: #00e5a0; --ga: #4895ef; --et: #f9c74f; --s10: #c77dff;
+  --dg: #ff4d6d;
 }
 body {
   background: var(--bg); color: var(--tx); font-family: var(--sans);
@@ -69,6 +70,19 @@ body {
 .kpi-meta .k-val.highlight { color: var(--ac); }
 .kpi-icon { width: 40px; height: 40px; background: var(--sf2); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--tx2); font-size: 1.1rem; }
 
+/* SUB-ABAS DE LOGÍSTICA */
+.subtabs-bar {
+  display: flex; background: var(--sf2); padding: 4px; border-radius: 8px;
+  gap: 4px; margin-bottom: 0.75rem; border: 1px solid var(--bd); flex-shrink: 0;
+}
+.subtab-btn {
+  flex: 1; border: none; background: transparent; color: var(--tx2); font-family: var(--mono);
+  font-size: 0.72rem; font-weight: 700; padding: 0.6rem 0.4rem; border-radius: 6px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.15s;
+}
+.subtab-btn:hover { background: rgba(255,255,255,0.03); color: var(--tx); }
+.subtab-btn.active { background: var(--sf3); color: var(--ac); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+
 /* CONTROLS BAR */
 .table-actions {
   background: var(--sf); border: 1px solid var(--bd); border-radius: 10px 10px 0 0;
@@ -77,18 +91,17 @@ body {
 .table-title { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
 .table-title span { color: var(--ac); font-size: 0.65rem; background: var(--ac-d); padding: 2px 6px; border-radius: 4px; }
 
-/* PLANILHA HORIZONTAL SPREADSHEET LAYOUT */
+/* PLANILHA SPREADSHEET LAYOUT */
 .spreadsheet-frame {
   flex: 1; background: var(--sf); border: 1px solid var(--bd); border-radius: 0 0 12px 12px;
   overflow: auto; position: relative;
 }
-.ss-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.8rem; min-width: 1200px; }
-.ss-table th, .ss-table td { padding: 0.5rem 0.65rem; border: 1px solid var(--bd); }
+.ss-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.8rem; min-width: 800px; }
+.ss-table th, .ss-table td { padding: 0.55rem 0.75rem; border: 1px solid var(--bd); }
 .ss-table th {
   background: var(--sf2); color: var(--tx2); font-family: var(--mono); font-size: 0.72rem;
   font-weight: 700; text-transform: uppercase; position: sticky; top: 0; z-index: 10; text-align: center;
 }
-.ss-table th.header-group { background: var(--sf3); color: var(--tx); font-size: 0.75rem; border-bottom: 2px solid var(--bd2); }
 .ss-table tbody tr { transition: background 0.15s; }
 .ss-table tbody tr:hover { background: rgba(255,255,255,0.02); }
 .ss-table tbody tr.weekend { background: rgba(0,0,0,0.15); }
@@ -99,19 +112,13 @@ body {
   font-family: var(--mono); font-size: 0.8rem; outline: none; padding: 2px 4px; border-radius: 4px; transition: all 0.15s;
 }
 .cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1px var(--ac); color: #fff; }
-.cell-in.disabled { color: var(--tx3); pointer-events: none; }
+.cell-in.disabled { color: var(--tx3); pointer-events: none; font-weight: bold; }
 
 /* FUEL INDICATORS */
 .f-gc { border-left: 3px solid var(--gc) !important; }
 .f-ga { border-left: 3px solid var(--ga) !important; }
 .f-et { border-left: 3px solid var(--et) !important; }
 .f-s10 { border-left: 3px solid var(--s10) !important; }
-
-.badge-c { display: inline-block; padding: 2px 5px; border-radius: 4px; font-family: var(--mono); font-size: 11px; font-weight: 700; text-align: center; width: 100%; }
-.badge-c.gc { background: rgba(0,229,160,0.15); color: var(--gc); }
-.badge-c.ga { background: rgba(72,149,239,0.15); color: var(--ga); }
-.badge-c.et { background: rgba(249,199,123,0.15); color: var(--et); }
-.badge-c.s10 { background: rgba(199,125,255,0.15); color: var(--s10); }
 
 /* LAYOUT CARDS CONCORRENTES */
 .grid-precos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; overflow-y: auto; padding-bottom: 1rem; }
@@ -163,10 +170,8 @@ body {
       <nav style="flex: 1;">
         <div class="sb-section-title">Módulos Administrativos</div>
         <ul class="nav-list">
-          <li class="nav-item active" onclick="switchTab('tab-medicao', this)"><i class="fa-solid fa-calculator"></i> Medição Diária</li>
-          <li class="nav-item" onclick="switchTab('tab-precos', this)"><i class="fa-solid fa-tags"></i> Coleta de Preços</li>
-          <li class="nav-item"><i class="fa-solid fa-truck-ramp-box"></i> Pedidos de Carga</li>
-          <li class="nav-item"><i class="fa-solid fa-chart-pie"></i> Painel de KPI</li>
+          <li class="nav-item active" onclick="switchMainTab('tab-medicao', this)"><i class="fa-solid fa-calculator"></i> Medição Diária</li>
+          <li class="nav-item" onclick="switchMainTab('tab-precos', this)"><i class="fa-solid fa-tags"></i> Coleta de Preços</li>
         </ul>
       </nav>
     </aside>
@@ -194,30 +199,24 @@ body {
         </div>
 
         <div style="margin-top: 1rem; display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+          <div class="subtabs-bar">
+            <button class="subtab-btn active" onclick="switchSubTab('medicao', this)">🛢️ MEDIÇÃO (L)</button>
+            <button class="subtab-btn" onclick="switchSubTab('venda', this)">⛽ VENDA DIÁRIA (L)</button>
+            <button class="subtab-btn" onclick="switchSubTab('pre-pedido', this)">📦 PRÉ PEDIDO</button>
+            <button class="subtab-btn" onclick="switchSubTab('previsao', this)">📐 PREVISÃO AMANHÃ</button>
+            <button class="subtab-btn" onclick="switchSubTab('diferenca', this)">Δ DIFERENÇA (R - P)</button>
+            <button class="subtab-btn" onclick="switchSubTab('pedido-final', this)">📋 PEDIDO FINAL</button>
+          </div>
+
           <div class="table-actions">
-            <div class="table-title">Histórico de Fechamento de Arqueação — Horizontal <span>Fórmula Tecno X Ativa</span></div>
-            <button class="btn-save" onclick="alert('Dados salvos localmente! Integre seu doGet/doPost aqui.')"><i class="fa-solid fa-floppy-disk"></i> Salvar Planilha</button>
+            <div class="table-title" id="table-dynamic-title">Planilha Operacional — Visão: <span>🛢️ MEDIÇÃO (L)</span></div>
+            <button class="btn-save" onclick="alert('Dados processados! Pronto para acoplar no seu Apps Script.')"><i class="fa-solid fa-floppy-disk"></i> Salvar Bloco</button>
           </div>
           
           <div class="spreadsheet-frame">
-            <table class="ss-table" id="table-med">
+            <table class="ss-table" id="table-logistica">
               <thead>
-                <tr>
-                  <th rowspan="2" style="width: 70px;">Dia</th>
-                  <th colspan="4" class="header-group">GASOLINA COMUM (GC)</th>
-                  <th colspan="4" class="header-group">ETANOL HIDRATADO (ET)</th>
-                </tr>
-                <tr>
-                  <th style="width: 100px;">Med. Física</th>
-                  <th style="width: 90px;">Venda Vol.</th>
-                  <th style="width: 90px;">Carga (L)</th>
-                  <th style="width: 100px;">Prev. Saldo</th>
-                  <th style="width: 100px;">Med. Física</th>
-                  <th style="width: 90px;">Venda Vol.</th>
-                  <th style="width: 90px;">Carga (L)</th>
-                  <th style="width: 100px;">Prev. Saldo</th>
-                </tr>
-              </thead>
+                </thead>
               <tbody>
                 </tbody>
             </table>
@@ -239,34 +238,75 @@ body {
   </div>
 
   <script>
-    // Gerador de dados de simulação da planilha horizontal (30 Dias)
-    function buildPlanilha() {
-      const tbody = document.querySelector('#table-med tbody');
+    // Estado Global do Filtro da Sub-aba
+    let CURRENT_SUB_TAB = 'medicao';
+
+    // Definição dos Cabeçalhos por Sub-aba
+    const SUB_TABS_CONFIG = {
+      'medicao': { title: 'MEDIÇÃO (L)', cols: ['GC Comum', 'GA Aditivada', 'ET Etanol', 'S10 Diesel'] },
+      'venda': { title: 'VENDA DIÁRIA (L)', cols: ['GC Venda', 'GA Venda', 'ET Venda', 'S10 Venda'] },
+      'pre-pedido': { title: 'PRÉ PEDIDO', cols: ['GC Sugerido', 'GA Sugerido', 'ET Sugerido', 'S10 Sugerido'] },
+      'previsao': { title: 'PREVISÃO MED. AMANHÃ (L)', cols: ['GC Prev', 'GA Prev', 'ET Prev', 'S10 Prev'] },
+      'diferenca': { title: 'Δ DIFERENÇA (Real − Prev)', cols: ['Δ GC', 'Δ GA', 'Δ ET', 'Δ S10'] },
+      'pedido-final': { title: 'PEDIDO FINAL', cols: ['GC Confirmado', 'GA Confirmado', 'ET Confirmado', 'S10 Confirmado'] }
+    };
+
+    // Gera o Cabeçalho e Linhas Dinamicamente baseado na Sub-Aba escolhida
+    function renderPlanilha() {
+      const config = SUB_TABS_CONFIG[CURRENT_SUB_TAB];
+      document.querySelector('#table-dynamic-title span').textContent = config.title;
+
+      // 1. Montar Header
+      const thead = document.querySelector('#table-logistica thead');
+      thead.innerHTML = `
+        <tr>
+          <th style="width: 80px;">Dia</th>
+          <th class="f-gc">${config.cols[0]}</th>
+          <th class="f-ga">${config.cols[1]}</th>
+          <th class="f-et">${config.cols[2]}</th>
+          <th class="f-s10">${config.cols[3]}</th>
+        </tr>
+      `;
+
+      // 2. Montar Linhas (Simulando os dias do mês)
+      const tbody = document.querySelector('#table-logistica tbody');
       let html = '';
       
-      for(let d=1; d<=15; d++) {
+      // Valores fictícios para ilustrar
+      const mockValues = {
+        'medicao': ['14.250', '4.100', '8.200', '11.400'],
+        'venda': ['2.850', '650', '1.200', '3.100'],
+        'pre-pedido': ['15.000', '0', '5.000', '10.000'],
+        'previsao': ['11.400', '3.450', '7.000', '8.300'],
+        'diferenca': ['+120', '-10', '+45', '-110'],
+        'pedido-final': ['15.000', '0', '5.000', '15.000']
+      };
+
+      const val = mockValues[CURRENT_SUB_TAB];
+
+      for(let d = 1; d <= 15; d++) {
         let diaStr = String(d).padStart(2, '0') + '/06';
         let isFimDeSemana = (d % 7 === 6 || d % 7 === 0);
         let classeLinha = isFimDeSemana ? 'class="weekend"' : '';
         
+        // Cor especial se for a aba de Diferença (Verde para positivo, Vermelho para negativo)
+        let customColorStyle = '';
+        if(CURRENT_SUB_TAB === 'diferenca') {
+          customColorStyle = d % 2 === 0 ? 'style="color:var(--ac); font-weight:bold;"' : 'style="color:var(--dg); font-weight:bold;"';
+        }
+        
         html += `<tr ${classeLinha}>
           <td style="text-align:center; font-family:var(--mono); font-weight:700; color:var(--tx2); background:var(--sf);">${diaStr}</td>
-          
-          <td class="f-gc"><input type="text" class="cell-in" value="${15400 - (d*120)}" placeholder="-"></td>
-          <td><input type="text" class="cell-in" value="2850" style="color:var(--tx2)"></td>
-          <td><input type="text" class="cell-in" value="${d === 5 ? '15000' : ''}" style="color:var(--ac); font-weight:700;"></td>
-          <td><input type="text" class="cell-in disabled" value="${15400 - (d*120) - 2850}" readonly></td>
-          
-          <td class="f-et"><input type="text" class="cell-in" value="${8200 - (d*90)}" placeholder="-"></td>
-          <td><input type="text" class="cell-in" value="1100" style="color:var(--tx2)"></td>
-          <td><input type="text" class="cell-in" value="" placeholder="-"></td>
-          <td><input type="text" class="cell-in disabled" value="${8200 - (d*90) - 1100}" readonly></td>
+          <td class="f-gc"><input type="text" class="cell-in" ${customColorStyle} value="${val[0]}"></td>
+          <td class="f-ga"><input type="text" class="cell-in" ${customColorStyle} value="${val[1]}"></td>
+          <td class="f-et"><input type="text" class="cell-in" ${customColorStyle} value="${val[2]}"></td>
+          <td class="f-s10"><input type="text" class="cell-in" ${customColorStyle} value="${val[3]}"></td>
         </tr>`;
       }
       tbody.innerHTML = html;
     }
 
-    // Gerador de cards de concorrência dinâmicos
+    // Gerador de cards de concorrência
     function buildConcorrentes() {
       const container = document.getElementById('concorrentes-container');
       const mockConcorrentes = [
@@ -296,8 +336,16 @@ body {
       container.innerHTML = html;
     }
 
-    // Controle de Abas (Navegação Desktop)
-    function switchTab(tabId, element) {
+    // Troca de Sub-abas Internas
+    function switchSubTab(subTabId, element) {
+      document.querySelectorAll('.subtab-btn').forEach(b => b.classList.remove('active'));
+      element.classList.add('active');
+      CURRENT_SUB_TAB = subTabId;
+      renderPlanilha();
+    }
+
+    // Troca de Abas Principais (Sidebar)
+    function switchMainTab(tabId, element) {
       document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       
@@ -305,9 +353,9 @@ body {
       element.classList.add('active');
     }
 
-    // Inicialização da Aplicação
+    // Inicialização
     window.addEventListener('DOMContentLoaded', () => {
-      buildPlanilha();
+      renderPlanilha();
       buildConcorrentes();
     });
   </script>

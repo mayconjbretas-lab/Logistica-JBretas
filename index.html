@@ -261,44 +261,44 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
     <aside class="sidebar">
       <div>
         <div class="sb-section-title">Filtro Operacional</div>
-        <select class="sel-posto" id="global-posto">
-          <option value="ALEX">ALEX</option>
-          <option value="ANA LUCIA">ANA LUCIA</option>
-          <option value="ARAPONGA">ARAPONGA</option>
-          <option value="AVIVA">AVIVA</option>
-          <option value="BAHAMAS">BAHAMAS</option>
-          <option value="BEATRIZ">BEATRIZ</option>
-          <option value="BERNARDO">BERNARDO</option>
-          <option value="BIANCA">BIANCA</option>
-          <option value="BOMBOM FIL.">BOMBOM FIL.</option>
-          <option value="BOMBOM M">BOMBOM M</option>
-          <option value="BRUNA">BRUNA</option>
-          <option value="DIFERENCIAL">DIFERENCIAL</option>
-          <option value="DUDU">DUDU</option>
-          <option value="E. REAL">E. REAL</option>
-          <option value="FELIPAO">FELIPAO</option>
-          <option value="GLÓRIA">GLÓRIA</option>
-          <option value="ITAPOA">ITAPOA</option>
-          <option value="JOAQUIM">JOAQUIM</option>
-          <option value="JOCA">JOCA</option>
-          <option value="LEANDRO">LEANDRO</option>
-          <option value="LOURA">LOURA</option>
-          <option value="MANGABEIRAS">MANGABEIRAS</option>
-          <option value="MIRAGEM">MIRAGEM</option>
-          <option value="O. Branco">O. Branco</option>
-          <option value="PLANALTO">PLANALTO</option>
-          <option value="POSTO J.A.">POSTO J.A.</option>
-          <option value="QUATRO RODAS">QUATRO RODAS</option>
-          <option value="RODRIGO">RODRIGO</option>
-          <option value="S. BERNARDO">S. BERNARDO</option>
-          <option value="S. COLIBRI">S. COLIBRI</option>
-          <option value="S. LUIZ">S. LUIZ</option>
-          <option value="SANTA INES">SANTA INES</option>
-          <option value="SANTA MARIA">SANTA MARIA</option>
-          <option value="TOPAZIO">TOPAZIO</option>
-          <option value="TRANCOSO">TRANCOSO</option>
-          <option value="TÚNEL">TÚNEL</option>
-          <option value="Urbano Ferraz">Urbano Ferraz</option>
+        <select class="sel-posto" id="global-posto" onchange="onPostoChange()">
+          <option value="P. ALEX">P. ALEX</option>
+          <option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
+          <option value="P. ARAPONGA">P. ARAPONGA</option>
+          <option value="P. AVIVA">P. AVIVA</option>
+          <option value="P. BAHAMAS">P. BAHAMAS</option>
+          <option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
+          <option value="P. BERNARDO">P. BERNARDO</option>
+          <option value="P. BIANCA">P. BIANCA</option>
+          <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option>
+          <option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
+          <option value="P. BRUNA">P. BRUNA</option>
+          <option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
+          <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option>
+          <option value="P. FELIPAO">P. FELIPAO</option>
+          <option value="P. GLÓRIA">P. GLÓRIA</option>
+          <option value="P. ITAPOA">P. ITAPOA</option>
+          <option value="P. JA">P. JA</option>
+          <option value="P. JOCA">P. JOCA</option>
+          <option value="P. LEANDRO">P. LEANDRO</option>
+          <option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
+          <option value="P. MANGABEIRAS">P. MANGABEIRAS</option>
+          <option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
+          <option value="P. OURO BRANCO">P. OURO BRANCO</option>
+          <option value="P. PLANALTO">P. PLANALTO</option>
+          <option value="P. QUATRO RODAS">P. QUATRO RODAS</option>
+          <option value="P. RODRIGO">P. RODRIGO</option>
+          <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option>
+          <option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
+          <option value="P. SANTA MARIA">P. SANTA MARIA</option>
+          <option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
+          <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option>
+          <option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
+          <option value="P. TOPAZIO">P. TOPAZIO</option>
+          <option value="P. TRANCOSO">P. TRANCOSO</option>
+          <option value="P. TUNEL">P. TUNEL</option>
+          <option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
+          <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
         </select>
       </div>
 
@@ -320,45 +320,29 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       <!-- ABA PRINCIPAL 1: MEDIÇÃO DIÁRIA -->
       <section id="tab-medicao" class="view-panel active">
         <div class="table-actions">
-          <div class="table-title">Matriz Integrada de Suprimentos <span>• Visão Horizontal Completa</span></div>
+          <div class="table-title">Matriz Integrada de Suprimentos <span id="medicao-subtitle">• Carregando posto...</span></div>
           <div style="display: flex; align-items: center; gap: 1rem;">
             <div class="scroll-indicator"><i class="fa-solid fa-left-right"></i> Use o scroll horizontal para ver tudo</div>
-            <button class="btn-save" onclick="alert('Dados salvos no bando de dados!')"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
+            <button class="btn-save" onclick="alert('Em breve: grava direto na coluna de Pedido Logística do mês via Apps Script.')"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
           </div>
         </div>
-        
+
         <div class="spreadsheet-frame">
           <table class="ss-table">
-            <thead>
-              <tr>
-                <th rowspan="2" class="sticky-col" style="background: var(--sf2); border-bottom: 2px solid var(--bd2)">DIA</th>
-                <th colspan="4" class="h-med">🛢️ MEDIÇÃO (L)</th>
-                <th colspan="4" class="h-ven">⛽ VENDA DIÁRIA (L)</th>
-                <th colspan="4" class="h-pre">📦 PRÉ-PEDIDO (LOGÍSTICA)</th>
-                <th colspan="4" class="h-pvn">📐 PREVISÃO AMANHÃ (L)</th>
-                <th colspan="4" class="h-dif">Δ DIFERENÇA (R - P)</th>
-                <th colspan="4" class="h-fin">📋 PEDIDO FINAL (APROVADO)</th>
-              </tr>
-              <tr>
-                <th style="color:var(--b-med)">GC</th><th style="color:var(--b-med)">GA</th><th style="color:var(--b-med)">ET</th><th style="color:var(--b-med)">S10</th>
-                <th style="color:var(--b-ven)">GC</th><th style="color:var(--b-ven)">GA</th><th style="color:var(--b-ven)">ET</th><th style="color:var(--b-ven)">S10</th>
-                <th style="color:var(--b-pre)">GC</th><th style="color:var(--b-pre)">GA</th><th style="color:var(--b-pre)">ET</th><th style="color:var(--b-pre)">S10</th>
-                <th style="color:var(--b-pvn)">GC</th><th style="color:var(--b-pvn)">GA</th><th style="color:var(--b-pvn)">ET</th><th style="color:var(--b-pvn)">S10</th>
-                <th style="color:var(--b-dif)">GC</th><th style="color:var(--b-dif)">GA</th><th style="color:var(--b-dif)">ET</th><th style="color:var(--b-dif)">S10</th>
-                <th style="color:var(--b-fin)">GC</th><th style="color:var(--b-fin)">GA</th><th style="color:var(--b-fin)">ET</th><th style="color:var(--b-fin)">S10</th>
-              </tr>
+            <thead id="medicao-thead">
+              <!-- Cabeçalho montado dinamicamente — cada posto tem seu próprio conjunto de combustíveis -->
             </thead>
             <tbody id="matriz-corpo">
-              <!-- Inserido dinamicamente via JS -->
+              <tr><td style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS (CONFORME SOLICITADO AGORA) -->
+      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS (DADOS REAIS — Apps Script) -->
       <section id="tab-precos" class="view-panel">
         <div class="table-actions">
-          <div class="table-title">Histórico de Coletas — Coleta de Preços <span>• Painel Auditor Integrado</span></div>
+          <div class="table-title">Histórico de Coletas — Coleta de Preços <span id="coleta-subtitle">• Painel Auditor Integrado</span></div>
           <div class="scroll-indicator"><i class="fa-solid fa-camera"></i> Passe o mouse ou clique em "Ver Foto" para auditar</div>
         </div>
         
@@ -372,24 +356,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
               </tr>
             </thead>
             <tbody id="coleta-corpo">
-              <tr class="row-concorrente">
-                <td>14/06/2026</td><td>09:15</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>POSTO DUAS PONTES</td>
-                <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Bandeira Branca</td><td>Independente</td><td>Mauricio</td>
-                <td>3,87</td><td>5,97</td><td>6,27</td><td>6,97</td><td>-</td><td>-19.900.247</td><td>-43.903.849</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
-              </tr>
-              <tr class="row-proprio">
-                <td>15/06/2026</td><td>11:45</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>P. BOMBOM MATRIZ</td>
-                <td><span class="badge-tipo proprio">Próprio</span></td><td>Ipiranga</td><td>Independente</td><td>Mauricio</td>
-                <td>3,67</td><td>5,79</td><td>6,09</td><td>-</td><td>-</td><td>-19.921.819</td><td>-43.922.651</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-PROPRIO.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-PROPRIO.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
-              </tr>
-              <tr class="row-concorrente">
-                <td>16/06/2026</td><td>09:15</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>POSTO REDE AQUI</td>
-                <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Shell</td><td>Independente</td><td>Mauricio</td>
-                <td>3,99</td><td>5,49</td><td>5,89</td><td>-</td><td>-</td><td>-19.921.819</td><td>-43.922.651</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-SHELL.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-SHELL.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
-              </tr>
+              <tr><td colspan="17" style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>
             </tbody>
           </table>
         </div>
@@ -460,12 +427,10 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       </div>
     </div>
     <div class="popover-body">
-      <!-- Simulação da foto real capturada da bomba de combustível -->
-      <img src="https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=400&q=80" alt="Bomba">
+      <img id="popover-img" src="" alt="Foto da coleta">
     </div>
     <div class="popover-ftr">
-      <i class="fa-regular fa-user"></i> Pertence a você<br>
-      <span style="font-size:0.6rem; color:var(--tx3)">Nenhuma mudança desde a última visualização</span>
+      <a id="popover-link" href="#" target="_blank" rel="noopener" style="color:var(--ac); text-decoration:underline;">Abrir foto original no Drive</a>
     </div>
   </div>
 
@@ -475,56 +440,126 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
   </div>
 
   <script>
-    // Gerador de linhas para a Matriz de Medição
-    function renderMatrizHorizontal() {
+    // ===== CONFIGURAÇÃO DO BACKEND (Apps Script) =====
+    // Cole aqui a URL do seu Web App publicado (a mesma usada pelo PWA Fechamento).
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoJ3-g48frwYtMlnpVj5EIYapInPP11OJXrkOPUzCULrbIZWMQW51xFe-Ot4cox00r/exec';
+
+    async function chamarApi(params) {
+      const qs = new URLSearchParams(params).toString();
+      const resp = await fetch(APPS_SCRIPT_URL + '?' + qs);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      return resp.json();
+    }
+
+    // Mapa de cores por categoria — mesma lógica de cores que você já usa no Code.gs
+    const CATEGORIAS_MEDICAO = [
+      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',           classe: 'h-med', cor: 'var(--b-med)' },
+      { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',       classe: 'h-ven', cor: 'var(--b-ven)' },
+      { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',     classe: 'h-pvn', cor: 'var(--b-pvn)' },
+      { chave: 'pedido',    titulo: '📦 PEDIDO LOGÍSTICA (L)',   classe: 'h-pre', cor: 'var(--b-pre)' },
+      { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',      classe: 'h-fin', cor: 'var(--b-fin)' },
+      { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)', classe: 'h-dif', cor: 'var(--b-dif)' },
+    ];
+
+    function montarCabecalhoMedicao(grupos) {
+      const thead = document.getElementById('medicao-thead');
+      const n = grupos.length;
+      let row1 = '<tr><th rowspan="2" class="sticky-col" style="background: var(--sf2); border-bottom: 2px solid var(--bd2)">DIA</th>';
+      CATEGORIAS_MEDICAO.forEach(cat => {
+        row1 += '<th colspan="' + n + '" class="' + cat.classe + '">' + cat.titulo + '</th>';
+      });
+      row1 += '</tr>';
+      let row2 = '<tr>';
+      CATEGORIAS_MEDICAO.forEach(cat => {
+        grupos.forEach(g => { row2 += '<th style="color:' + cat.cor + '" title="' + g.comb + '">' + g.abv + '</th>'; });
+      });
+      row2 += '</tr>';
+      thead.innerHTML = row1 + row2;
+    }
+
+    function fmtL(v) {
+      if (v === null || v === undefined) return '—';
+      return Number(v).toLocaleString('pt-BR');
+    }
+
+    function montarLinhasMedicao(dados) {
       const tbody = document.getElementById('matriz-corpo');
+      const n = dados.grupos.length;
       let html = '';
-      for (let d = 1; d <= 10; d++) {
-        let diaStr = String(d).padStart(2, '0') + '/06';
-        html += `
-          <tr>
-            <td class="sticky-col">${diaStr}</td>
-            <td><input type="text" class="cell-in" value="14.250"></td>
-            <td><input type="text" class="cell-in" value="4.100"></td>
-            <td><input type="text" class="cell-in" value="8.200"></td>
-            <td><input type="text" class="cell-in" value="11.400"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="2.850"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="650"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="1.200"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="3.100"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="15.000"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="0"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="5.000"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="10.000"></td>
-            <td><input type="text" class="cell-in disabled" value="11.400"></td>
-            <td><input type="text" class="cell-in disabled" value="3.450"></td>
-            <td><input type="text" class="cell-in disabled" value="7.000"></td>
-            <td><input type="text" class="cell-in disabled" value="8.300"></td>
-            <td><span style="color:var(--b-ven); font-family:var(--mono); font-weight:bold;">+120</span></td>
-            <td><span style="color:var(--b-dif); font-family:var(--mono); font-weight:bold;">-10</span></td>
-            <td><span style="color:var(--b-ven); font-family:var(--mono); font-weight:bold;">+45</span></td>
-            <td><span style="color:var(--b-dif); font-family:var(--mono); font-weight:bold;">-110</span></td>
-            <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="15.000"></td>
-            <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="0"></td>
-            <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="5.000"></td>
-            <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="15.000"></td>
-          </tr>
-        `;
+      dados.dias.forEach(d => {
+        // Só mostra até o dia de hoje (dias futuros do mês ainda não têm medição lançada)
+        html += '<tr><td class="sticky-col">' + String(d.dia).padStart(2,'0') + '/' + dados.mes + '</td>';
+        const blocos = [d.medicao, d.venda, d.carga, d.pedido, d.previsao, d.diferenca];
+        blocos.forEach((bloco, bi) => {
+          for (let i = 0; i < n; i++) {
+            const val = bloco[i];
+            if (bi === 5) { // diferença — só texto colorido, não é editável
+              const cor = val > 0 ? 'var(--b-ven)' : (val < 0 ? 'var(--b-dif)' : 'var(--tx3)');
+              html += '<td><span style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' + (val > 0 ? '+' : '') + (val === null ? '—' : fmtL(val)) + '</span></td>';
+            } else {
+              html += '<td><input type="text" class="cell-in" value="' + fmtL(val) + '"></td>';
+            }
+          }
+        });
+        html += '</tr>';
+      });
+      tbody.innerHTML = html || '<tr><td style="padding:1.5rem; color:var(--tx3);">Sem dados para este posto neste mês.</td></tr>';
+    }
+
+    async function carregarMedicao(posto) {
+      const subtitle = document.getElementById('medicao-subtitle');
+      const tbody = document.getElementById('matriz-corpo');
+      subtitle.textContent = '• Carregando ' + posto + '...';
+      tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>';
+      try {
+        const dados = await chamarApi({ tipo: 'mesCompleto', posto: posto });
+        if (dados.erro) {
+          subtitle.textContent = '• Erro: ' + dados.erro;
+          tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">' + dados.erro + '</td></tr>';
+          return;
+        }
+        subtitle.textContent = '• ' + dados.posto + ' — ' + dados.mes + '/' + dados.ano + ' (atualizado em tempo real do Sheets)';
+        montarCabecalhoMedicao(dados.grupos);
+        montarLinhasMedicao(dados);
+      } catch (err) {
+        subtitle.textContent = '• Falha ao conectar com o Apps Script';
+        tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">Não foi possível carregar: ' + err.message + '. Confira a URL em APPS_SCRIPT_URL.</td></tr>';
       }
-      tbody.innerHTML = html;
+    }
+
+    function onPostoChange() {
+      const posto = document.getElementById('global-posto').value;
+      carregarMedicao(posto);
     }
 
     // Controle do Popover de Imagem (Aparece ao passar o mouse ou clicar)
     const popover = document.getElementById('global-photo-popover');
     const popoverName = document.getElementById('popover-filename');
+    const popoverImg = document.getElementById('popover-img');
+    const popoverLink = document.getElementById('popover-link');
 
-    function showPhoto(event, title) {
-      popoverName.innerHTML = `<i class="fa-solid fa-image"></i> ${title}`;
+    // Converte um link de visualização do Drive (gerado por arq.getUrl() no Code.gs)
+    // num link de imagem direta, pro <img> conseguir exibir inline.
+    function driveThumb(url) {
+      const m = url && url.match(/[-\w]{25,}/);
+      return m ? ('https://lh3.googleusercontent.com/d/' + m[0] + '=w400') : '';
+    }
+
+    function showPhoto(event, fotoUrl, label) {
+      popoverName.innerHTML = '<i class="fa-solid fa-image"></i> ' + (label || 'Foto');
       popover.style.display = 'flex';
-      
+      if (fotoUrl && fotoUrl.startsWith('http')) {
+        popoverImg.src = driveThumb(fotoUrl);
+        popoverLink.href = fotoUrl;
+        popoverLink.style.display = 'block';
+      } else {
+        popoverImg.src = '';
+        popoverLink.style.display = 'none';
+      }
+
       const mouseX = event.clientX;
       const mouseY = event.clientY;
-      
+
       // Centraliza e posiciona dinamicamente perto do gatilho do ponteiro
       popover.style.left = (mouseX - 300) + 'px'; 
       popover.style.top = (mouseY - 80) + 'px';
@@ -532,6 +567,53 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 
     function hidePhoto() {
       popover.style.display = 'none';
+    }
+
+    // ===== COLETA DE PREÇOS — dados reais via tipo=coletaRecentes =====
+    function badgeTipo(tipo) {
+      const cls = tipo === 'Próprio' ? 'proprio' : 'concorrente';
+      return '<span class="badge-tipo ' + cls + '">' + (tipo || '-') + '</span>';
+    }
+
+    function fmtPreco(v) { return (v === null || v === undefined) ? '-' : String(v).toFixed(2).replace('.', ','); }
+
+    function montarLinhasColeta(registros) {
+      const tbody = document.getElementById('coleta-corpo');
+      if (!registros.length) {
+        tbody.innerHTML = '<tr><td colspan="17" style="padding:1.5rem; color:var(--tx3);">Nenhuma coleta nos últimos dias.</td></tr>';
+        return;
+      }
+      let html = '';
+      registros.forEach(r => {
+        const linhaClasse = r.tipo === 'Próprio' ? 'row-proprio' : 'row-concorrente';
+        const temFoto = r.foto && String(r.foto).startsWith('http');
+        const fotoCell = temFoto
+          ? '<span class="link-foto" onmouseenter="showPhoto(event, \'' + r.foto + '\', \'' + (r.postoAlvo||'').replace(/'/g,"") + '\')" onmouseleave="hidePhoto()" onclick="showPhoto(event, \'' + r.foto + '\', \'' + (r.postoAlvo||'').replace(/'/g,"") + '\')"><i class="fa-regular fa-image"></i> Ver Foto</span>'
+          : '<span style="color:var(--tx3)">—</span>';
+        html += '<tr class="' + linhaClasse + '">' +
+          '<td>' + (r.data||'-') + '</td><td>' + (r.hora||'-') + '</td><td>' + (r.posto||'-') + '</td><td>' + (r.gerente||'-') + '</td><td>' + (r.postoAlvo||'-') + '</td>' +
+          '<td>' + badgeTipo(r.tipo) + '</td><td>' + (r.bandeira||'-') + '</td><td>' + (r.rede||'-') + '</td><td>' + (r.supervisor||'-') + '</td>' +
+          '<td>' + fmtPreco(r.ET) + '</td><td>' + fmtPreco(r.GC) + '</td><td>' + fmtPreco(r.GA) + '</td><td>' + fmtPreco(r.S10) + '</td><td>' + fmtPreco(r.S500) + '</td>' +
+          '<td>' + (r.lat||'-') + '</td><td>' + (r.lng||'-') + '</td><td>' + fotoCell + '</td></tr>';
+      });
+      tbody.innerHTML = html;
+    }
+
+    async function carregarColetas() {
+      const subtitle = document.getElementById('coleta-subtitle');
+      const tbody = document.getElementById('coleta-corpo');
+      try {
+        const dados = await chamarApi({ tipo: 'coletaRecentes', dias: '15' });
+        if (!dados.success) {
+          subtitle.textContent = '• Erro ao carregar';
+          return;
+        }
+        subtitle.textContent = '• ' + dados.registros.length + ' coletas nos últimos 15 dias (atualizado em tempo real)';
+        montarLinhasColeta(dados.registros);
+      } catch (err) {
+        subtitle.textContent = '• Falha ao conectar com o Apps Script';
+        tbody.innerHTML = '<tr><td colspan="17" style="padding:1.5rem; color:var(--b-dif);">Não foi possível carregar: ' + err.message + '</td></tr>';
+      }
     }
 
     // Troca de Módulos pela Sidebar Principal
@@ -965,7 +1047,8 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 
     // Inicialização automática
     window.addEventListener('DOMContentLoaded', () => {
-      renderMatrizHorizontal();
+      carregarMedicao(document.getElementById('global-posto').value);
+      carregarColetas();
       renderLancamento();
       renderMargemPostos();
       updateThemeIcon();

@@ -134,7 +134,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 }
 .btn-save:hover { opacity: 0.9; }
 
-/* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS */
+/* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS (CONFORME PLANILHA DO USUÁRIO) */
 .row-proprio { color: #00e5a0 !important; font-weight: 500; }
 .row-concorrente { color: #eef0f4 !important; }
 .badge-tipo { padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
@@ -193,8 +193,14 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 .dist-card-hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--bd); padding-bottom: 0.6rem; }
 .dist-card-hdr .dist-nome { font-family: var(--mono); font-weight: 700; font-size: 0.85rem; color: var(--b-cus); }
 .dist-card-hdr .dist-postos { font-size: 0.62rem; color: var(--tx3); font-family: var(--mono); text-align: right; }
+.dist-postos-detail { font-size: 0.65rem; }
+.dist-postos-detail summary { color: var(--b-cus); cursor: pointer; font-family: var(--mono); list-style: none; }
+.dist-postos-detail summary::-webkit-details-marker { display: none; }
+.dist-postos-detail summary::before { content: '▸ '; }
+.dist-postos-detail[open] summary::before { content: '▾ '; }
+.dist-postos-list { color: var(--tx2); line-height: 1.6; padding: 0.4rem 0 0.2rem; }
 .dist-fuel-row { display: flex; align-items: center; gap: 0.5rem; }
-.dist-fuel-row label { font-size: 0.72rem; color: var(--tx2); font-family: var(--mono); font-weight: 700; width: 55px; flex-shrink: 0; }
+.dist-fuel-row label { font-size: 0.72rem; color: var(--tx2); font-family: var(--mono); font-weight: 700; width: 36px; flex-shrink: 0; }
 .dist-fuel-row input {
   flex: 1; background: var(--sf2); border: 1px solid var(--bd); color: var(--tx); text-align: right;
   padding: 0.4rem 0.55rem; border-radius: 6px; font-family: var(--mono); font-size: 0.78rem; outline: none; min-width: 0;
@@ -256,27 +262,43 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       <div>
         <div class="sb-section-title">Filtro Operacional</div>
         <select class="sel-posto" id="global-posto">
-          <option value="POSTO J.A.">POSTO J.A.</option>
-          <option value="TOPAZIO">TOPAZIO</option>
-          <option value="MANGABEIRAS">MANGABEIRAS</option>
           <option value="ALEX">ALEX</option>
-          <option value="ITAPOA">ITAPOA</option>
-          <option value="PLANALTO">PLANALTO</option>
-          <option value="LOURA">LOURA</option>
-          <option value="BRUNA">BRUNA</option>
           <option value="ANA LUCIA">ANA LUCIA</option>
-          <option value="JOCA">JOCA</option>
-          <option value="JOAQUIM">JOAQUIM</option>
-          <option value="MIRAGEM">MIRAGEM</option>
-          <option value="TRANCOSO">TRANCOSO</option>
-          <option value="S. COLIBRI">S. COLIBRI</option>
-          <option value="BIANCA">BIANCA</option>
-          <option value="FELIPAO">FELIPAO</option>
-          <option value="BERNARDO">BERNARDO</option>
-          <option value="S. LUIZ">S. LUIZ</option>
+          <option value="ARAPONGA">ARAPONGA</option>
+          <option value="AVIVA">AVIVA</option>
           <option value="BAHAMAS">BAHAMAS</option>
-          <option value="S. BERNARDO">S. BERNARDO</option>
+          <option value="BEATRIZ">BEATRIZ</option>
+          <option value="BERNARDO">BERNARDO</option>
+          <option value="BIANCA">BIANCA</option>
           <option value="BOMBOM FIL.">BOMBOM FIL.</option>
+          <option value="BOMBOM M">BOMBOM M</option>
+          <option value="BRUNA">BRUNA</option>
+          <option value="DIFERENCIAL">DIFERENCIAL</option>
+          <option value="DUDU">DUDU</option>
+          <option value="E. REAL">E. REAL</option>
+          <option value="FELIPAO">FELIPAO</option>
+          <option value="GLÓRIA">GLÓRIA</option>
+          <option value="ITAPOA">ITAPOA</option>
+          <option value="JOAQUIM">JOAQUIM</option>
+          <option value="JOCA">JOCA</option>
+          <option value="LEANDRO">LEANDRO</option>
+          <option value="LOURA">LOURA</option>
+          <option value="MANGABEIRAS">MANGABEIRAS</option>
+          <option value="MIRAGEM">MIRAGEM</option>
+          <option value="O. Branco">O. Branco</option>
+          <option value="PLANALTO">PLANALTO</option>
+          <option value="POSTO J.A.">POSTO J.A.</option>
+          <option value="QUATRO RODAS">QUATRO RODAS</option>
+          <option value="RODRIGO">RODRIGO</option>
+          <option value="S. BERNARDO">S. BERNARDO</option>
+          <option value="S. COLIBRI">S. COLIBRI</option>
+          <option value="S. LUIZ">S. LUIZ</option>
+          <option value="SANTA INES">SANTA INES</option>
+          <option value="SANTA MARIA">SANTA MARIA</option>
+          <option value="TOPAZIO">TOPAZIO</option>
+          <option value="TRANCOSO">TRANCOSO</option>
+          <option value="TÚNEL">TÚNEL</option>
+          <option value="Urbano Ferraz">Urbano Ferraz</option>
         </select>
       </div>
 
@@ -301,7 +323,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
           <div class="table-title">Matriz Integrada de Suprimentos <span>• Visão Horizontal Completa</span></div>
           <div style="display: flex; align-items: center; gap: 1rem;">
             <div class="scroll-indicator"><i class="fa-solid fa-left-right"></i> Use o scroll horizontal para ver tudo</div>
-            <button class="btn-save" onclick="alert('Dados salvos no banco de dados!')"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
+            <button class="btn-save" onclick="alert('Dados salvos no bando de dados!')"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
           </div>
         </div>
         
@@ -333,7 +355,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
         </div>
       </section>
 
-      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS -->
+      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS (CONFORME SOLICITADO AGORA) -->
       <section id="tab-precos" class="view-panel">
         <div class="table-actions">
           <div class="table-title">Histórico de Coletas — Coleta de Preços <span>• Painel Auditor Integrado</span></div>
@@ -438,6 +460,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       </div>
     </div>
     <div class="popover-body">
+      <!-- Simulação da foto real capturada da bomba de combustível -->
       <img src="https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=400&q=80" alt="Bomba">
     </div>
     <div class="popover-ftr">
@@ -446,12 +469,13 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
     </div>
   </div>
 
-  <!-- CONTAINER EXCLUSIVO DE IMPRESSÃO -->
+  <!-- CONTAINER EXCLUSIVO DE IMPRESSÃO (QUADRO INTERNO OU QUADRO DO POSTO) -->
   <div id="quadro-impressao">
     <div id="qi-conteudo"></div>
   </div>
 
   <script>
+    // Gerador de linhas para a Matriz de Medição
     function renderMatrizHorizontal() {
       const tbody = document.getElementById('matriz-corpo');
       let html = '';
@@ -490,14 +514,18 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       tbody.innerHTML = html;
     }
 
+    // Controle do Popover de Imagem (Aparece ao passar o mouse ou clicar)
     const popover = document.getElementById('global-photo-popover');
     const popoverName = document.getElementById('popover-filename');
 
     function showPhoto(event, title) {
       popoverName.innerHTML = `<i class="fa-solid fa-image"></i> ${title}`;
       popover.style.display = 'flex';
+      
       const mouseX = event.clientX;
       const mouseY = event.clientY;
+      
+      // Centraliza e posiciona dinamicamente perto do gatilho do ponteiro
       popover.style.left = (mouseX - 300) + 'px'; 
       popover.style.top = (mouseY - 80) + 'px';
     }
@@ -506,69 +534,287 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       popover.style.display = 'none';
     }
 
+    // Troca de Módulos pela Sidebar Principal
     function switchMainTab(tabId, element) {
       document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      
       document.getElementById(tabId).classList.add('active');
       element.classList.add('active');
     }
 
-    // ===== DADOS INJETADOS DIRETAMENTE DA PLANILHA DO USUÁRIO =====
+    // ===== MÓDULO CUSTO & MARGEM (dados reais — extraídos de ALTERAÇÕES_DE_PREÇOS_2026.xlsx, aba "Preços impressos", snapshot de 12/06/2026) =====
+    // As 37 estações foram agrupadas em 4 clusters de custo idêntico/quase idêntico por combustível — isso é o que a planilha
+    // mostra acontecer na prática, mas o arquivo não nomeia o fornecedor de cada cluster nessa data. Os nomes "Distribuidora 1-4"
+    // são provisórios: troque por CIAPETRO/ALE/RIO BRANCO/IPIRANGA/BR (ou o que for correto) assim que confirmar com a logística.
 
     const distribuidoras = [
       {
-        id: 'dist_padrao_1', nome: 'Base de Custos Principal',
-        postos: ['POSTO J.A.', 'TOPAZIO', 'MANGABEIRAS', 'ITAPOA', 'PLANALTO', 'LOURA', 'BRUNA'],
-        custoHoje: { 'ETANOL': 3.3490, 'G COMUM': 5.3595, 'G ADITIVADA': 5.4995, 'DIESEL S10': 6.2225 },
-        custoOntem: { 'ETANOL': 3.3490, 'G COMUM': 5.3695, 'G ADITIVADA': 5.5088, 'DIESEL S10': 6.2475 }
+        id: 'd1', nome: "Distribuidora 1",
+        postos: ["POSTO J.A.", "ITAPOA", "PLANALTO", "LOURA", "TOPAZIO", "BRUNA", "DIFERENCIAL", "MANGABEIRAS", "GLÓRIA", "RODRIGO", "ARAPONGA", "TÚNEL", "QUATRO RODAS", "BERNARDO", "DUDU", "S. LUIZ"],
+        custoHoje: { ET: 3.3490, GC: 5.3595, GA: 5.4995, S10: 6.2225, S500: 5.6565 },
+        custoOntem: { ET: 3.3490, GC: 5.3695, GA: 5.5088, S10: 6.2475, S500: 5.6565 }
       },
       {
-        id: 'dist_padrao_2', nome: 'Base de Custos Secundária',
-        postos: ['ANA LUCIA', 'JOCA', 'JOAQUIM', 'MIRAGEM', 'TRANCOSO', 'S. COLIBRI', 'BIANCA', 'FELIPAO'],
-        custoHoje: { 'ETANOL': 3.3495, 'G COMUM': 5.3791, 'G ADITIVADA': 5.5142, 'DIESEL S10': 6.2218 },
-        custoOntem: { 'ETANOL': 3.3495, 'G COMUM': 5.3791, 'G ADITIVADA': 5.5142, 'DIESEL S10': 6.2218 }
+        id: 'd2', nome: "Distribuidora 2",
+        postos: ["Urbano Ferraz", "SANTA INES", "ANA LUCIA", "JOCA", "SANTA MARIA", "JOAQUIM", "MIRAGEM", "LEANDRO", "TRANCOSO", "S. COLIBRI", "AVIVA", "BIANCA", "FELIPAO", "O. Branco"],
+        custoHoje: { ET: 3.3495, GC: 5.3791, GA: 5.5142, S10: 6.2218, S500: 5.6968 },
+        custoOntem: { ET: 3.3495, GC: 5.3791, GA: 5.5142, S10: 6.2218, S500: 5.6968 }
+      },
+      {
+        id: 'd3', nome: "Distribuidora 3",
+        postos: ["BAHAMAS", "S. BERNARDO", "BOMBOM M", "BOMBOM FIL.", "E. REAL"],
+        custoHoje: { ET: 3.3492, GC: 5.3599, GA: 5.5095, S10: 6.2225, S500: 5.6558 },
+        custoOntem: { ET: 3.3492, GC: 5.3695, GA: 5.5095, S10: 6.2475, S500: 5.6558 }
+      },
+      {
+        id: 'd4', nome: "Distribuidora 4",
+        postos: ["BEATRIZ", "ALEX"],
+        custoHoje: { ET: 3.4058, GC: 5.2824, GA: 5.2925, S10: 5.8186, S500: 5.7527 },
+        custoOntem: { ET: 3.4058, GC: 5.2824, GA: 5.2925, S10: 5.8186, S500: 5.7527 }
       }
     ];
 
     const vendaAtual = {
-      'POSTO J.A.':   { 'ETANOL': 4.490, 'G COMUM': 6.690, 'G ADITIVADA': 6.990, 'DIESEL S10': 6.990 },
-      'ITAPOA':       { 'ETANOL': 3.890, 'G COMUM': 5.870, 'G ADITIVADA': 6.170, 'DIESEL S10': 6.990 },
-      'PLANALTO':     { 'ETANOL': 3.890, 'G COMUM': 5.890, 'G ADITIVADA': 6.190, 'DIESEL S10': 6.790 },
-      'LOURA':        { 'ETANOL': 3.590, 'G COMUM': 5.850, 'G ADITIVADA': 6.150, 'DIESEL S10': 6.840 },
-      'TOPAZIO':      { 'ETANOL': 3.790, 'G COMUM': 5.790, 'G ADITIVADA': 6.090, 'DIESEL S10': 6.750 },
-      'MANGABEIRAS':  { 'ETANOL': 4.490, 'G COMUM': 6.690, 'G ADITIVADA': 6.990, 'DIESEL S10': 6.990 },
-      'ALEX':         { 'ETANOL': 3.990, 'G COMUM': 6.290, 'G ADITIVADA': 6.590, 'DIESEL S10': 6.990 },
-      'ANA LUCIA':    { 'ETANOL': 3.890, 'G COMUM': 5.950, 'DIESEL S10': 6.880 },
-      'JOCA':         { 'ETANOL': 3.990, 'G COMUM': 5.990, 'DIESEL S10': 6.990 },
-      'JOAQUIM':      { 'ETANOL': 3.850, 'G COMUM': 5.870, 'G ADITIVADA': 6.170, 'DIESEL S10': 6.640 },
-      'MIRAGEM':      { 'ETANOL': 3.890, 'G COMUM': 5.890, 'G ADITIVADA': 6.190, 'DIESEL S10': 6.990 },
-      'TRANCOSO':     { 'ETANOL': 3.990, 'G COMUM': 5.990, 'G ADITIVADA': 6.290, 'DIESEL S10': 6.890 },
-      'S. COLIBRI':   { 'ETANOL': 3.670, 'G COMUM': 5.870, 'G ADITIVADA': 6.170, 'DIESEL S10': 6.750 },
-      'BIANCA':       { 'ETANOL': 4.380, 'G COMUM': 6.280, 'G ADITIVADA': 6.580, 'DIESEL S10': 6.990 },
-      'FELIPAO':      { 'ETANOL': 4.550, 'G COMUM': 6.490, 'DIESEL S10': 6.890 },
-      'BERNARDO':     { 'ETANOL': 4.270, 'G COMUM': 6.170, 'DIESEL S10': 6.550 },
-      'BAHAMAS':      { 'ETANOL': 3.870, 'G COMUM': 5.850, 'G ADITIVADA': 6.150 },
-      'S. BERNARDO':  { 'ETANOL': 3.550, 'G COMUM': 5.670, 'G ADITIVADA': 5.970 },
-      'BOMBOM FIL.':  { 'ETANOL': 3.790, 'G COMUM': 5.790, 'G ADITIVADA': 6.090, 'DIESEL S10': 6.750 }
+      "POSTO J.A.": { ET: 4.4900, GC: 6.6900, GA: 6.9900, S10: 6.9900 },
+      "ITAPOA": { ET: 3.8900, GC: 5.8700, GA: 6.1700, S10: 6.9900 },
+      "PLANALTO": { ET: 3.8900, GC: 5.8900, GA: 6.1900, S10: 6.7900, S500: 6.6900 },
+      "LOURA": { ET: 3.5900, GC: 5.8500, GA: 6.1500, S10: 6.8400, S500: 6.7400 },
+      "TOPAZIO": { ET: 3.7900, GC: 5.7900, GA: 6.0900, S10: 6.7500 },
+      "BRUNA": { ET: 3.8900, GC: 5.8900, GA: 6.1900, S10: 6.6900, S500: 6.3900 },
+      "DIFERENCIAL": { ET: 3.8700, GC: 5.9400, GA: 6.2400, S10: 6.7700 },
+      "MANGABEIRAS": { ET: 4.4900, GC: 6.6900, GA: 6.9900, S10: 6.9900 },
+      "GLÓRIA": { ET: 3.6900, GC: 5.8900, S10: 6.7900 },
+      "RODRIGO": { ET: 3.8500, GC: 5.8900, GA: 6.1900, S10: 6.7500, S500: 6.5900 },
+      "ARAPONGA": { ET: 3.9900, GC: 5.9900, GA: 6.2900, S10: 6.9900 },
+      "TÚNEL": { ET: 3.7700, GC: 5.9500, GA: 6.2500 },
+      "QUATRO RODAS": { ET: 3.6500, GC: 5.7900, GA: 6.0900, S10: 6.7900 },
+      "E. REAL": { ET: 4.5500, GC: 6.4500, GA: 6.7500, S10: 6.8900, S500: 6.5400 },
+      "BEATRIZ": { ET: 4.5500, GC: 6.4900, GA: 6.7900, S10: 6.4900, S500: 6.2900 },
+      "ALEX": { ET: 3.9900, GC: 6.2900, GA: 6.5900, S10: 6.9900 },
+      "Urbano Ferraz": { ET: 4.2900, GC: 6.3900, GA: 6.6900, S10: 6.9900 },
+      "SANTA INES": { ET: 3.8900, GC: 5.9500, GA: 6.2500, S10: 6.8800 },
+      "ANA LUCIA": { ET: 3.8900, GC: 5.9500, S10: 6.8800 },
+      "JOCA": { ET: 3.9900, GC: 5.9900, S10: 6.9900 },
+      "SANTA MARIA": { ET: 3.9700, GC: 5.8700, GA: 6.1700, S10: 6.8900 },
+      "JOAQUIM": { ET: 3.8500, GC: 5.8700, GA: 6.1700, S10: 6.6400, S500: 6.2500 },
+      "MIRAGEM": { ET: 3.8900, GC: 5.8900, GA: 6.1900, S10: 6.9900, S500: 6.8900 },
+      "LEANDRO": { ET: 3.6900, GC: 5.8900, GA: 6.1900, S10: 6.8500, S500: 6.5900 },
+      "TRANCOSO": { ET: 3.9900, GC: 5.9900, GA: 6.2900, S10: 6.8900 },
+      "S. COLIBRI": { ET: 3.6700, GC: 5.8700, GA: 6.1700, S10: 6.7500, S500: 6.6900 },
+      "AVIVA": { ET: 4.7900, GC: 6.3900, GA: 6.6900, S10: 6.8500, S500: 6.7500 },
+      "BIANCA": { ET: 4.3800, GC: 6.2800, GA: 6.5800, S10: 6.9900, S500: 6.6900 },
+      "FELIPAO": { ET: 4.5500, GC: 6.4900, S10: 6.8900, S500: 6.5400 },
+      "DUDU": { ET: 3.7900, GC: 5.6900, S10: 6.8900 },
+      "BERNARDO": { ET: 4.2700, GC: 6.1700, S10: 6.5500, S500: 6.3900 },
+      "S. LUIZ": { ET: 4.7900, GC: 6.3900, S10: 6.7500, S500: 6.6500 },
+      "O. Branco": { ET: 3.6700, GC: 5.8500, GA: 6.1500, S10: 6.6500, S500: 6.3500 },
+      "BAHAMAS": { ET: 3.8700, GC: 5.8500, GA: 6.1500 },
+      "S. BERNARDO": { ET: 3.5500, GC: 5.6700, GA: 5.9700 },
+      "BOMBOM M": { ET: 3.8700, GC: 5.9400, GA: 6.2400 },
+      "BOMBOM FIL.": { ET: 3.7900, GC: 5.7900, GA: 6.0900, S10: 6.7500 }
     };
 
-    const custoOverride = {};
-    const margemMinima = { 'ETANOL': 0.4000, 'G COMUM': 0.4500, 'G ADITIVADA': 0.4500, 'DIESEL S10': 0.4500 };
+    const custoOverride = {
+      "BRUNA_S500": 5.6215,
+      "BRUNA_S10": 6.1875,
+      "E. REAL_ET": 3.3493,
+      "E. REAL_GC": 5.3588,
+      "E. REAL_GA": 5.4986,
+      "E. REAL_S10": 6.2219,
+      "DUDU_ET": 3.3539,
+      "DUDU_GC": 5.3649,
+      "DUDU_S10": 6.2859,
+      "BERNARDO_S500": 5.6215,
+      "BERNARDO_S10": 6.1875,
+      "S. LUIZ_ET": 3.3443,
+      "S. LUIZ_GC": 5.3685,
+      "S. LUIZ_S500": 5.6165,
+      "S. LUIZ_S10": 6.2115,
+      "O. Branco_GA": 5.9698,
+      "O. Branco_S10": 6.2618
+    };
+
+    const reajusteReal = {
+      "POSTO J.A._ET": 0.0000,
+      "POSTO J.A._GC": -0.0100,
+      "POSTO J.A._GA": 0.0006,
+      "POSTO J.A._S10": -0.0250,
+      "ITAPOA_ET": 0.0000,
+      "ITAPOA_GC": -0.0100,
+      "ITAPOA_GA": -0.0093,
+      "ITAPOA_S10": -0.0250,
+      "PLANALTO_ET": 0.0000,
+      "PLANALTO_GC": -0.0100,
+      "PLANALTO_GA": -0.0093,
+      "PLANALTO_S500": 0.0000,
+      "PLANALTO_S10": -0.0250,
+      "LOURA_ET": 0.0000,
+      "LOURA_GC": -0.0100,
+      "LOURA_GA": -0.0093,
+      "LOURA_S500": 0.0000,
+      "LOURA_S10": -0.0250,
+      "TOPAZIO_ET": 0.0000,
+      "TOPAZIO_GC": -0.0100,
+      "TOPAZIO_GA": -0.0093,
+      "TOPAZIO_S10": -0.0250,
+      "BRUNA_ET": 0.0000,
+      "BRUNA_GC": -0.0100,
+      "BRUNA_GA": -0.0093,
+      "BRUNA_S500": 0.0000,
+      "BRUNA_S10": -0.0250,
+      "DIFERENCIAL_ET": 0.0000,
+      "DIFERENCIAL_GC": -0.0100,
+      "DIFERENCIAL_GA": -0.0093,
+      "DIFERENCIAL_S10": -0.0250,
+      "MANGABEIRAS_ET": 0.0000,
+      "MANGABEIRAS_GC": -0.0100,
+      "MANGABEIRAS_GA": -0.0093,
+      "MANGABEIRAS_S10": -0.0250,
+      "GLÓRIA_ET": 0.0000,
+      "GLÓRIA_GC": -0.0100,
+      "GLÓRIA_S10": -0.0250,
+      "RODRIGO_ET": 0.0000,
+      "RODRIGO_GC": -0.0100,
+      "RODRIGO_GA": -0.0093,
+      "RODRIGO_S500": 0.0000,
+      "RODRIGO_S10": -0.0250,
+      "ARAPONGA_ET": 0.0000,
+      "ARAPONGA_GC": -0.0100,
+      "ARAPONGA_GA": -0.0093,
+      "ARAPONGA_S10": -0.0250,
+      "TÚNEL_ET": 0.0000,
+      "TÚNEL_GC": -0.0100,
+      "TÚNEL_GA": -0.0093,
+      "QUATRO RODAS_ET": 0.0000,
+      "QUATRO RODAS_GC": -0.0100,
+      "QUATRO RODAS_GA": -0.0093,
+      "QUATRO RODAS_S10": -0.0250,
+      "E. REAL_ET": 0.0000,
+      "E. REAL_GC": -0.0097,
+      "E. REAL_GA": -0.0099,
+      "E. REAL_S500": 0.0000,
+      "E. REAL_S10": -0.0249,
+      "BEATRIZ_ET": 0.0000,
+      "BEATRIZ_GC": 0.0000,
+      "BEATRIZ_GA": 0.0000,
+      "BEATRIZ_S500": 0.0000,
+      "BEATRIZ_S10": 0.0000,
+      "ALEX_ET": 0.0000,
+      "ALEX_GC": 0.0000,
+      "ALEX_GA": 0.0000,
+      "ALEX_S10": 0.0000,
+      "Urbano Ferraz_ET": 0.0000,
+      "Urbano Ferraz_GC": 0.0000,
+      "Urbano Ferraz_GA": 0.0000,
+      "Urbano Ferraz_S10": 0.0000,
+      "SANTA INES_ET": 0.0000,
+      "SANTA INES_GC": 0.0000,
+      "SANTA INES_GA": 0.0000,
+      "SANTA INES_S10": 0.0000,
+      "ANA LUCIA_ET": 0.0000,
+      "ANA LUCIA_GC": 0.0000,
+      "ANA LUCIA_S10": 0.0000,
+      "JOCA_ET": 0.0000,
+      "JOCA_GC": 0.0000,
+      "JOCA_S10": 0.0000,
+      "SANTA MARIA_ET": 0.0000,
+      "SANTA MARIA_GC": 0.0000,
+      "SANTA MARIA_GA": 0.0000,
+      "SANTA MARIA_S10": 0.0000,
+      "JOAQUIM_ET": 0.0000,
+      "JOAQUIM_GC": 0.0000,
+      "JOAQUIM_GA": 0.0000,
+      "JOAQUIM_S500": 0.0000,
+      "JOAQUIM_S10": 0.0000,
+      "MIRAGEM_ET": 0.0000,
+      "MIRAGEM_GC": 0.0000,
+      "MIRAGEM_GA": 0.0000,
+      "MIRAGEM_S500": 0.0000,
+      "MIRAGEM_S10": 0.0000,
+      "LEANDRO_ET": 0.0000,
+      "LEANDRO_GC": 0.0000,
+      "LEANDRO_GA": 0.0000,
+      "LEANDRO_S500": 0.0000,
+      "LEANDRO_S10": 0.0000,
+      "TRANCOSO_ET": 0.0000,
+      "TRANCOSO_GC": 0.0000,
+      "TRANCOSO_GA": 0.0000,
+      "TRANCOSO_S10": 0.0000,
+      "S. COLIBRI_ET": 0.0000,
+      "S. COLIBRI_GC": 0.0000,
+      "S. COLIBRI_GA": 0.0000,
+      "S. COLIBRI_S500": 0.0000,
+      "S. COLIBRI_S10": 0.0000,
+      "AVIVA_ET": 0.0000,
+      "AVIVA_GC": 0.0000,
+      "AVIVA_GA": 0.0000,
+      "AVIVA_S500": 0.0000,
+      "AVIVA_S10": 0.0000,
+      "BIANCA_ET": 0.0000,
+      "BIANCA_GC": 0.0000,
+      "BIANCA_GA": 0.0000,
+      "BIANCA_S500": 0.0000,
+      "BIANCA_S10": 0.0000,
+      "FELIPAO_ET": 0.0000,
+      "FELIPAO_GC": 0.0000,
+      "FELIPAO_S500": 0.0000,
+      "FELIPAO_S10": 0.0000,
+      "DUDU_ET": 0.0000,
+      "DUDU_GC": 0.0000,
+      "DUDU_S10": 0.0000,
+      "BERNARDO_ET": 0.0000,
+      "BERNARDO_GC": -0.0100,
+      "BERNARDO_S500": 0.0000,
+      "BERNARDO_S10": -0.0250,
+      "S. LUIZ_ET": 0.0000,
+      "S. LUIZ_GC": 0.0000,
+      "S. LUIZ_S500": 0.0000,
+      "S. LUIZ_S10": 0.0000,
+      "O. Branco_ET": 0.0000,
+      "O. Branco_GC": 0.0000,
+      "O. Branco_GA": 0.0000,
+      "O. Branco_S500": 0.0000,
+      "O. Branco_S10": 0.0000,
+      "BAHAMAS_ET": 0.0000,
+      "BAHAMAS_GC": -0.0096,
+      "BAHAMAS_GA": 0.0000,
+      "S. BERNARDO_ET": 0.0000,
+      "S. BERNARDO_GC": -0.0096,
+      "S. BERNARDO_GA": 0.0000,
+      "BOMBOM M_ET": 0.0000,
+      "BOMBOM M_GC": -0.0096,
+      "BOMBOM M_GA": 0.0000,
+      "BOMBOM FIL._ET": 0.0000,
+      "BOMBOM FIL._GC": -0.0096,
+      "BOMBOM FIL._GA": 0.0000,
+      "BOMBOM FIL._S10": -0.0250
+    };
+
+    // Ajustes pontuais de custo por posto (frete, exceção) — sobrepõem o valor da distribuidora. Calculados comparando
+    // o custo individual de cada posto, na planilha, com a base do seu cluster.
+
+    // Piso de margem por combustível — abaixo de 60% disso vira "crítico"
+    const margemMinima = { ET: 0.4000, GC: 0.4500, GA: 0.4500, S10: 0.4500, S500: 0.4000 };
 
     function getDistribuidoraDoPosto(posto) {
-      return distribuidoras.find(d => d.postos.includes(posto)) || distribuidoras[0];
+      return distribuidoras.find(d => d.postos.includes(posto));
     }
 
     function getCustoEfetivo(posto, comb) {
       const key = posto + '_' + comb;
       if (custoOverride[key] !== undefined) return custoOverride[key];
       const dist = getDistribuidoraDoPosto(posto);
-      return dist && dist.custoHoje[comb] !== undefined ? dist.custoHoje[comb] : 5.00; 
+      return dist ? dist.custoHoje[comb] : 0;
     }
 
+    // O reajuste vem direto da planilha (coluna "reajustes" do dia 12/06) — é mais fiel do que recalcular
+    // a partir do custo de ontem da distribuidora, já que cada posto pode ter tido seu próprio histórico.
     function getReajuste(posto, comb) {
+      const key = posto + '_' + comb;
+      if (reajusteReal[key] !== undefined) return reajusteReal[key];
       const dist = getDistribuidoraDoPosto(posto);
-      if (!dist || dist.custoHoje[comb] === undefined) return 0;
+      if (!dist) return 0;
       return dist.custoHoje[comb] - dist.custoOntem[comb];
     }
 
@@ -581,13 +827,16 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 
     function corReajuste(v) { return v > 0 ? 'var(--b-dif)' : (v < 0 ? 'var(--ac)' : 'var(--tx3)'); }
 
+    // Cards de lançamento — uma entrada por distribuidora alimenta todos os postos vinculados
     function renderLancamento() {
       const grid = document.getElementById('dist-grid');
       let html = '';
       distribuidoras.forEach(dist => {
         html += '<div class="dist-card"><div class="dist-card-hdr">' +
           '<span class="dist-nome">' + dist.nome + '</span>' +
-          '<span class="dist-postos">' + dist.postos.slice(0,3).join(' • ') + '...</span></div>';
+          '<span class="dist-postos">' + dist.postos.length + ' postos</span></div>' +
+          '<details class="dist-postos-detail"><summary>ver postos vinculados</summary>' +
+          '<div class="dist-postos-list">' + dist.postos.join(' • ') + '</div></details>';
         Object.keys(dist.custoHoje).forEach(comb => {
           const reaj = dist.custoHoje[comb] - dist.custoOntem[comb];
           const reajTxt = (reaj > 0 ? '+' : '') + reaj.toFixed(4);
@@ -611,6 +860,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       renderMargemPostos();
     }
 
+    // Tabela de margem por posto — cruza custo efetivo x venda atual, com ajuste opcional por posto
     function renderMargemPostos() {
       const tbody = document.getElementById('margem-corpo');
       let html = '';
@@ -661,6 +911,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       }
     }
 
+    // Gera o quadro para impressão — "interno" mostra custo/margem (uso ADM), "posto" mostra só o preço de venda
     function imprimirQuadro(modo) {
       const cont = document.getElementById('qi-conteudo');
       const hoje = new Date().toLocaleDateString('pt-BR');
@@ -694,6 +945,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       window.print();
     }
 
+    // Alternância de tema claro/escuro
     function toggleTheme() {
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
       if (isLight) {
@@ -711,6 +963,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       document.getElementById('theme-icon').className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
     }
 
+    // Inicialização automática
     window.addEventListener('DOMContentLoaded', () => {
       renderMatrizHorizontal();
       renderLancamento();

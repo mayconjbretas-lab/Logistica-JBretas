@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JBRETAS — Logística & Medição Industrial</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0c10; --sf: #121620; --sf2: #1a1f2c; --sf3: #22293a;
+  --bd: #242c3d; --bd2: #343f56;
+  --ac: #00e5a0; --ac-d: rgba(0,229,160,0.1);
+  --tx: #eef0f4; --tx2: #8a99ad; --tx3: #5c6b84;
+  --gc: #00e5a0; --ga: #4895ef; --et: #f9c74f; --s10: #c77dff;
+}
+body {
+  background: var(--bg); color: var(--tx); font-family: var(--sans);
+  height: 100vh; overflow: hidden; display: flex; flex-direction: column;
+  --sans: 'DM Sans', sans-serif; --mono: 'Space Mono', monospace;
+}
+
+/* TOPBAR */
+.topbar {
+  background: var(--sf); border-bottom: 1px solid var(--bd); height: 60px;
+  display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; flex-shrink: 0;
+}
+.brand-group { display: flex; align-items: center; gap: 0.75rem; }
+.logo {
+  width: 36px; height: 36px; background: var(--ac-d); border: 1.5px solid var(--ac);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-weight: 700; color: var(--ac);
+}
+.title-group .main-t { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--ac); letter-spacing: 1px; }
+.title-group .sub-t { font-size: 0.65rem; color: var(--tx3); text-transform: uppercase; letter-spacing: 2px; }
+
+/* MAIN CONTENT SPLIT */
+.app-container { flex: 1; display: flex; overflow: hidden; }
+
+/* SIDEBAR REFRESH */
+.sidebar {
+  width: 260px; background: var(--sf); border-right: 1px solid var(--bd);
+  display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem 1rem; flex-shrink: 0;
+}
+.sb-section-title { font-family: var(--mono); font-size: 0.7rem; color: var(--tx3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; padding-left: 0.5rem; }
+.nav-list { display: flex; flex-direction: column; gap: 0.35rem; list-style: none; }
+.nav-item {
+  display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem;
+  color: var(--tx2); border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s;
+}
+.nav-item:hover, .nav-item.active { background: var(--sf2); color: var(--tx); }
+.nav-item.active { border-left: 3px solid var(--ac); color: var(--ac); border-radius: 0 8px 8px 0; padding-left: calc(1rem - 3px); }
+.sel-posto {
+  width: 100%; background: var(--sf2); border: 1px solid var(--bd); color: var(--tx);
+  padding: 0.65rem 0.85rem; border-radius: 8px; outline: none; font-size: 0.85rem; font-weight: 500;
+}
+
+/* WORKSPACE VIEWPORT */
+.workspace { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem; gap: 1.25rem; }
+.view-panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+.view-panel.active { display: flex; }
+
+/* DASHBOARD HEADER CARDS */
+.kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; flex-shrink: 0; }
+.kpi-card { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; }
+.kpi-meta .k-lbl { font-size: 0.68rem; color: var(--tx3); font-family: var(--mono); text-transform: uppercase; }
+.kpi-meta .k-val { font-size: 1.4rem; font-weight: 700; color: var(--tx2); margin-top: 2px; font-family: var(--mono); }
+.kpi-meta .k-val.highlight { color: var(--ac); }
+.kpi-icon { width: 40px; height: 40px; background: var(--sf2); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--tx2); font-size: 1.1rem; }
+
+/* CONTROLS BAR */
+.table-actions {
+  background: var(--sf); border: 1px solid var(--bd); border-radius: 10px 10px 0 0;
+  padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; border-bottom: none;
+}
+.table-title { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+.table-title span { color: var(--ac); font-size: 0.65rem; background: var(--ac-d); padding: 2px 6px; border-radius: 4px; }
+
+/* PLANILHA HORIZONTAL SPREADSHEET LAYOUT */
+.spreadsheet-frame {
+  flex: 1; background: var(--sf); border: 1px solid var(--bd); border-radius: 0 0 12px 12px;
+  overflow: auto; position: relative;
+}
+.ss-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.8rem; min-width: 1200px; }
+.ss-table th, .ss-table td { padding: 0.5rem 0.65rem; border: 1px solid var(--bd); }
+.ss-table th {
+  background: var(--sf2); color: var(--tx2); font-family: var(--mono); font-size: 0.72rem;
+  font-weight: 700; text-transform: uppercase; position: sticky; top: 0; z-index: 10; text-align: center;
+}
+.ss-table th.header-group { background: var(--sf3); color: var(--tx); font-size: 0.75rem; border-bottom: 2px solid var(--bd2); }
+.ss-table tbody tr { transition: background 0.15s; }
+.ss-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+.ss-table tbody tr.weekend { background: rgba(0,0,0,0.15); }
+
+/* INPUT CELLS LIKE EXCEL */
+.cell-in {
+  width: 100%; background: transparent; border: none; color: var(--tx); text-align: right;
+  font-family: var(--mono); font-size: 0.8rem; outline: none; padding: 2px 4px; border-radius: 4px; transition: all 0.15s;
+}
+.cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1px var(--ac); color: #fff; }
+.cell-in.disabled { color: var(--tx3); pointer-events: none; }
+
+/* FUEL INDICATORS */
+.f-gc { border-left: 3px solid var(--gc) !important; }
+.f-ga { border-left: 3px solid var(--ga) !important; }
+.f-et { border-left: 3px solid var(--et) !important; }
+.f-s10 { border-left: 3px solid var(--s10) !important; }
+
+.badge-c { display: inline-block; padding: 2px 5px; border-radius: 4px; font-family: var(--mono); font-size: 11px; font-weight: 700; text-align: center; width: 100%; }
+.badge-c.gc { background: rgba(0,229,160,0.15); color: var(--gc); }
+.badge-c.ga { background: rgba(72,149,239,0.15); color: var(--ga); }
+.badge-c.et { background: rgba(249,199,123,0.15); color: var(--et); }
+.badge-c.s10 { background: rgba(199,125,255,0.15); color: var(--s10); }
+
+/* LAYOUT CARDS CONCORRENTES */
+.grid-precos { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; overflow-y: auto; padding-bottom: 1rem; }
+.card-preco { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; overflow: hidden; }
+.cp-hdr { background: var(--sf2); padding: 0.75rem 1rem; border-bottom: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: center; }
+.cp-title { font-weight: 600; font-size: 0.88rem; color: var(--tx); }
+.cp-sub { font-size: 0.65rem; font-family: var(--mono); color: var(--tx3); }
+.cp-body { padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.cp-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.4rem; border-bottom: 1px dashed var(--bd); }
+.cp-row:last-child { border-bottom: none; padding-bottom: 0; }
+.cp-lbl { font-size: 0.75rem; color: var(--tx2); }
+.cp-val { font-family: var(--mono); font-size: 0.9rem; font-weight: 700; }
+.cp-val.gc { color: var(--gc); } .cp-val.ga { color: var(--ga); } .cp-val.et { color: var(--et); } .cp-val.s10 { color: var(--s10); }
+
+.btn-save {
+  background: var(--ac); color: var(--bg); border: none; font-family: var(--mono);
+  font-weight: 700; font-size: 0.75rem; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px;
+}
+.btn-save:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand-group">
+      <div class="logo">JB</div>
+      <div class="title-group">
+        <div class="main-t">JBRETAS LOGÍSTICA</div>
+        <div class="sub-t">// Enterprise Resource Center</div>
+      </div>
+    </div>
+    <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--tx2);">
+      Ref: <span style="color: var(--ac);">JUN 2026</span>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <aside class="sidebar">
+      <div>
+        <div class="sb-section-title">Filtro Operacional</div>
+        <select class="sel-posto" id="global-posto">
+          <option value="P. ALEX">P. ALEX</option>
+          <option value="P. MANGABEIRAS">P. MANGABEIRAS</option>
+          <option value="P. TOPAZIO">P. TOPAZIO</option>
+          <option value="P. TUNEL">P. TUNEL</option>
+        </select>
+      </div>
+
+      <nav style="flex: 1;">
+        <div class="sb-section-title">Módulos Administrativos</div>
+        <ul class="nav-list">
+          <li class="nav-item active" onclick="switchTab('tab-medicao', this)"><i class="fa-solid fa-calculator"></i> Medição Diária</li>
+          <li class="nav-item" onclick="switchTab('tab-precos', this)"><i class="fa-solid fa-tags"></i> Coleta de Preços</li>
+          <li class="nav-item"><i class="fa-solid fa-truck-ramp-box"></i> Pedidos de Carga</li>
+          <li class="nav-item"><i class="fa-solid fa-chart-pie"></i> Painel de KPI</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="workspace">
+      
+      <section id="tab-medicao" class="view-panel active">
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-meta"><div class="k-lbl">Medição Ontem</div><div class="k-val highlight">14.850 L</div></div>
+            <div class="kpi-icon"><i class="fa-solid fa-droplet"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-meta"><div class="k-lbl">Venda Projetada</div><div class="k-val">3.200 L</div></div>
+            <div class="kpi-icon"><i class="fa-solid fa-chart-line"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-meta"><div class="k-lbl">Autonomia Tanque</div><div class="k-val" style="color:var(--et)">4.2 Dias</div></div>
+            <div class="kpi-icon"><i class="fa-solid fa-clock"></i></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-meta"><div class="k-lbl">Status Previsão</div><div class="k-val" style="color:var(--ac)">ESTÁVEL</div></div>
+            <div class="kpi-icon"><i class="fa-solid fa-shield-check"></i></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; display: flex; flex-direction: column; flex: 1; overflow: hidden;">
+          <div class="table-actions">
+            <div class="table-title">Histórico de Fechamento de Arqueação — Horizontal <span>Fórmula Tecno X Ativa</span></div>
+            <button class="btn-save" onclick="alert('Dados salvos localmente! Integre seu doGet/doPost aqui.')"><i class="fa-solid fa-floppy-disk"></i> Salvar Planilha</button>
+          </div>
+          
+          <div class="spreadsheet-frame">
+            <table class="ss-table" id="table-med">
+              <thead>
+                <tr>
+                  <th rowspan="2" style="width: 70px;">Dia</th>
+                  <th colspan="4" class="header-group">GASOLINA COMUM (GC)</th>
+                  <th colspan="4" class="header-group">ETANOL HIDRATADO (ET)</th>
+                </tr>
+                <tr>
+                  <th style="width: 100px;">Med. Física</th>
+                  <th style="width: 90px;">Venda Vol.</th>
+                  <th style="width: 90px;">Carga (L)</th>
+                  <th style="width: 100px;">Prev. Saldo</th>
+                  <th style="width: 100px;">Med. Física</th>
+                  <th style="width: 90px;">Venda Vol.</th>
+                  <th style="width: 90px;">Carga (L)</th>
+                  <th style="width: 100px;">Prev. Saldo</th>
+                </tr>
+              </thead>
+              <tbody>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="tab-precos" class="view-panel">
+        <div class="table-actions" style="border-bottom: 1px solid var(--bd); border-radius: 12px 12px 0 0;">
+          <div class="table-title">Monitoramento de Mercado em Tempo Real — Concorrentes Diretos</div>
+          <span style="font-size: 0.72rem; color: var(--tx2); font-family: var(--mono);">Última Coleta: Hoje 08:32</span>
+        </div>
+        
+        <div class="grid-precos" id="concorrentes-container">
+          </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Gerador de dados de simulação da planilha horizontal (30 Dias)
+    function buildPlanilha() {
+      const tbody = document.querySelector('#table-med tbody');
+      let html = '';
+      
+      for(let d=1; d<=15; d++) {
+        let diaStr = String(d).padStart(2, '0') + '/06';
+        let isFimDeSemana = (d % 7 === 6 || d % 7 === 0);
+        let classeLinha = isFimDeSemana ? 'class="weekend"' : '';
+        
+        html += `<tr ${classeLinha}>
+          <td style="text-align:center; font-family:var(--mono); font-weight:700; color:var(--tx2); background:var(--sf);">${diaStr}</td>
+          
+          <td class="f-gc"><input type="text" class="cell-in" value="${15400 - (d*120)}" placeholder="-"></td>
+          <td><input type="text" class="cell-in" value="2850" style="color:var(--tx2)"></td>
+          <td><input type="text" class="cell-in" value="${d === 5 ? '15000' : ''}" style="color:var(--ac); font-weight:700;"></td>
+          <td><input type="text" class="cell-in disabled" value="${15400 - (d*120) - 2850}" readonly></td>
+          
+          <td class="f-et"><input type="text" class="cell-in" value="${8200 - (d*90)}" placeholder="-"></td>
+          <td><input type="text" class="cell-in" value="1100" style="color:var(--tx2)"></td>
+          <td><input type="text" class="cell-in" value="" placeholder="-"></td>
+          <td><input type="text" class="cell-in disabled" value="${8200 - (d*90) - 1100}" readonly></td>
+        </tr>`;
+      }
+      tbody.innerHTML = html;
+    }
+
+    // Gerador de cards de concorrência dinâmicos
+    function buildConcorrentes() {
+      const container = document.getElementById('concorrentes-container');
+      const mockConcorrentes = [
+        { nome: 'POSTO IPIRANGA MATRIZ', bandeira: 'IPIRANGA', gc: '5.29', ga: '5.49', et: '3.59', s10: '5.89' },
+        { nome: 'POSTO SHELL AV. CENTRAL', bandeira: 'SHELL', gc: '5.34', ga: '5.59', et: '3.62', s10: '5.94' },
+        { nome: 'POSTO ALIANÇA (B. BRANCA)', bandeira: 'BANDEIRA BRANCA', gc: '5.19', ga: '5.39', et: '3.47', s10: '5.75' },
+        { nome: 'COMPETIDOR SÃO JOSÉ', bandeira: 'VIBRA ENERGY', gc: '5.28', ga: '5.48', et: '3.55', s10: '5.84' }
+      ];
+
+      let html = '';
+      mockConcorrentes.forEach(c => {
+        html += `
+          <div class="card-preco">
+            <div class="cp-hdr">
+              <div class="cp-title">${c.nome}</div>
+              <div class="cp-sub">${c.bandeira}</div>
+            </div>
+            <div class="cp-body">
+              <div class="cp-row"><span class="cp-lbl">Gasolina Comum</span><span class="cp-val gc">R$ ${c.gc}</span></div>
+              <div class="cp-row"><span class="cp-lbl">Gasolina Aditivada</span><span class="cp-val ga">R$ ${c.ga}</span></div>
+              <div class="cp-row"><span class="cp-lbl">Etanol Hidratado</span><span class="cp-val et">R$ ${c.et}</span></div>
+              <div class="cp-row"><span class="cp-lbl">Diesel S10</span><span class="cp-val s10">R$ ${c.s10}</span></div>
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // Controle de Abas (Navegação Desktop)
+    function switchTab(tabId, element) {
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      element.classList.add('active');
+    }
+
+    // Inicialização da Aplicação
+    window.addEventListener('DOMContentLoaded', () => {
+      buildPlanilha();
+      buildConcorrentes();
+    });
+  </script>
+</body>
+</html>

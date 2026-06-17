@@ -126,7 +126,7 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 }
 .btn-save:hover { opacity: 0.9; }
 
-/* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS (CONFORME PLANILHA DO USUÁRIO) */
+/* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS */
 .row-proprio { color: #00e5a0 !important; font-weight: 500; }
 .row-concorrente { color: #eef0f4 !important; }
 .badge-tipo { padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
@@ -147,11 +147,22 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 .popover-ftr { padding: 0.5rem 0.75rem; background: #121620; font-size: 0.65rem; color: var(--tx3); border-top: 1px solid var(--bd); }
 
 .placeholder-panel { padding: 2rem; background: var(--sf); border-radius: 12px; border: 1px solid var(--bd); text-align: center; color: var(--tx2); }
+
+/* ESTILOS EXCLUSIVOS DO PAINEL DE KPI */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; width: 100%; }
+.kpi-card { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; text-align: left; }
+.kpi-title { font-size: 0.75rem; color: var(--tx2); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.5px; }
+.kpi-value { font-size: 1.6rem; font-weight: 700; color: var(--tx); font-family: var(--mono); }
+.kpi-sub { font-size: 0.7rem; color: var(--tx3); }
+.kpi-section-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; flex: 1; min-height: 0; }
+.kpi-block { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; overflow: hidden; text-align: left; }
+.kpi-block-title { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; color: var(--ac); margin-bottom: 1rem; border-bottom: 1px solid var(--bd); padding-bottom: 0.5rem; }
+.kpi-list { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; list-style: none; }
+.kpi-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.5rem; color: var(--tx); }
 </style>
 </head>
 <body>
 
-  <!-- TOPBAR -->
   <header class="topbar">
     <div class="brand-group">
       <div class="logo">JB</div>
@@ -166,7 +177,6 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
   </header>
 
   <div class="app-container">
-    <!-- SIDEBAR COMPLETA -->
     <aside class="sidebar">
       <div>
         <div class="sb-section-title">Filtro Operacional</div>
@@ -189,16 +199,14 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       </nav>
     </aside>
 
-    <!-- WORKSPACE VIEWPORT -->
     <main class="workspace">
       
-      <!-- ABA PRINCIPAL 1: MEDIÇÃO DIÁRIA -->
       <section id="tab-medicao" class="view-panel active">
         <div class="table-actions">
           <div class="table-title">Matriz Integrada de Suprimentos <span>• Visão Horizontal Completa</span></div>
           <div style="display: flex; align-items: center; gap: 1rem;">
             <div class="scroll-indicator"><i class="fa-solid fa-left-right"></i> Use o scroll horizontal para ver tudo</div>
-            <button class="btn-save" onclick="alert('Dados salvos no bando de dados!')"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
+            <button class="btn-save" onclick="alert('Dados salvos no banco de dados!')"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
           </div>
         </div>
         
@@ -223,14 +231,11 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
                 <th style="color:var(--b-fin)">GC</th><th style="color:var(--b-fin)">GA</th><th style="color:var(--b-fin)">ET</th><th style="color:var(--b-fin)">S10</th>
               </tr>
             </thead>
-            <tbody id="matriz-corpo">
-              <!-- Inserido dinamicamente via JS -->
-            </tbody>
+            <tbody id="matriz-corpo"></tbody>
           </table>
         </div>
       </section>
 
-      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS (CONFORME SOLICITADO AGORA) -->
       <section id="tab-precos" class="view-panel">
         <div class="table-actions">
           <div class="table-title">Histórico de Coletas — Coleta de Preços <span>• Painel Auditor Integrado</span></div>
@@ -246,98 +251,121 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
                 <th>Latitude</th><th>Longitude</th><th>Foto</th>
               </tr>
             </thead>
-            <tbody id="coleta-corpo">
+            <tbody>
+              <tr class="row-proprio">
+                <td>15/06/2026</td><td>07:42</td><td>P. ALEX</td><td>RAFAEL</td><td>-</td>
+                <td><span class="badge-tipo proprio">Próprio</span></td><td>Ipiranga</td><td>Grupo JBretas</td><td>Mauricio</td>
+                <td>3,79</td><td>5,89</td><td>6,19</td><td>6,89</td><td>-</td><td>-19.923.411</td><td>-43.942.102</td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-ALEX-PROP-1506.jpg')" onmouseleave="hidePhoto()"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+              </tr>
+              <tr class="row-conconcorrente">
+                <td>15/06/2026</td><td>08:15</td><td>P. ALEX</td><td>RAFAEL</td><td>POSTO ALTERNATIVO</td>
+                <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Bandeira Branca</td><td>Independente</td><td>Mauricio</td>
+                <td>3,67</td><td>5,77</td><td>6,07</td><td>6,77</td><td>-</td><td>-19.925.120</td><td>-43.944.350</td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-ALEX-CONC-1506.jpg')" onmouseleave="hidePhoto()"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+              </tr>
               <tr class="row-concorrente">
                 <td>14/06/2026</td><td>09:15</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>POSTO DUAS PONTES</td>
                 <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Bandeira Branca</td><td>Independente</td><td>Mauricio</td>
                 <td>3,87</td><td>5,97</td><td>6,27</td><td>6,97</td><td>-</td><td>-19.900.247</td><td>-43.903.849</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
-              </tr>
-              <tr class="row-proprio">
-                <td>15/06/2026</td><td>11:45</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>P. BOMBOM MATRIZ</td>
-                <td><span class="badge-tipo proprio">Próprio</span></td><td>Ipiranga</td><td>Independente</td><td>Mauricio</td>
-                <td>3,67</td><td>5,79</td><td>6,09</td><td>-</td><td>-</td><td>-19.921.819</td><td>-43.922.651</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-PROPRIO.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-PROPRIO.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
-              </tr>
-              <tr class="row-concorrente">
-                <td>16/06/2026</td><td>09:15</td><td>P. BOMBOM MATRIZ</td><td>IGOR ARTOIS</td><td>POSTO REDE AQUI</td>
-                <td><span class="badge-tipo concorrente">Concorrente</span></td><td>Shell</td><td>Independente</td><td>Mauricio</td>
-                <td>3,99</td><td>5,49</td><td>5,89</td><td>-</td><td>-</td><td>-19.921.819</td><td>-43.922.651</td>
-                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-SHELL.jpg')" onmouseleave="hidePhoto()" onclick="showPhoto(event, 'P.-BOMBOM-MATRIZ-SHELL.jpg')"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
+                <td><span class="link-foto" onmouseenter="showPhoto(event, 'P.-BOMBOM-MATRIZ-CONC1.jpg')" onmouseleave="hidePhoto()"><i class="fa-regular fa-image"></i> Ver Foto</span></td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <!-- ABA PRINCIPAL 3: PEDIDOS DE CARGA -->
       <section id="tab-pedidos-carga" class="view-panel">
         <div class="placeholder-panel" style="border-left: 4px solid var(--b-pre);">
           <h2><i class="fa-solid fa-truck-ramp-box"></i> Painel de Aprovação de Carga (ADM)</h2>
-          <p style="margin-top: 1rem; color: var(--tx2);">Aqui o administrativo visualiza as sugestões enviadas pela logística no <b>📦 PRÉ-PEDIDO</b>, realiza ajustes finos se necessário, e ao clicar em "Aprovar", os volumes são injetados automaticamente na coluna <b>📋 PEDIDO FINAL</b> da tela anterior.</p>
+          <p style="margin-top: 1rem; color: var(--tx2);">Gerenciamento de volumes sugeridos e injeção automática no banco de dados.</p>
         </div>
       </section>
 
-      <!-- ABA PRINCIPAL 4: PAINEL DE KPI -->
       <section id="tab-kpi" class="view-panel">
-        <div class="placeholder-panel">
-          <h2><i class="fa-solid fa-chart-pie"></i> Painel de KPI</h2>
-          <p style="margin-top: 1rem;">Métricas de frentistas, estoques consolidados e auditoria de margens.</p>
+        <div class="kpi-grid">
+          <div class="kpi-card" style="border-left: 4px solid var(--b-ven)">
+            <span class="kpi-title">Volume Total Comercializado</span>
+            <div class="kpi-value">1.428.500 L</div>
+            <span class="kpi-sub">Acumulado mensal da rede</span>
+          </div>
+          <div class="kpi-card" style="border-left: 4px solid var(--b-med)">
+            <span class="kpi-title">Margem Média da Rede</span>
+            <div class="kpi-value" style="color: var(--ac)">R$ 0,51 / L</div>
+            <span class="kpi-sub">Meta estabelecida: R$ 0,48 / L</span>
+          </div>
+          <div class="kpi-card" style="border-left: 4px solid var(--b-pre)">
+            <span class="kpi-title">Diferença Operacional Total</span>
+            <div class="kpi-value" style="color: var(--b-dif)">-420 L</div>
+            <span class="kpi-sub">Variação física vs contábil (Rede)</span>
+          </div>
+        </div>
+
+        <div class="kpi-section-layout">
+          <div class="kpi-block">
+            <div class="kpi-block-title"><i class="fa-solid fa-trophy"></i> Eficiência Operacional — Frentistas (Top Margem)</div>
+            <ul class="kpi-list">
+              <li class="kpi-item"><span>1. Carlos Silva (P. ALEX)</span><strong style="color:var(--ac)">104.2% da Meta</strong></li>
+              <li class="kpi-item"><span>2. Marcos Souza (P. TOPAZIO)</span><strong>98.5% da Meta</strong></li>
+              <li class="kpi-item"><span>3. Amanda Costa (P. TUNEL)</span><strong>95.1% da Meta</strong></li>
+            </ul>
+          </div>
+          <div class="kpi-block">
+            <div class="kpi-block-title" style="color: var(--b-dif)"><i class="fa-solid fa-triangle-exclamation"></i> Alertas Ativos de Estoque Crítico</div>
+            <ul class="kpi-list">
+              <li class="kpi-item"><span>P. MANGABEIRAS — Etanol (ET)</span><span style="color:var(--b-dif); font-weight:bold;">Autonomia &lt; 12h</span></li>
+              <li class="kpi-item"><span>P. ALEX — Diesel S10</span><span style="color:var(--b-pre); font-weight:bold;">Tanque a 15% da capacidade</span></li>
+            </ul>
+          </div>
         </div>
       </section>
 
     </main>
   </div>
 
-  <!-- COMPONENTE FLUTUANTE (POPOVER DE IMAGEM ESTILO GOOGLE SHEETS) -->
   <div id="global-photo-popover" class="photo-popover">
-    <div class="popover-hdr">
-      <span id="popover-filename"><i class="fa-solid fa-image"></i> Arquivo</span>
-      <div style="display:flex; gap:8px; color:var(--tx2)">
-        <i class="fa-regular fa-copy"></i>
-        <i class="fa-solid fa-pen"></i>
-      </div>
-    </div>
+    <div class="popover-hdr"><span id="popover-filename">Arquivo</span></div>
     <div class="popover-body">
-      <!-- Simulação da foto real capturada da bomba de combustível -->
       <img src="https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&w=400&q=80" alt="Bomba">
-    </div>
-    <div class="popover-ftr">
-      <i class="fa-regular fa-user"></i> Pertence a você<br>
-      <span style="font-size:0.6rem; color:var(--tx3)">Nenhuma mudança desde a última visualização</span>
     </div>
   </div>
 
   <script>
-    // Gerador de linhas para a Matriz de Medição
+    // Gerador de Mock horizontal dinâmico
     function renderMatrizHorizontal() {
       const tbody = document.getElementById('matriz-corpo');
       let html = '';
-      for (let d = 1; d <= 10; d++) {
+      for (let d = 1; d <= 5; d++) {
         let diaStr = String(d).padStart(2, '0') + '/06';
         html += `
           <tr>
             <td class="sticky-col">${diaStr}</td>
+            
             <td><input type="text" class="cell-in" value="14.250"></td>
             <td><input type="text" class="cell-in" value="4.100"></td>
             <td><input type="text" class="cell-in" value="8.200"></td>
             <td><input type="text" class="cell-in" value="11.400"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="2.850"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="650"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="1.200"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-ven)" value="3.100"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="15.000"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="0"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="5.000"></td>
-            <td><input type="text" class="cell-in" style="color:var(--b-pre); font-weight:bold; background: rgba(249,199,79,0.05)" value="10.000"></td>
+            
+            <td><input type="text" class="cell-in" style="color:var(--b-ven);" value="2.850"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-ven);" value="650"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-ven);" value="1.200"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-ven);" value="3.100"></td>
+            
+            <td><input type="text" class="cell-in" style="color:var(--b-pre);" value="15.000"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-pre);" value="0"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-pre);" value="5.000"></td>
+            <td><input type="text" class="cell-in" style="color:var(--b-pre);" value="10.000"></td>
+            
             <td><input type="text" class="cell-in disabled" value="11.400"></td>
             <td><input type="text" class="cell-in disabled" value="3.450"></td>
             <td><input type="text" class="cell-in disabled" value="7.000"></td>
             <td><input type="text" class="cell-in disabled" value="8.300"></td>
+            
             <td><span style="color:var(--b-ven); font-family:var(--mono); font-weight:bold;">+120</span></td>
             <td><span style="color:var(--b-dif); font-family:var(--mono); font-weight:bold;">-10</span></td>
             <td><span style="color:var(--b-ven); font-family:var(--mono); font-weight:bold;">+45</span></td>
             <td><span style="color:var(--b-dif); font-family:var(--mono); font-weight:bold;">-110</span></td>
+            
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="15.000"></td>
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="0"></td>
             <td><input type="text" class="cell-in disabled" style="color:var(--b-fin); font-weight:bold;" value="5.000"></td>
@@ -348,18 +376,17 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       tbody.innerHTML = html;
     }
 
-    // Controle do Popover de Imagem (Aparece ao passar o mouse ou clicar)
+    // Controle do Popover de Imagem
     const popover = document.getElementById('global-photo-popover');
     const popoverName = document.getElementById('popover-filename');
 
     function showPhoto(event, title) {
-      popoverName.innerHTML = `<i class="fa-solid fa-image"></i> ${title}`;
+      popoverName.innerHTML = `<i class=\"fa-solid fa-image\"></i> ${title}`;
       popover.style.display = 'flex';
       
       const mouseX = event.clientX;
       const mouseY = event.clientY;
       
-      // Centraliza e posiciona dinamicamente perto do gatilho do ponteiro
       popover.style.left = (mouseX - 300) + 'px'; 
       popover.style.top = (mouseY - 80) + 'px';
     }
@@ -373,13 +400,23 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
       
-      document.getElementById(tabId).classList.add('active');
+      const target = document.getElementById(tabId);
+      // Correção de display block/flex dependendo do layout da aba
+      if (tabId === 'tab-kpi') {
+        target.style.display = 'block';
+      } else {
+        target.style.display = 'flex';
+      }
+      target.classList.add('active');
       element.classList.add('active');
     }
 
-    // Inicialização automática
     window.addEventListener('DOMContentLoaded', () => {
       renderMatrizHorizontal();
+      
+      // Inicialização correta de exibição
+      document.querySelectorAll('.view-panel').forEach(p => p.style.display = 'none');
+      document.getElementById('tab-medicao').style.display = 'flex';
     });
   </script>
 </body>

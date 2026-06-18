@@ -10,6 +10,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --bg: #0a0c10; --sf: #121620; --sf2: #1a1f2c; --sf3: #22293a;
+  --gap-line: transparent;
   --bd: #2b3349; --bd2: #3e4a68; --bd-col: #424f70;
   --ac: #00e5a0; --ac-d: rgba(0,229,160,0.1);
   --tx: #eef0f4; --tx2: #8a99ad; --tx3: #5c6b84;
@@ -25,6 +26,7 @@
 }
 :root[data-theme="light"] {
   --bg: #eef0f4; --sf: #ffffff; --sf2: #eceef2; --sf3: #dfe3ea;
+  --gap-line: #000000;
   --bd: #c2c9d6; --bd2: #9aa4b8; --bd-col: #a9b1c2;
   --ac: #00875f; --ac-d: rgba(0,135,95,0.1);
   --tx: #0f1420; --tx2: #313a4d; --tx3: #5a6478;
@@ -105,7 +107,13 @@ body {
 .ss-table tbody tr:nth-child(even) { background: var(--sf2); }
 /* GAP ENTRE BLOCOS (Medição / Venda / Carga / Pedido...): troque o valor "16px" pela largura do vão desejado,
    e var(--bg) pela cor que esse vão deve mostrar (atualmente a cor de fundo da página, criando um respiro real). */
-.ss-table td.grp-end, .ss-table th.grp-end { border-right: 16px solid var(--bg); }
+.ss-table td.grp-end, .ss-table th.grp-end { border-right: 16px solid var(--bg); position: relative; }
+/* Linha de grade fina exatamente no meio do vão. Cor controlada por --gap-line (preta no modo claro,
+   transparente no escuro). Ajuste "width" para deixar a linha mais grossa, e "right" se mudar o "16px" acima
+   (right deve ficar em metade negativa da largura do vão, ex.: vão de 20px -> right: -10px). */
+.ss-table td.grp-end::after, .ss-table th.grp-end::after {
+  content: ''; position: absolute; top: 0; bottom: 0; right: -8px; width: 1px; background: var(--gap-line);
+}
 
 /* Fixar coluna de dias na esquerda ao rolar */
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }

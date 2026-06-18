@@ -10,7 +10,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --bg: #0a0c10; --sf: #121620; --sf2: #1a1f2c; --sf3: #22293a;
-  --gap-line: transparent;
   --bd: #2b3349; --bd2: #3e4a68; --bd-col: #424f70;
   --ac: #00e5a0; --ac-d: rgba(0,229,160,0.1);
   --tx: #eef0f4; --tx2: #8a99ad; --tx3: #5c6b84;
@@ -26,7 +25,6 @@
 }
 :root[data-theme="light"] {
   --bg: #eef0f4; --sf: #ffffff; --sf2: #eceef2; --sf3: #dfe3ea;
-  --gap-line: #000000;
   --bd: #c2c9d6; --bd2: #9aa4b8; --bd-col: #a9b1c2;
   --ac: #00875f; --ac-d: rgba(0,135,95,0.1);
   --tx: #0f1420; --tx2: #313a4d; --tx3: #5a6478;
@@ -107,17 +105,19 @@ body {
 .ss-table tbody tr:nth-child(even) { background: var(--sf2); }
 /* GAP ENTRE BLOCOS (Medição / Venda / Carga / Pedido...): troque o valor "16px" pela largura do vão desejado,
    e var(--bg) pela cor que esse vão deve mostrar (atualmente a cor de fundo da página, criando um respiro real). */
-.ss-table td.grp-end, .ss-table th.grp-end { border-right: 16px solid var(--bg); position: relative; }
-/* Linha de grade fina bem na borda final da coluna (como numa planilha): fica colada no fim da célula, e o
-   vão vazio continua depois dela. Cor controlada por --gap-line (preta no modo claro, transparente no escuro).
-   "width" controla a espessura da linha; "right: 0" é o que a gruda na borda da célula (não mexer ao trocar o "16px" do vão). */
-.ss-table td.grp-end::after, .ss-table th.grp-end::after {
-  content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 1.5px; background: var(--gap-line);
-}
+.ss-table td.grp-end, .ss-table th.grp-end { border-right: 16px solid var(--bg); }
 
 /* Fixar coluna de dias na esquerda ao rolar */
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
-th.sticky-col { z-index: 15; background: var(--sf2); }
+th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
+
+/* CABEÇALHO FIXO (congelado) ao rolar a tela verticalmente.
+   --thead-row1-h é calculada via JS (função montarCabecalhoMedicao) com a altura real da 1ª linha do
+   cabeçalho, pra 2ª linha (G.C/G.A/ET) colar exatamente debaixo dela. O "42px" é só um valor de
+   segurança caso o JS ainda não tenha rodado. */
+.ss-table thead th { position: sticky; z-index: 18; }
+.ss-table thead tr:first-child th { top: 0; z-index: 20; }
+#medicao-thead tr:last-child th { top: var(--thead-row1-h, 42px); z-index: 19; }
 
 /* Cabeçalhos Superiores Dinâmicos */
 .ss-table thead tr:first-child th {
@@ -502,6 +502,13 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       });
       row2 += '</tr>';
       thead.innerHTML = row1 + row2;
+
+      // Mede a altura real da 1ª linha do cabeçalho pra 2ª linha (sticky) colar exatamente debaixo dela.
+      // Se um dia mudar o padding/fonte do cabeçalho, isso se ajusta sozinho — não precisa mexer aqui.
+      const linha1 = thead.querySelector('tr:first-child th');
+      if (linha1) {
+        document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
+      }
     }
 
     function fmtL(v) {
@@ -1076,6 +1083,11 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
       document.getElementById('theme-icon').className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
     }
+
+    window.addEventListener('resize', () => {
+      const linha1 = document.querySelector('#medicao-thead tr:first-child th');
+      if (linha1) document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
+    });
 
     // Inicialização automática
     window.addEventListener('DOMContentLoaded', () => {

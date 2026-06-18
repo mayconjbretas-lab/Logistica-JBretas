@@ -108,11 +108,11 @@ body {
 /* GAP ENTRE BLOCOS (Medição / Venda / Carga / Pedido...): troque o valor "16px" pela largura do vão desejado,
    e var(--bg) pela cor que esse vão deve mostrar (atualmente a cor de fundo da página, criando um respiro real). */
 .ss-table td.grp-end, .ss-table th.grp-end { border-right: 16px solid var(--bg); position: relative; }
-/* Linha de grade fina exatamente no meio do vão. Cor controlada por --gap-line (preta no modo claro,
-   transparente no escuro). Ajuste "width" para deixar a linha mais grossa, e "right" se mudar o "16px" acima
-   (right deve ficar em metade negativa da largura do vão, ex.: vão de 20px -> right: -10px). */
+/* Linha de grade fina bem na borda final da coluna (como numa planilha): fica colada no fim da célula, e o
+   vão vazio continua depois dela. Cor controlada por --gap-line (preta no modo claro, transparente no escuro).
+   "width" controla a espessura da linha; "right: 0" é o que a gruda na borda da célula (não mexer ao trocar o "16px" do vão). */
 .ss-table td.grp-end::after, .ss-table th.grp-end::after {
-  content: ''; position: absolute; top: 0; bottom: 0; right: -8px; width: 3px; background: var(--gap-line);
+  content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 1.5px; background: var(--gap-line);
 }
 
 /* Fixar coluna de dias na esquerda ao rolar */

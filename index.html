@@ -115,6 +115,11 @@ body {
 .ss-table td.grp-end::after, .ss-table th.grp-end::after {
   content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: var(--bd-col);
 }
+/* Mesma linha de grade, espelhada no começo da primeira coluna logo depois do vão (o outro "lado" do vão). */
+.ss-table tbody td.grp-start { position: relative; }
+.ss-table td.grp-start::before, .ss-table th.grp-start::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--bd-col);
+}
 
 /* Fixar coluna de dias na esquerda ao rolar */
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
@@ -502,14 +507,18 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
       const n = grupos.length;
       let row1 = '<tr><th rowspan="2" class="sticky-col" style="background: var(--sf2); border-bottom: 2px solid var(--bd2)">DIA</th>';
       CATEGORIAS_MEDICAO.forEach((cat, ci) => {
-        const grpCls = (ci < CATEGORIAS_MEDICAO.length - 1) ? ' grp-end' : '';
-        row1 += '<th colspan="' + n + '" class="' + cat.classe + grpCls + '">' + cat.titulo + '</th>';
+        const grpEndCls = (ci < CATEGORIAS_MEDICAO.length - 1) ? ' grp-end' : '';
+        const grpStartCls = (ci > 0) ? ' grp-start' : '';
+        row1 += '<th colspan="' + n + '" class="' + cat.classe + grpEndCls + grpStartCls + '">' + cat.titulo + '</th>';
       });
       row1 += '</tr>';
       let row2 = '<tr>';
-      CATEGORIAS_MEDICAO.forEach(cat => {
+      CATEGORIAS_MEDICAO.forEach((cat, ci) => {
         grupos.forEach((g, gi) => {
-          const cls = (gi === grupos.length - 1) ? ' class="grp-end"' : '';
+          let classes = '';
+          if (gi === grupos.length - 1) classes += ' grp-end';
+          if (ci > 0 && gi === 0) classes += ' grp-start';
+          const cls = classes ? ' class="' + classes.trim() + '"' : '';
           row2 += '<th' + cls + ' style="color:' + cat.cor + '" title="' + g.comb + '">' + g.abv + '</th>';
         });
       });
@@ -544,7 +553,7 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
           for (let i = 0; i < n; i++) {
             // Garante que se o bloco final não vier mapeado de imediato ele exiba o fallback nulo com segurança
             const val = bloco ? bloco[i] : null;
-            const tdCls = (i === n - 1) ? ' class="grp-end"' : '';
+            const tdCls = (i === n - 1) ? ' class="grp-end"' : ((bi > 0 && i === 0) ? ' class="grp-start"' : '');
             if (bi === 6) { // índice da diferença atualizado para 6 devido à nova coluna anterior
               const cor = val > 0 ? 'var(--b-ven)' : (val < 0 ? 'var(--b-dif)' : 'var(--tx3)');
               html += '<td' + tdCls + '><span style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' + (val > 0 ? '+' : '') + (val === null ? '—' : fmtL(val)) + '</span></td>';

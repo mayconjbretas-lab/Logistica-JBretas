@@ -527,7 +527,7 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 
       // Mede a altura real da 1ª linha do cabeçalho pra 2ª linha (sticky) colar exatamente debaixo dela.
       // Se um dia mudar o padding/fonte do cabeçalho, isso se ajusta sozinho — não precisa mexer aqui.
-      const linha1 = thead.querySelector('tr:first-child th');
+      const linha1 = thead.querySelector('tr:first-child th:not(.sticky-col)');
       if (linha1) {
         document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
       }
@@ -1107,7 +1107,7 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
     }
 
     window.addEventListener('resize', () => {
-      const linha1 = document.querySelector('#medicao-thead tr:first-child th');
+      const linha1 = document.querySelector('#medicao-thead tr:first-child th:not(.sticky-col)');
       if (linha1) document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
     });
 

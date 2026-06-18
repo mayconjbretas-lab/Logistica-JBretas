@@ -453,10 +453,11 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 
     // Mapa de cores por categoria — mesma lógica de cores que você já usa no Code.gs
     const CATEGORIAS_MEDICAO = [
-      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',           classe: 'h-med', cor: 'var(--b-med)' },
+      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',            classe: 'h-med', cor: 'var(--b-med)' },
       { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',       classe: 'h-ven', cor: 'var(--b-ven)' },
       { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',     classe: 'h-pvn', cor: 'var(--b-pvn)' },
-      { chave: 'pedido',    titulo: '📦 PEDIDO LOGÍSTICA (L)',   classe: 'h-pre', cor: 'var(--b-pre)' },
+      { chave: 'pedido',    titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',         classe: 'h-pre', cor: 'var(--b-pre)' },
+      { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)',   classe: 'h-pre', cor: 'var(--b-pre)' },
       { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',      classe: 'h-fin', cor: 'var(--b-fin)' },
       { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)', classe: 'h-dif', cor: 'var(--b-dif)' },
     ];
@@ -489,11 +490,15 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       dados.dias.forEach(d => {
         // Só mostra até o dia de hoje (dias futuros do mês ainda não têm medição lançada)
         html += '<tr><td class="sticky-col">' + String(d.dia).padStart(2,'0') + '/' + dados.mes + '</td>';
-        const blocos = [d.medicao, d.venda, d.carga, d.pedido, d.previsao, d.diferenca];
+        
+        // ADICIONADO: d.final incluído sequencialmente logo após o d.pedido
+        const blocos = [d.medicao, d.venda, d.carga, d.pedido, d.final, d.previsao, d.diferenca];
+        
         blocos.forEach((bloco, bi) => {
           for (let i = 0; i < n; i++) {
-            const val = bloco[i];
-            if (bi === 5) { // diferença — só texto colorido, não é editável
+            // Garante que se o bloco final não vier mapeado de imediato ele exiba o fallback nulo com segurança
+            const val = bloco ? bloco[i] : null; 
+            if (bi === 6) { // índice da diferença atualizado para 6 devido à nova coluna anterior
               const cor = val > 0 ? 'var(--b-ven)' : (val < 0 ? 'var(--b-dif)' : 'var(--tx3)');
               html += '<td><span style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' + (val > 0 ? '+' : '') + (val === null ? '—' : fmtL(val)) + '</span></td>';
             } else {

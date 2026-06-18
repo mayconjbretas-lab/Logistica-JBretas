@@ -10,7 +10,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --bg: #0a0c10; --sf: #121620; --sf2: #1a1f2c; --sf3: #22293a;
-  --bd: #242c3d; --bd2: #343f56;
+  --bd: #2b3349; --bd2: #3e4a68;
   --ac: #00e5a0; --ac-d: rgba(0,229,160,0.1);
   --tx: #eef0f4; --tx2: #8a99ad; --tx3: #5c6b84;
   
@@ -24,10 +24,19 @@
   --b-cus: #ff9e00; --b-cus-d: rgba(255,158,0,0.1);
 }
 :root[data-theme="light"] {
-  --bg: #f5f6f8; --sf: #ffffff; --sf2: #f0f1f4; --sf3: #e4e6eb;
-  --bd: #dde1e8; --bd2: #c7ccd6;
-  --ac: #00b386; --ac-d: rgba(0,179,134,0.08);
-  --tx: #1a1f2c; --tx2: #5c6b84; --tx3: #8a99ad;
+  --bg: #eef0f4; --sf: #ffffff; --sf2: #eceef2; --sf3: #dfe3ea;
+  --bd: #c2c9d6; --bd2: #9aa4b8;
+  --ac: #00875f; --ac-d: rgba(0,135,95,0.1);
+  --tx: #0f1420; --tx2: #313a4d; --tx3: #5a6478;
+
+  /* Cores dos Blocos Temáticos — versões escurecidas p/ contraste em fundo claro */
+  --b-med: #1d5fc2; --b-med-d: rgba(29,95,194,0.1);
+  --b-ven: #00875f; --b-ven-d: rgba(0,135,95,0.1);
+  --b-pre: #9a6a00; --b-pre-d: rgba(154,106,0,0.1);
+  --b-pvn: #7c3aed; --b-pvn-d: rgba(124,58,237,0.1);
+  --b-dif: #c81e45; --b-dif-d: rgba(200,30,69,0.1);
+  --b-fin: #0e78a0; --b-fin-d: rgba(14,120,160,0.1);
+  --b-cus: #b35900; --b-cus-d: rgba(179,89,0,0.1);
 }
 body {
   background: var(--bg); color: var(--tx); font-family: var(--sans);
@@ -90,8 +99,11 @@ body {
 }
 
 /* TABELA ESTILO SPREADSHEET INDÚSTRIA */
-.ss-table { border-collapse: collapse; text-align: left; font-size: 0.78rem; width: max-content; min-width: 100%; }
-.ss-table th, .ss-table td { padding: 0.45rem 0.6rem; border: 1px solid var(--bd); text-align: center; }
+.ss-table { border-collapse: collapse; text-align: left; font-size: 0.85rem; width: max-content; min-width: 100%; }
+.ss-table th, .ss-table td { padding: 0.6rem 1.1rem; border: 1px solid var(--bd); text-align: center; }
+/* Linhas de grade mais visíveis + separadores fortes entre os blocos de categoria */
+.ss-table tbody tr:nth-child(even) { background: var(--sf2); }
+.ss-table td.grp-end, .ss-table th.grp-end { border-right: 3px solid var(--bd2); }
 
 /* Fixar coluna de dias na esquerda ao rolar */
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
@@ -99,10 +111,10 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 
 /* Cabeçalhos Superiores Dinâmicos */
 .ss-table thead tr:first-child th {
-  font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; padding: 0.6rem;
+  font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; padding: 0.7rem 1.1rem; letter-spacing: 0.5px;
 }
 .ss-table thead tr:last-child th {
-  background: var(--sf2); color: var(--tx2); font-family: var(--mono); font-size: 0.65rem; font-weight: bold;
+  background: var(--sf2); color: var(--tx2); font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
 }
 
 /* Blocos de Cores do Header */
@@ -116,10 +128,10 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 
 /* Estilização das Células de Input */
 .cell-in {
-  width: 65px; background: transparent; border: none; color: var(--tx); text-align: center;
-  font-family: var(--mono); font-size: 0.78rem; outline: none; padding: 2px; border-radius: 4px;
+  width: 72px; background: transparent; border: none; color: var(--tx); text-align: center;
+  font-family: var(--mono); font-size: 0.85rem; font-weight: 600; outline: none; padding: 3px; border-radius: 4px;
 }
-.cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1px var(--ac); color: #fff; }
+.cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1.5px var(--ac); color: var(--tx); }
 .cell-in.disabled { pointer-events: none; opacity: 0.8; }
 
 /* Subtítulo informativo de scroll no rodapé */
@@ -135,12 +147,12 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
 .btn-save:hover { opacity: 0.9; }
 
 /* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS (CONFORME PLANILHA DO USUÁRIO) */
-.row-proprio { color: #00e5a0 !important; font-weight: 500; }
-.row-concorrente { color: #eef0f4 !important; }
+.row-proprio { color: var(--ac) !important; font-weight: 600; }
+.row-concorrente { color: var(--tx) !important; }
 .badge-tipo { padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
-.badge-tipo.proprio { background: rgba(0,229,160,0.1); color: #00e5a0; }
-.badge-tipo.concorrente { background: rgba(255,255,255,0.05); color: var(--tx2); }
-.link-foto { color: #4895ef; text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 500; }
+.badge-tipo.proprio { background: var(--ac-d); color: var(--ac); }
+.badge-tipo.concorrente { background: var(--sf3); color: var(--tx2); }
+.link-foto { color: var(--b-med); text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
 .link-foto:hover { color: var(--ac); }
 
 /* DESIGN COMPONENTE POPOVER FLUTUANTE DE IMAGEM GOOGLE SHEETS */
@@ -472,7 +484,10 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
       row1 += '</tr>';
       let row2 = '<tr>';
       CATEGORIAS_MEDICAO.forEach(cat => {
-        grupos.forEach(g => { row2 += '<th style="color:' + cat.cor + '" title="' + g.comb + '">' + g.abv + '</th>'; });
+        grupos.forEach((g, gi) => {
+          const cls = (gi === grupos.length - 1) ? ' class="grp-end"' : '';
+          row2 += '<th' + cls + ' style="color:' + cat.cor + '" title="' + g.comb + '">' + g.abv + '</th>';
+        });
       });
       row2 += '</tr>';
       thead.innerHTML = row1 + row2;
@@ -497,12 +512,13 @@ th.sticky-col { z-index: 15; background: var(--sf2); }
         blocos.forEach((bloco, bi) => {
           for (let i = 0; i < n; i++) {
             // Garante que se o bloco final não vier mapeado de imediato ele exiba o fallback nulo com segurança
-            const val = bloco ? bloco[i] : null; 
+            const val = bloco ? bloco[i] : null;
+            const tdCls = (i === n - 1) ? ' class="grp-end"' : '';
             if (bi === 6) { // índice da diferença atualizado para 6 devido à nova coluna anterior
               const cor = val > 0 ? 'var(--b-ven)' : (val < 0 ? 'var(--b-dif)' : 'var(--tx3)');
-              html += '<td><span style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' + (val > 0 ? '+' : '') + (val === null ? '—' : fmtL(val)) + '</span></td>';
+              html += '<td' + tdCls + '><span style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' + (val > 0 ? '+' : '') + (val === null ? '—' : fmtL(val)) + '</span></td>';
             } else {
-              html += '<td><input type="text" class="cell-in" value="' + fmtL(val) + '"></td>';
+              html += '<td' + tdCls + '><input type="text" class="cell-in" value="' + fmtL(val) + '"></td>';
             }
           }
         });

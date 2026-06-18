@@ -10,7 +10,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --bg: #0a0c10; --sf: #121620; --sf2: #1a1f2c; --sf3: #22293a;
-  --bd: #2b3349; --bd2: #3e4a68; --bd-col: #424f70;
+  --bd: #2b3349; --bd2: #3e4a68; --bd-col: #4f5d82;
   --ac: #00e5a0; --ac-d: rgba(0,229,160,0.1);
   --tx: #eef0f4; --tx2: #8a99ad; --tx3: #5c6b84;
   
@@ -25,7 +25,7 @@
 }
 :root[data-theme="light"] {
   --bg: #eef0f4; --sf: #ffffff; --sf2: #eceef2; --sf3: #dfe3ea;
-  --bd: #c2c9d6; --bd2: #9aa4b8; --bd-col: #a9b1c2;
+  --bd: #c2c9d6; --bd2: #9aa4b8; --bd-col: #8d97ad;
   --ac: #00875f; --ac-d: rgba(0,135,95,0.1);
   --tx: #0f1420; --tx2: #313a4d; --tx3: #5a6478;
 
@@ -105,7 +105,12 @@ body {
 .ss-table tbody tr:nth-child(even) { background: var(--sf2); }
 /* GAP ENTRE BLOCOS (Medição / Venda / Carga / Pedido...): troque o valor "16px" pela largura do vão desejado,
    e var(--bg) pela cor que esse vão deve mostrar (atualmente a cor de fundo da página, criando um respiro real). */
-.ss-table td.grp-end, .ss-table th.grp-end { border-right: 16px solid var(--bg); }
+.ss-table td.grp-end, .ss-table th.grp-end { border-right: 18px solid var(--bg); position: relative; }
+/* Linha de grade marcando o fim da coluna, bem colada na borda (estilo planilha), antes do vão começar.
+   "width" controla a espessura; "right: 0" é o que gruda na borda (não mexer ao trocar o "16px" acima). */
+.ss-table td.grp-end::after, .ss-table th.grp-end::after {
+  content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 2px; background: var(--bd2);
+}
 
 /* Fixar coluna de dias na esquerda ao rolar */
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
@@ -128,13 +133,17 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 }
 
 /* Blocos de Cores do Header */
-.h-med { background: var(--b-med-d) !important; color: var(--b-med) !important; border-bottom: 2px solid var(--b-med) !important; }
-.h-ven { background: var(--b-ven-d) !important; color: var(--b-ven) !important; border-bottom: 2px solid var(--b-ven) !important; }
-.h-pre { background: var(--b-pre-d) !important; color: var(--b-pre) !important; border-bottom: 2px solid var(--b-pre) !important; }
-.h-pvn { background: var(--b-pvn-d) !important; color: var(--b-pvn) !important; border-bottom: 2px solid var(--b-pvn) !important; }
-.h-dif { background: var(--b-dif-d) !important; color: var(--b-dif) !important; border-bottom: 2px solid var(--b-dif) !important; }
-.h-fin { background: var(--b-fin-d) !important; color: var(--b-fin) !important; border-bottom: 2px solid var(--b-fin) !important; }
-.h-cus { background: var(--b-cus-d) !important; color: var(--b-cus) !important; border-bottom: 2px solid var(--b-cus) !important; }
+/* Os fundos -d (h-med, h-ven etc.) são translúcidos de propósito (dão aquele tom suave), mas como o
+   cabeçalho agora fica fixo (sticky) por cima da tabela ao rolar, translúcido deixava os números das
+   linhas de baixo "passarem por trás" e embolarem com o texto do cabeçalho. Por isso empilhamos uma camada
+   sólida (var(--sf2)) embaixo do tom translúcido — visualmente fica igual, mas agora é 100% opaco. */
+.h-med { background: linear-gradient(var(--b-med-d), var(--b-med-d)), var(--sf2) !important; color: var(--b-med) !important; border-bottom: 2px solid var(--b-med) !important; }
+.h-ven { background: linear-gradient(var(--b-ven-d), var(--b-ven-d)), var(--sf2) !important; color: var(--b-ven) !important; border-bottom: 2px solid var(--b-ven) !important; }
+.h-pre { background: linear-gradient(var(--b-pre-d), var(--b-pre-d)), var(--sf2) !important; color: var(--b-pre) !important; border-bottom: 2px solid var(--b-pre) !important; }
+.h-pvn { background: linear-gradient(var(--b-pvn-d), var(--b-pvn-d)), var(--sf2) !important; color: var(--b-pvn) !important; border-bottom: 2px solid var(--b-pvn) !important; }
+.h-dif { background: linear-gradient(var(--b-dif-d), var(--b-dif-d)), var(--sf2) !important; color: var(--b-dif) !important; border-bottom: 2px solid var(--b-dif) !important; }
+.h-fin { background: linear-gradient(var(--b-fin-d), var(--b-fin-d)), var(--sf2) !important; color: var(--b-fin) !important; border-bottom: 2px solid var(--b-fin) !important; }
+.h-cus { background: linear-gradient(var(--b-cus-d), var(--b-cus-d)), var(--sf2) !important; color: var(--b-cus) !important; border-bottom: 2px solid var(--b-cus) !important; }
 
 /* Estilização das Células de Input */
 .cell-in {

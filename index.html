@@ -513,14 +513,13 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
     // editavel:false = Previsão e Diferença são CALCULADAS (na tela e na planilha),
     // nunca digitadas direto — por isso viram texto, não input.
     const CATEGORIAS_MEDICAO = [
-      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                 classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
+      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
       { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',            classe: 'h-ven', cor: 'var(--b-ven)', editavel: true  },
       { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',          classe: 'h-pvn', cor: 'var(--b-pvn)', editavel: true  },
       { chave: 'prePedido', titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',  classe: 'h-pre', cor: 'var(--b-pre)', editavel: true  },
       { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)', classe: 'h-cus', cor: 'var(--b-cus)', editavel: true  },
       { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',           classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
-      { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',       classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
-      { chave: 'diferenca', titulo: '$ EMPRESTIMO COMBUSTIVEL (L)',    classe: 'h-dif', cor: 'var(--b-dif)', editavel: false }
+      { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',      classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
     ];
 
     // Cada categoria usa sua própria lista de colunas: Venda usa os combustíveis
@@ -617,8 +616,11 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 
     // Recalcula Previsão e Diferença de UM dia específico (índice no array `dias`,
     // não o número do dia do mês) usando a MESMA fórmula da planilha:
-    // Previsão = Medição de ONTEM + Carga de hoje − Venda de hoje + Pedido Final de hoje
+    // Previsão = Medição de ONTEM + Carga de hoje − Venda de hoje
     // Diferença = Medição de hoje − Previsão de hoje
+    // Pedido (Pré-Pedido e Pedido Final) NÃO entra aqui — é só solicitação/histórico.
+    // Se entrasse, o mesmo litro seria contado 2x quando o caminhão chegasse de
+    // verdade e a Carga Recebida também fosse preenchida pro mesmo dia.
     function recalcularPrevisaoEDiff(diaIdx) {
       if (!DADOS_ATUAIS) return;
       const dias = DADOS_ATUAIS.dias;
@@ -634,11 +636,10 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
           const medOntem = diaOntem.medicao[i];
           if (medOntem !== null && medOntem !== undefined) {
             const carga  = Number(dia.carga[i])  || 0;
-            const pedido = Number(dia.pedido[i]) || 0;
             const idxVenda = vendaCols.findIndex(c => c.comb === g.comb);
             const venda = (idxVenda === -1 || dia.venda[idxVenda] === null || dia.venda[idxVenda] === undefined)
               ? 0 : Number(dia.venda[idxVenda]);
-            prevVal = Number(medOntem) + carga - venda + pedido;
+            prevVal = Number(medOntem) + carga - venda;
           }
         }
         dia.previsao[i] = prevVal;
@@ -676,10 +677,11 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 
       EDICOES_PENDENTES[diaIdx + '|' + campo + '|' + comb] = { dia: diaIdx, campo, comb, valor };
 
-      // Só recalcula o que realmente é afetado por esse campo —
-      // Pré-Pedido é só rascunho, não entra na fórmula da Previsão.
+      // Só recalcula o que realmente afeta a Previsão. Pedido (Pré-Pedido e
+      // Pedido Final) é só solicitação/histórico — não entra na conta, pra não
+      // duplicar com Carga Recebida quando o caminhão chegar de verdade.
       if (campo === 'medicao') recalcularPrevisaoEDiff(diaIdx + 1);
-      else if (campo === 'carga' || campo === 'pedido' || campo === 'venda') recalcularPrevisaoEDiff(diaIdx);
+      else if (campo === 'carga' || campo === 'venda') recalcularPrevisaoEDiff(diaIdx);
 
       atualizarBotoesSalvar();
     }

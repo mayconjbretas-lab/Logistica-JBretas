@@ -79,6 +79,24 @@ body {
   padding: 0.65rem 0.85rem; border-radius: 8px; outline: none; font-size: 0.85rem; font-weight: 500;
 }
 
+.coleta-filtros {
+  background: var(--sf); border: 1px solid var(--bd); border-top: none;
+  padding: 0.75rem 1.25rem; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: flex-end; flex-shrink: 0;
+}
+.filtro-campo { display: flex; flex-direction: column; gap: 3px; }
+.filtro-campo label { font-size: 0.62rem; color: var(--tx3); text-transform: uppercase; font-family: var(--mono); letter-spacing: 0.03em; }
+.filtro-input, .filtro-select {
+  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx);
+  padding: 0.42rem 0.6rem; border-radius: 6px; outline: none; font-size: 0.78rem; font-family: var(--mono);
+}
+.filtro-input:focus, .filtro-select:focus { box-shadow: 0 0 0 1.5px var(--ac); }
+.filtro-input { width: 132px; }
+.btn-limpar-filtro {
+  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx3); font-size: 0.75rem;
+  padding: 0.42rem 0.7rem; border-radius: 6px; cursor: pointer; font-family: var(--mono); display: flex; align-items: center; gap: 5px;
+}
+.btn-limpar-filtro:hover { color: var(--tx); border-color: var(--ac); }
+
 /* WORKSPACE */
 .workspace { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem; gap: 1rem; }
 .view-panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
@@ -396,6 +414,45 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
         <div class="table-actions">
           <div class="table-title">Histórico de Coletas — Coleta de Preços <span id="coleta-subtitle">• Painel Auditor Integrado</span></div>
           <div class="scroll-indicator"><i class="fa-solid fa-camera"></i> Passe o mouse ou clique em "Ver Foto" para auditar</div>
+        </div>
+
+        <div class="coleta-filtros">
+          <div class="filtro-campo">
+            <label>De</label>
+            <input type="date" class="filtro-input" id="flt-data-de" oninput="aplicarFiltrosColeta()">
+          </div>
+          <div class="filtro-campo">
+            <label>Até</label>
+            <input type="date" class="filtro-input" id="flt-data-ate" oninput="aplicarFiltrosColeta()">
+          </div>
+          <div class="filtro-campo">
+            <label>Posto Alvo</label>
+            <input type="text" class="filtro-input" id="flt-posto" placeholder="Buscar posto..." oninput="aplicarFiltrosColeta()">
+          </div>
+          <div class="filtro-campo">
+            <label>Gerente</label>
+            <input type="text" class="filtro-input" id="flt-gerente" placeholder="Buscar gerente..." oninput="aplicarFiltrosColeta()">
+          </div>
+          <div class="filtro-campo">
+            <label>Tipo</label>
+            <select class="filtro-select" id="flt-tipo" onchange="aplicarFiltrosColeta()">
+              <option value="">Todos</option>
+              <option value="Próprio">Próprio</option>
+              <option value="Concorrente">Concorrente</option>
+            </select>
+          </div>
+          <div class="filtro-campo">
+            <label>Supervisor</label>
+            <select class="filtro-select" id="flt-supervisor" onchange="aplicarFiltrosColeta()">
+              <option value="">Todos</option>
+              <option value="Mauricio">Mauricio</option>
+              <option value="Fabricio">Fabricio</option>
+              <option value="Paulo">Paulo</option>
+              <option value="Gledson">Gledson</option>
+              <option value="Rodrigo">Rodrigo</option>
+            </select>
+          </div>
+          <button class="btn-limpar-filtro" onclick="limparFiltrosColeta()"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros</button>
         </div>
         
         <div class="spreadsheet-frame">
@@ -842,6 +899,8 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
     }
 
     // ===== COLETA DE PREÇOS — dados reais via tipo=coletaRecentes =====
+    let COLETAS_TODAS = []; // guarda tudo que veio do Apps Script; os filtros recortam em cima disso, sem nova chamada
+
     function badgeTipo(tipo) {
       const cls = tipo === 'Próprio' ? 'proprio' : 'concorrente';
       return '<span class="badge-tipo ' + cls + '">' + (tipo || '-') + '</span>';
@@ -852,7 +911,7 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
     function montarLinhasColeta(registros) {
       const tbody = document.getElementById('coleta-corpo');
       if (!registros.length) {
-        tbody.innerHTML = '<tr><td colspan="17" style="padding:1.5rem; color:var(--tx3);">Nenhuma coleta nos últimos dias.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="17" style="padding:1.5rem; color:var(--tx3);">Nenhuma coleta encontrada com esse filtro.</td></tr>';
         return;
       }
       let html = '';
@@ -871,6 +930,59 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
       tbody.innerHTML = html;
     }
 
+    // Converte "DD/MM/AAAA" pra Date, pra dar pra comparar com os campos <input type="date">
+    function parseDataBR(str) {
+      if (!str) return null;
+      const p = String(str).split('/');
+      if (p.length !== 3) return null;
+      return new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
+    }
+
+    // Recorta COLETAS_TODAS de acordo com os campos de filtro preenchidos e
+    // redesenha a tabela — não faz nenhuma chamada nova ao Apps Script.
+    function aplicarFiltrosColeta() {
+      const de       = document.getElementById('flt-data-de').value;
+      const ate      = document.getElementById('flt-data-ate').value;
+      const posto    = document.getElementById('flt-posto').value.trim().toUpperCase();
+      const gerente  = document.getElementById('flt-gerente').value.trim().toUpperCase();
+      const tipo     = document.getElementById('flt-tipo').value;
+      const sup      = document.getElementById('flt-supervisor').value;
+
+      const dataDe  = de  ? new Date(de  + 'T00:00:00') : null;
+      const dataAte = ate ? new Date(ate + 'T23:59:59') : null;
+
+      const filtrados = COLETAS_TODAS.filter(r => {
+        if (posto   && !String(r.postoAlvo || '').toUpperCase().includes(posto))   return false;
+        if (gerente && !String(r.gerente   || '').toUpperCase().includes(gerente)) return false;
+        if (tipo    && r.tipo !== tipo)                                            return false;
+        if (sup     && r.supervisor !== sup)                                       return false;
+        if (dataDe || dataAte) {
+          const d = parseDataBR(r.data);
+          if (!d) return false;
+          if (dataDe  && d < dataDe)  return false;
+          if (dataAte && d > dataAte) return false;
+        }
+        return true;
+      });
+
+      montarLinhasColeta(filtrados);
+
+      const filtrosAtivos = !!(de || ate || posto || gerente || tipo || sup);
+      document.getElementById('coleta-subtitle').textContent = filtrosAtivos
+        ? '• ' + filtrados.length + ' de ' + COLETAS_TODAS.length + ' coletas (filtro ativo)'
+        : '• ' + COLETAS_TODAS.length + ' coletas nos últimos 15 dias (atualizado em tempo real)';
+    }
+
+    function limparFiltrosColeta() {
+      document.getElementById('flt-data-de').value = '';
+      document.getElementById('flt-data-ate').value = '';
+      document.getElementById('flt-posto').value = '';
+      document.getElementById('flt-gerente').value = '';
+      document.getElementById('flt-tipo').value = '';
+      document.getElementById('flt-supervisor').value = '';
+      aplicarFiltrosColeta();
+    }
+
     async function carregarColetas() {
       const subtitle = document.getElementById('coleta-subtitle');
       const tbody = document.getElementById('coleta-corpo');
@@ -880,8 +992,8 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
           subtitle.textContent = '• Erro ao carregar';
           return;
         }
-        subtitle.textContent = '• ' + dados.registros.length + ' coletas nos últimos 15 dias (atualizado em tempo real)';
-        montarLinhasColeta(dados.registros);
+        COLETAS_TODAS = dados.registros;
+        aplicarFiltrosColeta();
       } catch (err) {
         subtitle.textContent = '• Falha ao conectar com o Apps Script';
         tbody.innerHTML = '<tr><td colspan="17" style="padding:1.5rem; color:var(--b-dif);">Não foi possível carregar: ' + err.message + '</td></tr>';

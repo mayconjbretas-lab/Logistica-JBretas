@@ -545,28 +545,69 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
       const tbody = document.getElementById('matriz-corpo');
       const n = dados.grupos.length;
       let html = '';
-      dados.dias.forEach(d => {
-        // Só mostra até o dia de hoje (dias futuros do mês ainda não têm medição lançada)
+
+      dados.dias.forEach((d, idx) => {
         html += '<tr><td class="sticky-col">' + String(d.dia).padStart(2,'0') + '/' + dados.mes + '</td>';
-        
-        // ADICIONADO: d.final incluído sequencialmente logo após o d.pedido
-        const blocos = [d.medicao, d.venda, d.carga, d.pedido, d.final, d.previsao, d.diferenca];
-        
-        blocos.forEach((bloco, bi) => {
+
+        // ── PREVISÃO CALCULADA EM JS ──────────────────────────────────────────
+        // Previsão de hoje  (fecha 23:59): Med ontem + Carga hoje − Venda hoje
+        // Previsão de amanhã (tem pedido): Med hoje + Carga hoje + Pedido final − Venda hoje
+        // Prioridade: amanhã (se tiver med hoje + pedido final), senão hoje (se tiver med ontem)
+        const prevCalculada = dados.grupos.map((g, i) => {
+          const medOntem    = idx > 0 ? (dados.dias[idx - 1].medicao?.[i] ?? 0) : 0;
+          const medHoje     = d.medicao?.[i] ?? 0;
+          const cargaHoje   = d.carga?.[i] ?? 0;
+          const vendaHoje   = d.venda?.[i] ?? 0;
+          const pedidoFinal = d.final?.[i] ?? 0;
+
+          const prevHoje   = medOntem > 0 ? (medOntem + cargaHoje - vendaHoje) : null;
+          const prevAmanha = (medHoje > 0 && pedidoFinal > 0)
+            ? (medHoje + cargaHoje + pedidoFinal - vendaHoje)
+            : null;
+
+          return prevAmanha !== null ? prevAmanha : prevHoje;
+        });
+        // ─────────────────────────────────────────────────────────────────────
+
+        const blocos = [
+          { dados: d.medicao,    bi: 0 },
+          { dados: d.venda,      bi: 1 },
+          { dados: d.carga,      bi: 2 },
+          { dados: d.pedido,     bi: 3 },
+          { dados: d.final,      bi: 4 },
+          { dados: prevCalculada, bi: 5 }, // previsão calculada — só leitura, azul
+          { dados: d.diferenca,  bi: 6 },  // diferença — só leitura, colorida
+        ];
+
+        blocos.forEach(({ dados: bloco, bi }) => {
           for (let i = 0; i < n; i++) {
-            // Garante que se o bloco final não vier mapeado de imediato ele exiba o fallback nulo com segurança
             const val = bloco ? bloco[i] : null;
-            const tdCls = (i === n - 1) ? ' class="grp-end"' : ((bi > 0 && i === 0) ? ' class="grp-start"' : '');
-            if (bi === 6) { // índice da diferença atualizado para 6 devido à nova coluna anterior
+            const isGrpEnd   = i === n - 1;
+            const isGrpStart = bi > 0 && i === 0;
+            let tdCls = '';
+            if (isGrpEnd && isGrpStart) tdCls = ' class="grp-end grp-start"';
+            else if (isGrpEnd)          tdCls = ' class="grp-end"';
+            else if (isGrpStart)        tdCls = ' class="grp-start"';
+
+            if (bi === 6) {
+              // Diferença — colorida, só leitura
               const cor = val > 0 ? 'var(--b-ven)' : (val < 0 ? 'var(--b-dif)' : 'var(--tx3)');
-              html += '<td' + tdCls + '><span style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' + (val > 0 ? '+' : '') + (val === null ? '—' : fmtL(val)) + '</span></td>';
+              html += '<td' + tdCls + '><span style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' +
+                (val > 0 ? '+' : '') + (val === null ? '—' : fmtL(val)) + '</span></td>';
+            } else if (bi === 5) {
+              // Previsão calculada — azul, só leitura, arredondada
+              const display = val === null ? '—' : fmtL(Math.round(val));
+              html += '<td' + tdCls + '><span style="color:var(--b-fin); font-family:var(--mono); font-weight:700;">' + display + '</span></td>';
             } else {
+              // Demais blocos — editáveis
               html += '<td' + tdCls + '><input type="text" class="cell-in" value="' + fmtL(val) + '"></td>';
             }
           }
         });
+
         html += '</tr>';
       });
+
       tbody.innerHTML = html || '<tr><td style="padding:1.5rem; color:var(--tx3);">Sem dados para este posto neste mês.</td></tr>';
     }
 

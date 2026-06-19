@@ -165,6 +165,10 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1.5px var(--ac); color: var(--tx); }
 .cell-in.disabled { pointer-events: none; opacity: 0.8; }
 
+/* Célula editada mas ainda não salva na planilha — laranja chama atenção sem ser alarmante */
+.cell-in.cell-dirty { background: rgba(249,199,79,0.15); box-shadow: 0 0 0 1.5px var(--b-pre); color: var(--b-pre); }
+.cell-in.cell-dirty:focus { box-shadow: 0 0 0 1.5px var(--b-pre); }
+
 /* Subtítulo informativo de scroll no rodapé */
 .scroll-indicator {
   display: flex; align-items: center; justify-content: flex-end; gap: 6px;
@@ -176,6 +180,10 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
   font-weight: 700; font-size: 0.75rem; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px;
 }
 .btn-save:hover { opacity: 0.9; }
+.btn-save:disabled { background: var(--sf3); color: var(--tx3); cursor: not-allowed; opacity: 0.7; }
+.btn-save.btn-save-pre { background: var(--b-pre); }
+.btn-save.btn-save-pre:disabled { background: var(--sf3); color: var(--tx3); }
+
 
 /* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS (CONFORME PLANILHA DO USUÁRIO) */
 .row-proprio { color: var(--ac) !important; font-weight: 600; }
@@ -366,7 +374,8 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
           <div class="table-title">Matriz Integrada de Suprimentos <span id="medicao-subtitle">• Carregando posto...</span></div>
           <div style="display: flex; align-items: center; gap: 1rem;">
             <div class="scroll-indicator"><i class="fa-solid fa-left-right"></i> Use o scroll horizontal para ver tudo</div>
-            <button class="btn-save" onclick="alert('Em breve: grava direto na coluna de Pedido Logística do mês via Apps Script.')"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
+            <button class="btn-save" id="btn-salvar-matriz" disabled onclick="salvarAlteracoesMatriz()"><i class="fa-solid fa-floppy-disk"></i> Salvar Alterações</button>
+            <button class="btn-save btn-save-pre" id="btn-enviar-prepedido" disabled onclick="enviarPrePedido()"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
           </div>
         </div>
 
@@ -494,22 +503,37 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
       return resp.json();
     }
 
+    // Estado em memória da matriz carregada — espelha o JSON do mesCompleto e é
+    // atualizado a cada digitação, pra Previsão/Diferença recalcularem na hora
+    // sem precisar voltar no Apps Script a cada tecla.
+    let DADOS_ATUAIS = null;
+    let EDICOES_PENDENTES = {}; // chave "dia|campo|combustivel" -> {dia, campo, comb, valor}
+
     // Mapa de cores por categoria — mesma lógica de cores que você já usa no Code.gs
+    // editavel:false = Previsão e Diferença são CALCULADAS (na tela e na planilha),
+    // nunca digitadas direto — por isso viram texto, não input.
     const CATEGORIAS_MEDICAO = [
-      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',            classe: 'h-med', cor: 'var(--b-med)' },
-      { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',       classe: 'h-ven', cor: 'var(--b-ven)' },
-      { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',     classe: 'h-pvn', cor: 'var(--b-pvn)' },
-      { chave: 'pedido',    titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',         classe: 'h-pre', cor: 'var(--b-pre)' },
-      { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)',   classe: 'h-pre', cor: 'var(--b-pre)' },
-      { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',      classe: 'h-fin', cor: 'var(--b-fin)' },
-      { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)', classe: 'h-dif', cor: 'var(--b-dif)' },
+      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
+      { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',            classe: 'h-ven', cor: 'var(--b-ven)', editavel: true  },
+      { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',          classe: 'h-pvn', cor: 'var(--b-pvn)', editavel: true  },
+      { chave: 'prePedido', titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',  classe: 'h-pre', cor: 'var(--b-pre)', editavel: true  },
+      { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)', classe: 'h-cus', cor: 'var(--b-cus)', editavel: true  },
+      { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',           classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
+      { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',      classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
     ];
 
-    function montarCabecalhoMedicao(grupos) {
+    // Cada categoria usa sua própria lista de colunas: Venda usa os combustíveis
+    // de venda do posto; todas as outras usam os grupos de tanque (que podem
+    // combinar 2 tanques do mesmo combustível numa coluna só, com capacidade somada).
+    function colunasDaCategoria(chave, grupos, combustiveisVenda) {
+      return chave === 'venda' ? combustiveisVenda : grupos;
+    }
+
+    function montarCabecalhoMedicao(grupos, combustiveisVenda) {
       const thead = document.getElementById('medicao-thead');
-      const n = grupos.length;
       let row1 = '<tr><th rowspan="2" class="sticky-col" style="background: var(--sf2); border-bottom: 2px solid var(--bd2)">DIA</th>';
       CATEGORIAS_MEDICAO.forEach((cat, ci) => {
+        const n = colunasDaCategoria(cat.chave, grupos, combustiveisVenda).length;
         const grpEndCls = (ci < CATEGORIAS_MEDICAO.length - 1) ? ' grp-end' : '';
         const grpStartCls = (ci > 0) ? ' grp-start' : '';
         row1 += '<th colspan="' + n + '" class="' + cat.classe + grpEndCls + grpStartCls + '">' + cat.titulo + '</th>';
@@ -517,9 +541,10 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
       row1 += '</tr>';
       let row2 = '<tr>';
       CATEGORIAS_MEDICAO.forEach((cat, ci) => {
-        grupos.forEach((g, gi) => {
+        const cols = colunasDaCategoria(cat.chave, grupos, combustiveisVenda);
+        cols.forEach((g, gi) => {
           let classes = '';
-          if (gi === grupos.length - 1) classes += ' grp-end';
+          if (gi === cols.length - 1) classes += ' grp-end';
           if (ci > 0 && gi === 0) classes += ' grp-start';
           const cls = classes ? ' class="' + classes.trim() + '"' : '';
           row2 += '<th' + cls + ' style="color:' + cat.cor + '" title="' + g.comb + '">' + g.abv + '</th>';
@@ -529,7 +554,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
       thead.innerHTML = row1 + row2;
 
       // Mede a altura real da 1ª linha do cabeçalho pra 2ª linha (sticky) colar exatamente debaixo dela.
-      // Se um dia mudar o padding/fonte do cabeçalho, isso se ajusta sozinho — não precisa mexer aqui.
       const linha1 = thead.querySelector('tr:first-child th:not(.sticky-col)');
       if (linha1) {
         document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
@@ -537,78 +561,215 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
     }
 
     function fmtL(v) {
-      if (v === null || v === undefined) return '—';
-      return Number(v).toLocaleString('pt-BR');
+      if (v === null || v === undefined || v === '') return '—';
+      return Math.round(Number(v)).toLocaleString('pt-BR');
+    }
+
+    // Converte texto digitado em pt-BR (ponto de milhar, vírgula decimal) pra número.
+    // Campo vazio vira null (= "não preenchido"), não zero — importante pra Previsão
+    // saber distinguir "0 litros de verdade" de "ainda não digitado".
+    function parseNumBR(str) {
+      if (str === null || str === undefined) return null;
+      const limpo = String(str).replace(/\./g, '').replace(',', '.').replace('—', '').trim();
+      if (limpo === '') return null;
+      const n = parseFloat(limpo);
+      return isNaN(n) ? null : n;
     }
 
     function montarLinhasMedicao(dados) {
       const tbody = document.getElementById('matriz-corpo');
-      const n = dados.grupos.length;
+      const grupos = dados.grupos;
+      const vendaCols = dados.combustiveisVenda;
       let html = '';
 
-      dados.dias.forEach((d, idx) => {
+      dados.dias.forEach((d, diaIdx) => {
         html += '<tr><td class="sticky-col">' + String(d.dia).padStart(2,'0') + '/' + dados.mes + '</td>';
 
-        // ── PREVISÃO CALCULADA EM JS ──────────────────────────────────────────
-        // Previsão de hoje  (fecha 23:59): Med ontem + Carga hoje − Venda hoje
-        // Previsão de amanhã (tem pedido): Med hoje + Carga hoje + Pedido final − Venda hoje
-        // Prioridade: amanhã (se tiver med hoje + pedido final), senão hoje (se tiver med ontem)
-        const prevCalculada = dados.grupos.map((g, i) => {
-          const medOntem    = idx > 0 ? (dados.dias[idx - 1].medicao?.[i] ?? 0) : 0;
-          const medHoje     = d.medicao?.[i] ?? 0;
-          const cargaHoje   = d.carga?.[i] ?? 0;
-          const vendaHoje   = d.venda?.[i] ?? 0;
-          const pedidoFinal = d.final?.[i] ?? 0;
+        CATEGORIAS_MEDICAO.forEach((cat, ci) => {
+          const cols = colunasDaCategoria(cat.chave, grupos, vendaCols);
+          const valores = d[cat.chave] || [];
 
-          const prevHoje   = medOntem > 0 ? (medOntem + cargaHoje - vendaHoje) : null;
-          const prevAmanha = (medHoje > 0 && pedidoFinal > 0)
-            ? (medHoje + cargaHoje + pedidoFinal - vendaHoje)
-            : null;
+          cols.forEach((col, i) => {
+            const val = valores[i];
+            const tdCls = (i === cols.length - 1) ? ' class="grp-end"' : ((ci > 0 && i === 0) ? ' class="grp-start"' : '');
 
-          return prevAmanha !== null ? prevAmanha : prevHoje;
-        });
-        // ─────────────────────────────────────────────────────────────────────
-
-        const blocos = [
-          { dados: d.medicao,    bi: 0 },
-          { dados: d.venda,      bi: 1 },
-          { dados: d.carga,      bi: 2 },
-          { dados: d.pedido,     bi: 3 },
-          { dados: d.final,      bi: 4 },
-          { dados: prevCalculada, bi: 5 }, // previsão calculada — só leitura, azul
-          { dados: d.diferenca,  bi: 6 },  // diferença — só leitura, colorida
-        ];
-
-        blocos.forEach(({ dados: bloco, bi }) => {
-          for (let i = 0; i < n; i++) {
-            const val = bloco ? bloco[i] : null;
-            const isGrpEnd   = i === n - 1;
-            const isGrpStart = bi > 0 && i === 0;
-            let tdCls = '';
-            if (isGrpEnd && isGrpStart) tdCls = ' class="grp-end grp-start"';
-            else if (isGrpEnd)          tdCls = ' class="grp-end"';
-            else if (isGrpStart)        tdCls = ' class="grp-start"';
-
-            if (bi === 6) {
-              // Diferença — colorida, só leitura
+            if (cat.chave === 'previsao') {
+              html += '<td' + tdCls + '><span id="prev_' + diaIdx + '_' + i + '">' + fmtL(val) + '</span></td>';
+            } else if (cat.chave === 'diferenca') {
               const cor = val > 0 ? 'var(--b-ven)' : (val < 0 ? 'var(--b-dif)' : 'var(--tx3)');
-              html += '<td' + tdCls + '><span style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' +
-                (val > 0 ? '+' : '') + (val === null ? '—' : fmtL(val)) + '</span></td>';
-            } else if (bi === 5) {
-              // Previsão calculada — azul, só leitura, arredondada
-              const display = val === null ? '—' : fmtL(Math.round(val));
-              html += '<td' + tdCls + '><span style="color:var(--b-fin); font-family:var(--mono); font-weight:700;">' + display + '</span></td>';
+              html += '<td' + tdCls + '><span id="diff_' + diaIdx + '_' + i + '" style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' +
+                (val === null || val === undefined ? '—' : ((val > 0 ? '+' : '') + fmtL(val))) + '</span></td>';
             } else {
-              // Demais blocos — editáveis
-              html += '<td' + tdCls + '><input type="text" class="cell-in" value="' + fmtL(val) + '"></td>';
+              const combAttr = String(col.comb).replace(/"/g, '&quot;');
+              html += '<td' + tdCls + '><input type="text" inputmode="numeric" class="cell-in"' +
+                ' data-dia="' + diaIdx + '" data-campo="' + cat.chave + '" data-comb="' + combAttr + '"' +
+                ' value="' + fmtL(val).replace('—','') + '"' +
+                ' oninput="onCelulaEditada(this)" onblur="onCelulaBlur(this)"></td>';
             }
-          }
+          });
         });
 
         html += '</tr>';
       });
-
       tbody.innerHTML = html || '<tr><td style="padding:1.5rem; color:var(--tx3);">Sem dados para este posto neste mês.</td></tr>';
+    }
+
+    // Recalcula Previsão e Diferença de UM dia específico (índice no array `dias`,
+    // não o número do dia do mês) usando a MESMA fórmula da planilha:
+    // Previsão = Medição de ONTEM + Carga de hoje − Venda de hoje + Pedido Final de hoje
+    // Diferença = Medição de hoje − Previsão de hoje
+    function recalcularPrevisaoEDiff(diaIdx) {
+      if (!DADOS_ATUAIS) return;
+      const dias = DADOS_ATUAIS.dias;
+      const dia = dias[diaIdx];
+      if (!dia) return; // fora do mês (ex: tentou recalcular o dia seguinte ao dia 30/31)
+      const diaOntem = dias[diaIdx - 1];
+      const grupos = DADOS_ATUAIS.grupos;
+      const vendaCols = DADOS_ATUAIS.combustiveisVenda;
+
+      grupos.forEach((g, i) => {
+        let prevVal = null;
+        if (diaOntem) {
+          const medOntem = diaOntem.medicao[i];
+          if (medOntem !== null && medOntem !== undefined) {
+            const carga  = Number(dia.carga[i])  || 0;
+            const pedido = Number(dia.pedido[i]) || 0;
+            const idxVenda = vendaCols.findIndex(c => c.comb === g.comb);
+            const venda = (idxVenda === -1 || dia.venda[idxVenda] === null || dia.venda[idxVenda] === undefined)
+              ? 0 : Number(dia.venda[idxVenda]);
+            prevVal = Number(medOntem) + carga - venda + pedido;
+          }
+        }
+        dia.previsao[i] = prevVal;
+
+        const medHoje = dia.medicao[i];
+        const diffVal = (prevVal !== null && medHoje !== null && medHoje !== undefined)
+          ? Number(medHoje) - prevVal : null;
+        dia.diferenca[i] = diffVal;
+
+        const prevEl = document.getElementById('prev_' + diaIdx + '_' + i);
+        if (prevEl) prevEl.textContent = fmtL(prevVal);
+        const diffEl = document.getElementById('diff_' + diaIdx + '_' + i);
+        if (diffEl) {
+          const cor = diffVal > 0 ? 'var(--b-ven)' : (diffVal < 0 ? 'var(--b-dif)' : 'var(--tx3)');
+          diffEl.style.color = cor;
+          diffEl.textContent = (diffVal === null ? '—' : ((diffVal > 0 ? '+' : '') + fmtL(diffVal)));
+        }
+      });
+    }
+
+    function onCelulaEditada(input) {
+      if (!DADOS_ATUAIS) return;
+      const diaIdx = parseInt(input.dataset.dia);
+      const campo  = input.dataset.campo;
+      const comb   = input.dataset.comb;
+      const valor  = parseNumBR(input.value);
+
+      input.classList.add('cell-dirty');
+
+      const diaObj = DADOS_ATUAIS.dias[diaIdx];
+      const cols = campo === 'venda' ? DADOS_ATUAIS.combustiveisVenda : DADOS_ATUAIS.grupos;
+      const idx = cols.findIndex(c => c.comb === comb);
+      if (idx === -1) return;
+      diaObj[campo][idx] = valor;
+
+      EDICOES_PENDENTES[diaIdx + '|' + campo + '|' + comb] = { dia: diaIdx, campo, comb, valor };
+
+      // Só recalcula o que realmente é afetado por esse campo —
+      // Pré-Pedido é só rascunho, não entra na fórmula da Previsão.
+      if (campo === 'medicao') recalcularPrevisaoEDiff(diaIdx + 1);
+      else if (campo === 'carga' || campo === 'pedido' || campo === 'venda') recalcularPrevisaoEDiff(diaIdx);
+
+      atualizarBotoesSalvar();
+    }
+
+    function onCelulaBlur(input) {
+      const valor = parseNumBR(input.value);
+      input.value = fmtL(valor).replace('—', '');
+    }
+
+    function atualizarBotoesSalvar() {
+      const pendentes  = Object.values(EDICOES_PENDENTES);
+      const matrizQtd  = pendentes.filter(e => e.campo !== 'prePedido').length;
+      const preQtd     = pendentes.filter(e => e.campo === 'prePedido').length;
+
+      const btnMatriz = document.getElementById('btn-salvar-matriz');
+      const btnPre    = document.getElementById('btn-enviar-prepedido');
+      if (btnMatriz) {
+        btnMatriz.disabled = matrizQtd === 0;
+        btnMatriz.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações' + (matrizQtd ? ' (' + matrizQtd + ')' : '');
+      }
+      if (btnPre) {
+        btnPre.disabled = preQtd === 0;
+        btnPre.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido' + (preQtd ? ' (' + preQtd + ')' : '');
+      }
+    }
+
+    function limparDestaqueEdicoes() {
+      document.querySelectorAll('#matriz-corpo .cell-in.cell-dirty').forEach(el => el.classList.remove('cell-dirty'));
+    }
+
+    // Grava Medição, Venda, Carga e Pedido Final direto nas células da aba mensal.
+    // Previsão/Diferença continuam sendo fórmula nativa da planilha — como elas
+    // leem dessas mesmas células, recalculam sozinhas assim que isso salva.
+    async function salvarAlteracoesMatriz() {
+      const posto = document.getElementById('global-posto').value;
+      const itens = Object.values(EDICOES_PENDENTES)
+        .filter(e => e.campo !== 'prePedido')
+        .map(e => ({ data: DADOS_ATUAIS.dias[e.dia].data, campo: e.campo, combustivel: e.comb, valor: e.valor }));
+      if (!itens.length || !posto) return;
+
+      const btn = document.getElementById('btn-salvar-matriz');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+
+      try {
+        // mode:'no-cors' — mesma limitação do app de Fechamento: não dá pra ler a
+        // resposta do Apps Script daqui, só saber se a rede respondeu ou não.
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tipo: 'editar_matriz', posto: posto, itens: itens, user: 'ADM Logística (desktop)' })
+        });
+        Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo !== 'prePedido') delete EDICOES_PENDENTES[k]; });
+        limparDestaqueEdicoes();
+        atualizarBotoesSalvar();
+        await carregarMedicao(posto); // recarrega da planilha pra confirmar os valores gravados
+      } catch (err) {
+        alert('Erro ao salvar: ' + err.message + '\n\nConfira sua conexão e tente novamente.');
+        btn.disabled = false;
+        atualizarBotoesSalvar();
+      }
+    }
+
+    // Envia só as sugestões de Pré-Pedido pra aba separada "Pré-Pedidos" —
+    // não mexe na coluna oficial de Pedido (essa só muda com Salvar Alterações).
+    async function enviarPrePedido() {
+      const posto = document.getElementById('global-posto').value;
+      const itens = Object.values(EDICOES_PENDENTES)
+        .filter(e => e.campo === 'prePedido')
+        .map(e => ({ data: DADOS_ATUAIS.dias[e.dia].data, combustivel: e.comb, valor: e.valor }));
+      if (!itens.length || !posto) return;
+
+      const btn = document.getElementById('btn-enviar-prepedido');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tipo: 'pre_pedido', posto: posto, itens: itens, user: 'ADM Logística (desktop)' })
+        });
+        Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo === 'prePedido') delete EDICOES_PENDENTES[k]; });
+        limparDestaqueEdicoes();
+        atualizarBotoesSalvar();
+        alert('✅ Pré-Pedido enviado com sucesso.');
+      } catch (err) {
+        alert('Erro ao enviar: ' + err.message + '\n\nConfira sua conexão e tente novamente.');
+      }
+      btn.disabled = Object.values(EDICOES_PENDENTES).filter(e => e.campo === 'prePedido').length === 0;
+      atualizarBotoesSalvar();
     }
 
     async function carregarMedicao(posto) {
@@ -616,6 +777,8 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
       const tbody = document.getElementById('matriz-corpo');
       subtitle.textContent = '• Carregando ' + posto + '...';
       tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>';
+      EDICOES_PENDENTES = {};
+      atualizarBotoesSalvar();
       try {
         const dados = await chamarApi({ tipo: 'mesCompleto', posto: posto });
         if (dados.erro) {
@@ -623,8 +786,9 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
           tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">' + dados.erro + '</td></tr>';
           return;
         }
+        DADOS_ATUAIS = dados;
         subtitle.textContent = '• ' + dados.posto + ' — ' + dados.mes + '/' + dados.ano + ' (atualizado em tempo real do Sheets)';
-        montarCabecalhoMedicao(dados.grupos);
+        montarCabecalhoMedicao(dados.grupos, dados.combustiveisVenda);
         montarLinhasMedicao(dados);
       } catch (err) {
         subtitle.textContent = '• Falha ao conectar com o Apps Script';

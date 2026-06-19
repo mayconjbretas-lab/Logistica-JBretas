@@ -513,13 +513,14 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
     // editavel:false = Previsão e Diferença são CALCULADAS (na tela e na planilha),
     // nunca digitadas direto — por isso viram texto, não input.
     const CATEGORIAS_MEDICAO = [
-      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
+      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                 classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
       { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',            classe: 'h-ven', cor: 'var(--b-ven)', editavel: true  },
       { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',          classe: 'h-pvn', cor: 'var(--b-pvn)', editavel: true  },
       { chave: 'prePedido', titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',  classe: 'h-pre', cor: 'var(--b-pre)', editavel: true  },
       { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)', classe: 'h-cus', cor: 'var(--b-cus)', editavel: true  },
       { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',           classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
-      { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',      classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
+      { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',       classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
+      { chave: 'previsao',  titulo: '$ EMPRESTIMO COMBUSTIVEL (L)',    classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
     ];
 
     // Cada categoria usa sua própria lista de colunas: Venda usa os combustíveis

@@ -398,8 +398,21 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
     </div>
     <div class="login-field">
       <label><i class="fa-solid fa-key"></i> Senha</label>
-      <input type="password" id="login-senha" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()">
+      <div style="position:relative;">
+        <input type="password" id="login-senha" placeholder="••••••••" autocomplete="current-password"
+          style="width:100%; padding-right:2.8rem;"
+          onkeydown="if(event.key==='Enter')fazerLogin()">
+        <button type="button" onclick="toggleSenhaVisivel()"
+          style="position:absolute; right:0.75rem; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--tx3); cursor:pointer; font-size:1rem; padding:0; line-height:1;"
+          title="Mostrar/ocultar senha" id="btn-olho">
+          <i class="fa-solid fa-eye" id="icone-olho"></i>
+        </button>
+      </div>
     </div>
+    <label style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:var(--tx2); cursor:pointer; user-select:none;">
+      <input type="checkbox" id="lembrar-me" style="width:15px; height:15px; accent-color:var(--ac); cursor:pointer;">
+      Lembrar e-mail e senha neste dispositivo
+    </label>
     <div class="login-error" id="login-error"><i class="fa-solid fa-circle-exclamation"></i> <span id="login-error-msg">Credenciais inválidas.</span></div>
     <div id="login-loading"><i class="fa-solid fa-spinner fa-spin"></i> Verificando credenciais...</div>
     <button class="login-btn" id="login-btn" onclick="fazerLogin()"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
@@ -918,6 +931,21 @@ const PERFIS_PERMITIDOS = ['ADM', 'LOGISTICA'];
 let COMBUSTIVEIS_POSTOS = {};
 
 // ================================================================
+// OLHO — mostrar/ocultar senha
+// ================================================================
+function toggleSenhaVisivel() {
+  const input = document.getElementById('login-senha');
+  const icone = document.getElementById('icone-olho');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icone.className = 'fa-solid fa-eye-slash';
+  } else {
+    input.type = 'password';
+    icone.className = 'fa-solid fa-eye';
+  }
+}
+
+// ================================================================
 // LOGIN
 // ================================================================
 let USUARIO_LOGADO = null;
@@ -955,6 +983,13 @@ async function fazerLogin() {
     }
 
     USUARIO_LOGADO = data.usuario;
+
+    // Lembrar credenciais se checkbox marcado
+    if (document.getElementById('lembrar-me').checked) {
+      try { localStorage.setItem('jb_log_creds', JSON.stringify({ email, senha })); } catch(e) {}
+    } else {
+      try { localStorage.removeItem('jb_log_creds'); } catch(e) {}
+    }
 
     // Guarda sessão simples (sem senha)
     try { sessionStorage.setItem('jb_log_user', JSON.stringify(USUARIO_LOGADO)); } catch(e) {}
@@ -1003,6 +1038,17 @@ function fazerLogout() {
 
 // Tenta restaurar sessão ao abrir a página
 window.addEventListener('DOMContentLoaded', () => {
+  // Restaura credenciais salvas
+  try {
+    const creds = localStorage.getItem('jb_log_creds');
+    if (creds) {
+      const { email, senha } = JSON.parse(creds);
+      document.getElementById('login-email').value = email || '';
+      document.getElementById('login-senha').value = senha || '';
+      document.getElementById('lembrar-me').checked = true;
+    }
+  } catch(e) {}
+
   try {
     const stored = sessionStorage.getItem('jb_log_user');
     if (stored) {

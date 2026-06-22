@@ -13,8 +13,6 @@
   --bd: #2b3349; --bd2: #3e4a68; --bd-col: #4f5d82;
   --ac: #00e5a0; --ac-d: rgba(0,229,160,0.1);
   --tx: #eef0f4; --tx2: #8a99ad; --tx3: #5c6b84;
-  
-  /* Cores dos Blocos Temáticos */
   --b-med: #4895ef; --b-med-d: rgba(72,149,239,0.1);
   --b-ven: #00e5a0; --b-ven-d: rgba(0,229,160,0.1);
   --b-pre: #f9c74f; --b-pre-d: rgba(249,199,79,0.1);
@@ -22,14 +20,13 @@
   --b-dif: #ff4d6d; --b-dif-d: rgba(255,77,109,0.1);
   --b-fin: #4cc9f0; --b-fin-d: rgba(76,201,240,0.1);
   --b-cus: #ff9e00; --b-cus-d: rgba(255,158,0,0.1);
+  --b-mot: #f5b915; --b-mot-d: rgba(245,185,21,0.1);
 }
 :root[data-theme="light"] {
   --bg: #eef0f4; --sf: #ffffff; --sf2: #eceef2; --sf3: #dfe3ea;
   --bd: #c2c9d6; --bd2: #9aa4b8; --bd-col: #8d97ad;
   --ac: #00875f; --ac-d: rgba(0,135,95,0.1);
   --tx: #0f1420; --tx2: #313a4d; --tx3: #5a6478;
-
-  /* Cores dos Blocos Temáticos — versões escurecidas p/ contraste em fundo claro */
   --b-med: #1d5fc2; --b-med-d: rgba(29,95,194,0.1);
   --b-ven: #00875f; --b-ven-d: rgba(0,135,95,0.1);
   --b-pre: #9a6a00; --b-pre-d: rgba(154,106,0,0.1);
@@ -37,6 +34,7 @@
   --b-dif: #c81e45; --b-dif-d: rgba(200,30,69,0.1);
   --b-fin: #0e78a0; --b-fin-d: rgba(14,120,160,0.1);
   --b-cus: #b35900; --b-cus-d: rgba(179,89,0,0.1);
+  --b-mot: #b38500; --b-mot-d: rgba(179,133,0,0.1);
 }
 body {
   background: var(--bg); color: var(--tx); font-family: var(--sans);
@@ -44,7 +42,63 @@ body {
   --sans: 'DM Sans', sans-serif; --mono: 'Space Mono', monospace;
 }
 
-/* TOPBAR */
+/* ========================================================= */
+/* TELA DE LOGIN                                             */
+/* ========================================================= */
+#login-screen {
+  position: fixed; inset: 0; background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999; flex-direction: column; gap: 0;
+}
+.login-card {
+  background: var(--sf); border: 1px solid var(--bd); border-radius: 16px;
+  padding: 2.5rem 2rem; width: 380px; max-width: 95vw;
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.login-logo {
+  display: flex; align-items: center; gap: 0.75rem; justify-content: center;
+}
+.login-logo .logo-box {
+  width: 44px; height: 44px; background: var(--ac-d); border: 2px solid var(--ac);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-weight: 700; font-size: 1rem; color: var(--ac);
+}
+.login-logo .logo-text { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--ac); letter-spacing: 1px; }
+.login-logo .logo-sub { font-size: 0.65rem; color: var(--tx3); text-transform: uppercase; letter-spacing: 2px; }
+.login-title { text-align: center; }
+.login-title h2 { font-family: var(--mono); font-size: 1rem; color: var(--tx); margin-bottom: 0.25rem; }
+.login-title p { font-size: 0.8rem; color: var(--tx3); }
+.login-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.login-field label { font-size: 0.72rem; font-family: var(--mono); color: var(--tx3); text-transform: uppercase; letter-spacing: 1px; }
+.login-field input {
+  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx);
+  padding: 0.7rem 0.9rem; border-radius: 8px; outline: none; font-size: 0.9rem;
+  font-family: var(--sans); transition: border 0.15s;
+}
+.login-field input:focus { border-color: var(--ac); box-shadow: 0 0 0 2px var(--ac-d); }
+.login-btn {
+  background: var(--ac); color: var(--bg); border: none; font-family: var(--mono);
+  font-weight: 700; font-size: 0.85rem; padding: 0.85rem; border-radius: 8px;
+  cursor: pointer; letter-spacing: 0.5px; transition: opacity 0.15s;
+}
+.login-btn:hover { opacity: 0.88; }
+.login-btn:disabled { background: var(--sf3); color: var(--tx3); cursor: not-allowed; opacity: 1; }
+.login-error {
+  background: var(--b-dif-d); border: 1px solid var(--b-dif); border-radius: 8px;
+  padding: 0.65rem 0.9rem; color: var(--b-dif); font-size: 0.8rem; display: none;
+  align-items: center; gap: 0.5rem;
+}
+.login-error.show { display: flex; }
+.login-badge {
+  background: var(--b-mot-d); border: 1px solid var(--b-mot); border-radius: 8px;
+  padding: 0.5rem 0.9rem; color: var(--b-mot); font-size: 0.72rem; font-family: var(--mono);
+  text-align: center; letter-spacing: 0.5px;
+}
+#login-loading { display: none; text-align: center; font-size: 0.8rem; color: var(--tx3); font-family: var(--mono); }
+
+/* ========================================================= */
+/* TOPBAR                                                    */
+/* ========================================================= */
 .topbar {
   background: var(--sf); border-bottom: 1px solid var(--bd); height: 60px;
   display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; flex-shrink: 0;
@@ -57,11 +111,30 @@ body {
 }
 .title-group .main-t { font-family: var(--mono); font-size: 1.1rem; font-weight: 700; color: var(--ac); letter-spacing: 1px; }
 .title-group .sub-t { font-size: 0.65rem; color: var(--tx3); text-transform: uppercase; letter-spacing: 2px; }
+.topbar-right { display: flex; align-items: center; gap: 0.85rem; }
+.theme-toggle {
+  width: 36px; height: 36px; background: var(--sf2); border: 1px solid var(--bd); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; color: var(--tx2); cursor: pointer;
+  font-size: 0.95rem; transition: all 0.15s; flex-shrink: 0;
+}
+.theme-toggle:hover { color: var(--ac); border-color: var(--ac); }
+.user-badge {
+  background: var(--sf2); border: 1px solid var(--bd); border-radius: 8px;
+  padding: 0.35rem 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.78rem; color: var(--tx2);
+}
+.user-badge i { color: var(--ac); }
+.btn-logout {
+  background: var(--b-dif-d); border: 1px solid var(--b-dif); border-radius: 8px;
+  padding: 0.35rem 0.75rem; color: var(--b-dif); font-size: 0.75rem; font-family: var(--mono);
+  cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: all 0.15s;
+}
+.btn-logout:hover { background: var(--b-dif); color: #fff; }
 
-/* APP LAYOUT */
+/* ========================================================= */
+/* APP LAYOUT                                                */
+/* ========================================================= */
 .app-container { flex: 1; display: flex; overflow: hidden; }
-
-/* SIDEBAR MÓDULOS */
 .sidebar {
   width: 260px; background: var(--sf); border-right: 1px solid var(--bd);
   display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem 1rem; flex-shrink: 0;
@@ -78,7 +151,13 @@ body {
   width: 100%; background: var(--sf2); border: 1px solid var(--bd); color: var(--tx);
   padding: 0.65rem 0.85rem; border-radius: 8px; outline: none; font-size: 0.85rem; font-weight: 500;
 }
+.workspace { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem; gap: 1rem; }
+.view-panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+.view-panel.active { display: flex; }
 
+/* ========================================================= */
+/* SPREADSHEET / TABLE                                       */
+/* ========================================================= */
 .coleta-filtros {
   background: var(--sf); border: 1px solid var(--bd); border-top: none;
   padding: 0.75rem 1.25rem; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: flex-end; flex-shrink: 0;
@@ -96,77 +175,31 @@ body {
   padding: 0.42rem 0.7rem; border-radius: 6px; cursor: pointer; font-family: var(--mono); display: flex; align-items: center; gap: 5px;
 }
 .btn-limpar-filtro:hover { color: var(--tx); border-color: var(--ac); }
-
-/* WORKSPACE */
-.workspace { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem; gap: 1rem; }
-.view-panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
-.view-panel.active { display: flex; }
-
-/* LAYOUT DA MATRIZ HORIZONTAL */
 .table-actions {
   background: var(--sf); border: 1px solid var(--bd); border-radius: 12px 12px 0 0;
   padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; border-bottom: none;
 }
 .table-title { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
 .table-title span { color: var(--tx3); font-size: 0.7rem; font-weight: normal; }
-
-/* CONTAINER DO SCROLL */
 .spreadsheet-frame {
   flex: 1; background: var(--sf); border: 1px solid var(--bd); border-radius: 0 0 12px 12px;
   overflow: auto; position: relative;
 }
-
-/* TABELA ESTILO SPREADSHEET INDÚSTRIA */
 .ss-table { border-collapse: collapse; text-align: left; font-size: 0.85rem; width: max-content; min-width: 100%; }
 .ss-table th, .ss-table td { padding: 0.6rem 1.1rem; border: 1px solid var(--bd-col); text-align: center; }
-/* Linhas de grade mais visíveis + separadores fortes entre os blocos de categoria */
 .ss-table tbody tr:nth-child(even) { background: var(--sf2); }
-/* GAP ENTRE BLOCOS (Medição / Venda / Carga / Pedido...): troque o valor "16px" pela largura do vão desejado,
-   e var(--bg) pela cor que esse vão deve mostrar (atualmente a cor de fundo da página, criando um respiro real). */
-/* A célula em si (DS10) fica mais enxuta com um padding lateral menor — o "16px" do border-right é só
-   o vão; aumente/diminua ele à vontade que a célula não infla junto. Se quiser a célula ainda mais
-   estreita, reduza os 0.6rem abaixo (ex.: 0.4rem). */
 .ss-table td.grp-end, .ss-table th.grp-end { border-right: 20px solid var(--bg); padding-left: 0.6rem; padding-right: 0.6rem; }
-/* position:relative só nas células do corpo (não no cabeçalho) — no cabeçalho essas mesmas células já
-   recebem position:sticky pela regra do cabeçalho fixo, e "relative" aqui em cima sobrescrevia isso por
-   ter mais força no CSS, fazendo só a última coluna de cada bloco (DS10) descolar do cabeçalho fixo. */
 .ss-table tbody td.grp-end { position: relative; }
-/* Linha de grade marcando o fim da coluna, bem colada na borda (estilo planilha), antes do vão começar.
-   "width" controla a espessura; "right: 0" é o que gruda na borda (não mexer ao trocar o "16px" acima). */
-.ss-table td.grp-end::after, .ss-table th.grp-end::after {
-  content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: var(--bd-col);
-}
-/* Mesma linha de grade, espelhada no começo da primeira coluna logo depois do vão (o outro "lado" do vão). */
+.ss-table td.grp-end::after, .ss-table th.grp-end::after { content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: var(--bd-col); }
 .ss-table tbody td.grp-start { position: relative; }
-.ss-table td.grp-start::before, .ss-table th.grp-start::before {
-  content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--bd-col);
-}
-
-/* Fixar coluna de dias na esquerda ao rolar */
+.ss-table td.grp-start::before, .ss-table th.grp-start::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--bd-col); }
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
 th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
-
-/* CABEÇALHO FIXO (congelado) ao rolar a tela verticalmente.
-   --thead-row1-h é calculada via JS (função montarCabecalhoMedicao) com a altura real da 1ª linha do
-   cabeçalho, pra 2ª linha (G.C/G.A/ET) colar exatamente debaixo dela. O "42px" é só um valor de
-   segurança caso o JS ainda não tenha rodado. */
 .ss-table thead th { position: sticky; z-index: 18; }
 .ss-table thead tr:first-child th { top: 0; z-index: 20; }
 #medicao-thead tr:last-child th { top: var(--thead-row1-h, 42px); z-index: 19; }
-
-/* Cabeçalhos Superiores Dinâmicos */
-.ss-table thead tr:first-child th {
-  font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; padding: 0.7rem 1.1rem; letter-spacing: 0.5px;
-}
-.ss-table thead tr:last-child th {
-  background: var(--sf2); color: var(--tx2); font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
-}
-
-/* Blocos de Cores do Header */
-/* Os fundos -d (h-med, h-ven etc.) são translúcidos de propósito (dão aquele tom suave), mas como o
-   cabeçalho agora fica fixo (sticky) por cima da tabela ao rolar, translúcido deixava os números das
-   linhas de baixo "passarem por trás" e embolarem com o texto do cabeçalho. Por isso empilhamos uma camada
-   sólida (var(--sf2)) embaixo do tom translúcido — visualmente fica igual, mas agora é 100% opaco. */
+.ss-table thead tr:first-child th { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; padding: 0.7rem 1.1rem; letter-spacing: 0.5px; }
+.ss-table thead tr:last-child th { background: var(--sf2); color: var(--tx2); font-family: var(--mono); font-size: 0.72rem; font-weight: 700; }
 .h-med { background: linear-gradient(var(--b-med-d), var(--b-med-d)), var(--sf2) !important; color: var(--b-med) !important; border-bottom: 2px solid var(--b-med) !important; }
 .h-ven { background: linear-gradient(var(--b-ven-d), var(--b-ven-d)), var(--sf2) !important; color: var(--b-ven) !important; border-bottom: 2px solid var(--b-ven) !important; }
 .h-pre { background: linear-gradient(var(--b-pre-d), var(--b-pre-d)), var(--sf2) !important; color: var(--b-pre) !important; border-bottom: 2px solid var(--b-pre) !important; }
@@ -174,25 +207,15 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .h-dif { background: linear-gradient(var(--b-dif-d), var(--b-dif-d)), var(--sf2) !important; color: var(--b-dif) !important; border-bottom: 2px solid var(--b-dif) !important; }
 .h-fin { background: linear-gradient(var(--b-fin-d), var(--b-fin-d)), var(--sf2) !important; color: var(--b-fin) !important; border-bottom: 2px solid var(--b-fin) !important; }
 .h-cus { background: linear-gradient(var(--b-cus-d), var(--b-cus-d)), var(--sf2) !important; color: var(--b-cus) !important; border-bottom: 2px solid var(--b-cus) !important; }
-
-/* Estilização das Células de Input */
+.h-mot { background: linear-gradient(var(--b-mot-d), var(--b-mot-d)), var(--sf2) !important; color: var(--b-mot) !important; border-bottom: 2px solid var(--b-mot) !important; }
 .cell-in {
   width: 72px; background: transparent; border: none; color: var(--tx); text-align: center;
   font-family: var(--mono); font-size: 0.85rem; font-weight: 600; outline: none; padding: 3px; border-radius: 4px;
 }
 .cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1.5px var(--ac); color: var(--tx); }
-.cell-in.disabled { pointer-events: none; opacity: 0.8; }
-
-/* Célula editada mas ainda não salva na planilha — laranja chama atenção sem ser alarmante */
 .cell-in.cell-dirty { background: rgba(249,199,79,0.15); box-shadow: 0 0 0 1.5px var(--b-pre); color: var(--b-pre); }
 .cell-in.cell-dirty:focus { box-shadow: 0 0 0 1.5px var(--b-pre); }
-
-/* Subtítulo informativo de scroll no rodapé */
-.scroll-indicator {
-  display: flex; align-items: center; justify-content: flex-end; gap: 6px;
-  font-size: 0.65rem; color: var(--tx3); font-family: var(--mono); text-transform: uppercase; padding: 4px;
-}
-
+.scroll-indicator { display: flex; align-items: center; justify-content: flex-end; gap: 6px; font-size: 0.65rem; color: var(--tx3); font-family: var(--mono); text-transform: uppercase; padding: 4px; }
 .btn-save {
   background: var(--ac); color: var(--bg); border: none; font-family: var(--mono);
   font-weight: 700; font-size: 0.75rem; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px;
@@ -202,8 +225,9 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .btn-save.btn-save-pre { background: var(--b-pre); }
 .btn-save.btn-save-pre:disabled { background: var(--sf3); color: var(--tx3); }
 
-
-/* REGRAS EXCLUSIVAS DA ABA DE COLETA DE PREÇOS (CONFORME PLANILHA DO USUÁRIO) */
+/* ========================================================= */
+/* COLETA DE PREÇOS                                          */
+/* ========================================================= */
 .row-proprio { color: var(--ac) !important; font-weight: 600; }
 .row-concorrente { color: var(--tx) !important; }
 .badge-tipo { padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
@@ -211,8 +235,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .badge-tipo.concorrente { background: var(--sf3); color: var(--tx2); }
 .link-foto { color: var(--b-med); text-decoration: underline; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
 .link-foto:hover { color: var(--ac); }
-
-/* DESIGN COMPONENTE POPOVER FLUTUANTE DE IMAGEM GOOGLE SHEETS */
 .photo-popover {
   position: fixed; z-index: 999; background: #1a1f2c; border: 1px solid var(--bd2);
   border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 280px;
@@ -223,17 +245,9 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .popover-body img { width: 100%; height: auto; border-radius: 6px; object-fit: cover; }
 .popover-ftr { padding: 0.5rem 0.75rem; background: #121620; font-size: 0.65rem; color: var(--tx3); border-top: 1px solid var(--bd); }
 
-.placeholder-panel { padding: 2rem; background: var(--sf); border-radius: 12px; border: 1px solid var(--bd); text-align: center; color: var(--tx2); }
-
-.topbar-right { display: flex; align-items: center; gap: 0.85rem; }
-.theme-toggle {
-  width: 36px; height: 36px; background: var(--sf2); border: 1px solid var(--bd); border-radius: 8px;
-  display: flex; align-items: center; justify-content: center; color: var(--tx2); cursor: pointer;
-  font-size: 0.95rem; transition: all 0.15s; flex-shrink: 0;
-}
-.theme-toggle:hover { color: var(--ac); border-color: var(--ac); }
-
-/* MÓDULO CUSTO & MARGEM */
+/* ========================================================= */
+/* CUSTO & MARGEM                                            */
+/* ========================================================= */
 .custo-subnav { display: flex; gap: 0.5rem; }
 .subnav-btn {
   background: var(--sf2); border: 1px solid var(--bd); color: var(--tx2); font-family: var(--mono);
@@ -242,7 +256,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 }
 .subnav-btn:hover { color: var(--tx); }
 .subnav-btn.active { background: var(--b-cus-d); border-color: var(--b-cus); color: var(--b-cus); }
-
 .print-modes { display: flex; gap: 0.5rem; }
 .btn-print {
   background: var(--sf2); color: var(--tx); border: 1px solid var(--bd2); font-family: var(--mono);
@@ -250,14 +263,9 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
   display: flex; align-items: center; gap: 6px;
 }
 .btn-print:hover { border-color: var(--b-cus); color: var(--b-cus); }
-
 .custo-view { display: none; flex: 1; overflow: hidden; flex-direction: column; gap: 1rem; }
 .custo-view.active { display: flex; }
-
-.dist-grid {
-  flex: 1; overflow: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem; padding: 0.25rem; align-content: start;
-}
+.dist-grid { flex: 1; overflow: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; padding: 0.25rem; align-content: start; }
 .dist-card { background: var(--sf); border: 1px solid var(--bd); border-radius: 12px; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.65rem; }
 .dist-card-hdr { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--bd); padding-bottom: 0.6rem; }
 .dist-card-hdr .dist-nome { font-family: var(--mono); font-weight: 700; font-size: 0.85rem; color: var(--b-cus); }
@@ -270,23 +278,89 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .dist-postos-list { color: var(--tx2); line-height: 1.6; padding: 0.4rem 0 0.2rem; }
 .dist-fuel-row { display: flex; align-items: center; gap: 0.5rem; }
 .dist-fuel-row label { font-size: 0.72rem; color: var(--tx2); font-family: var(--mono); font-weight: 700; width: 36px; flex-shrink: 0; }
-.dist-fuel-row input {
-  flex: 1; background: var(--sf2); border: 1px solid var(--bd); color: var(--tx); text-align: right;
-  padding: 0.4rem 0.55rem; border-radius: 6px; font-family: var(--mono); font-size: 0.78rem; outline: none; min-width: 0;
-}
+.dist-fuel-row input { flex: 1; background: var(--sf2); border: 1px solid var(--bd); color: var(--tx); text-align: right; padding: 0.4rem 0.55rem; border-radius: 6px; font-family: var(--mono); font-size: 0.78rem; outline: none; min-width: 0; }
 .dist-fuel-row input:focus { border-color: var(--b-cus); box-shadow: 0 0 0 1px var(--b-cus); }
 .dist-fuel-row .reaj-tag { font-size: 0.62rem; font-family: var(--mono); min-width: 52px; text-align: right; flex-shrink: 0; }
-
-.custo-override {
-  width: 64px; background: var(--sf2); border: 1px dashed var(--bd2); color: var(--b-cus); text-align: center;
-  font-family: var(--mono); font-size: 0.72rem; border-radius: 4px; padding: 4px 2px; outline: none;
-}
+.custo-override { width: 64px; background: var(--sf2); border: 1px dashed var(--bd2); color: var(--b-cus); text-align: center; font-family: var(--mono); font-size: 0.72rem; border-radius: 4px; padding: 4px 2px; outline: none; }
 .custo-override:focus { border-style: solid; border-color: var(--b-cus); }
-
 .badge-margem { padding: 3px 8px; border-radius: 5px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); display: inline-block; }
 .badge-ok { background: var(--ac-d); color: var(--ac); }
 .badge-atencao { background: var(--b-pre-d); color: var(--b-pre); }
 .badge-critico { background: var(--b-dif-d); color: var(--b-dif); }
+
+/* ========================================================= */
+/* ABA MOTORISTA                                             */
+/* ========================================================= */
+.mot-subnav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.mot-subnav-btn {
+  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx2); font-family: var(--mono);
+  font-size: 0.72rem; font-weight: 700; padding: 0.5rem 0.9rem; border-radius: 8px; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.15s;
+}
+.mot-subnav-btn:hover { color: var(--tx); }
+.mot-subnav-btn.active { background: var(--b-mot-d); border-color: var(--b-mot); color: var(--b-mot); }
+.mot-view { display: none; flex: 1; overflow: hidden; flex-direction: column; gap: 1rem; }
+.mot-view.active { display: flex; }
+
+/* Formulário de lançamento motorista */
+.mot-form-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem; padding: 1.25rem; background: var(--sf); border: 1px solid var(--bd);
+  border-top: none; border-radius: 0 0 12px 12px; overflow-y: auto;
+}
+.mot-form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+.mot-form-group label { font-size: 0.68rem; font-family: var(--mono); color: var(--tx3); text-transform: uppercase; letter-spacing: 1px; }
+.mot-form-group input, .mot-form-group select {
+  background: var(--sf2); border: 1px solid var(--bd); color: var(--tx);
+  padding: 0.55rem 0.75rem; border-radius: 8px; outline: none;
+  font-size: 0.85rem; font-family: var(--sans); transition: border 0.15s;
+}
+.mot-form-group input:focus, .mot-form-group select:focus { border-color: var(--b-mot); box-shadow: 0 0 0 2px var(--b-mot-d); }
+.mot-form-group.full { grid-column: 1 / -1; }
+.mot-form-section-title {
+  grid-column: 1 / -1; font-family: var(--mono); font-size: 0.72rem; color: var(--b-mot);
+  text-transform: uppercase; letter-spacing: 1px; padding-top: 0.5rem;
+  border-top: 1px solid var(--bd); display: flex; align-items: center; gap: 0.5rem;
+}
+.mot-fuel-row { display: flex; align-items: center; gap: 0.75rem; }
+.mot-fuel-row label { font-size: 0.78rem; font-family: var(--mono); color: var(--tx2); width: 130px; flex-shrink: 0; }
+.mot-fuel-row input { flex: 1; background: var(--sf2); border: 1px solid var(--bd); color: var(--tx); text-align: right; padding: 0.4rem 0.6rem; border-radius: 6px; font-family: var(--mono); font-size: 0.82rem; outline: none; }
+.mot-fuel-row input:focus { border-color: var(--b-mot); }
+.mot-fuels-container { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.5rem; }
+.mot-fuels-box { background: var(--sf2); border: 1px solid var(--bd); border-radius: 10px; padding: 0.85rem 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.mot-fuels-box .fuels-title { font-size: 0.68rem; font-family: var(--mono); color: var(--tx3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
+.btn-mot-submit {
+  grid-column: 1 / -1; background: var(--b-mot); color: #000; border: none;
+  font-family: var(--mono); font-weight: 700; font-size: 0.85rem; padding: 0.85rem;
+  border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  transition: opacity 0.15s;
+}
+.btn-mot-submit:hover { opacity: 0.88; }
+.btn-mot-submit:disabled { background: var(--sf3); color: var(--tx3); cursor: not-allowed; }
+
+/* Status badges motorista */
+.badge-status { padding: 3px 8px; border-radius: 5px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
+.badge-ok2 { background: var(--ac-d); color: var(--ac); }
+.badge-pendente { background: var(--b-pre-d); color: var(--b-pre); }
+.badge-divergente { background: var(--b-dif-d); color: var(--b-dif); }
+.badge-menor { background: var(--b-pvn-d); color: var(--b-pvn); }
+
+/* Conciliação */
+.concil-card {
+  background: var(--sf); border: 1px solid var(--bd); border-radius: 12px;
+  padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
+}
+.concil-card-hdr { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--bd); padding-bottom: 0.65rem; }
+.concil-card-hdr .cc-posto { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; color: var(--b-mot); }
+.concil-card-hdr .cc-meta { font-size: 0.72rem; color: var(--tx3); text-align: right; line-height: 1.5; }
+.concil-row { display: flex; align-items: center; gap: 0.75rem; font-size: 0.82rem; }
+.concil-row .cr-comb { font-family: var(--mono); font-size: 0.72rem; color: var(--tx2); min-width: 90px; }
+.concil-bar-wrap { flex: 1; height: 6px; background: var(--sf3); border-radius: 3px; overflow: hidden; }
+.concil-bar { height: 100%; border-radius: 3px; transition: width 0.4s; }
+.concil-row .cr-nums { font-family: var(--mono); font-size: 0.72rem; color: var(--tx2); min-width: 160px; text-align: right; }
+.concil-row .cr-diff { font-family: var(--mono); font-size: 0.72rem; font-weight: 700; min-width: 80px; text-align: right; }
+
+.placeholder-panel { padding: 2rem; background: var(--sf); border-radius: 12px; border: 1px solid var(--bd); text-align: center; color: var(--tx2); }
 
 #quadro-impressao { display: none; }
 @media print {
@@ -295,9 +369,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
   #quadro-impressao { display: block; position: absolute; left: 0; top: 0; width: 100%; background: #fff; color: #000; padding: 24px; }
   #quadro-impressao table { width: 100%; border-collapse: collapse; margin-bottom: 18px; }
   #quadro-impressao th, #quadro-impressao td { border: 1px solid #999; padding: 6px 8px; text-align: center; font-size: 12px; }
-  #quadro-impressao h3 { font-family: Arial, sans-serif; margin-bottom: 6px; }
-  #quadro-impressao h4 { font-family: Arial, sans-serif; }
-  #quadro-impressao .qi-data { font-size: 11px; color: #444; margin-bottom: 14px; }
 }
 </style>
 <script>
@@ -306,1142 +377,1157 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 </head>
 <body>
 
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <div class="brand-group">
-      <div class="logo">JB</div>
-      <div class="title-group">
-        <div class="main-t">JBRETAS LOGÍSTICA</div>
-        <div class="sub-t">// Enterprise Resource Center</div>
-      </div>
-    </div>
-    <div class="topbar-right">
-      <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema claro/escuro">
-        <i class="fa-solid fa-sun" id="theme-icon"></i>
-      </button>
-      <div style="font-family: var(--mono); font-size: 0.75rem; color: var(--tx2);">
-        Ref: <span style="color: var(--ac);">JUN 2026</span>
-      </div>
-    </div>
-  </header>
-
-  <div class="app-container">
-    <!-- SIDEBAR COMPLETA -->
-    <aside class="sidebar">
+<!-- ===== TELA DE LOGIN ===== -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-box">JB</div>
       <div>
-        <div class="sb-section-title">Filtro Operacional</div>
-        <select class="sel-posto" id="global-posto" onchange="onPostoChange()">
-          <option value="P. ALEX">P. ALEX</option>
-          <option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
-          <option value="P. ARAPONGA">P. ARAPONGA</option>
-          <option value="P. AVIVA">P. AVIVA</option>
-          <option value="P. BAHAMAS">P. BAHAMAS</option>
-          <option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
-          <option value="P. BERNARDO">P. BERNARDO</option>
-          <option value="P. BIANCA">P. BIANCA</option>
-          <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option>
-          <option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
-          <option value="P. BRUNA">P. BRUNA</option>
-          <option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
-          <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option>
-          <option value="P. FELIPAO">P. FELIPAO</option>
-          <option value="P. GLÓRIA">P. GLÓRIA</option>
-          <option value="P. ITAPOA">P. ITAPOA</option>
-          <option value="P. JA">P. JA</option>
-          <option value="P. JOCA">P. JOCA</option>
-          <option value="P. LEANDRO">P. LEANDRO</option>
-          <option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
-          <option value="P. MANGABEIRAS">P. MANGABEIRAS</option>
-          <option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
-          <option value="P. OURO BRANCO">P. OURO BRANCO</option>
-          <option value="P. PLANALTO">P. PLANALTO</option>
-          <option value="P. QUATRO RODAS">P. QUATRO RODAS</option>
-          <option value="P. RODRIGO">P. RODRIGO</option>
-          <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option>
-          <option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
-          <option value="P. SANTA MARIA">P. SANTA MARIA</option>
-          <option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
-          <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option>
-          <option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
-          <option value="P. TOPAZIO">P. TOPAZIO</option>
-          <option value="P. TRANCOSO">P. TRANCOSO</option>
-          <option value="P. TUNEL">P. TUNEL</option>
-          <option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
-          <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
-        </select>
+        <div class="logo-text">JBRETAS</div>
+        <div class="logo-sub">// Logística Enterprise</div>
       </div>
+    </div>
+    <div class="login-title">
+      <h2>Acesso Restrito</h2>
+      <p>Módulo Administrativo — ADM / Logística</p>
+    </div>
+    <div class="login-badge"><i class="fa-solid fa-lock" style="margin-right:6px"></i>Credenciais fornecidas pelo administrador JBRETAS</div>
+    <div class="login-field">
+      <label><i class="fa-solid fa-at"></i> E-mail</label>
+      <input type="email" id="login-email" placeholder="seu@jbretas.com" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('login-senha').focus()">
+    </div>
+    <div class="login-field">
+      <label><i class="fa-solid fa-key"></i> Senha</label>
+      <input type="password" id="login-senha" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()">
+    </div>
+    <div class="login-error" id="login-error"><i class="fa-solid fa-circle-exclamation"></i> <span id="login-error-msg">Credenciais inválidas.</span></div>
+    <div id="login-loading"><i class="fa-solid fa-spinner fa-spin"></i> Verificando credenciais...</div>
+    <button class="login-btn" id="login-btn" onclick="fazerLogin()"><i class="fa-solid fa-right-to-bracket"></i> Entrar</button>
+  </div>
+</div>
 
-      <nav style="flex: 1;">
-        <div class="sb-section-title">Módulos Administrativos</div>
-        <ul class="nav-list">
-          <li class="nav-item active" onclick="switchMainTab('tab-medicao', this)"><i class="fa-solid fa-calculator"></i> Medição Diária</li>
-          <li class="nav-item" onclick="switchMainTab('tab-precos', this)"><i class="fa-solid fa-tags"></i> Coleta de Preços</li>
-          <li class="nav-item" onclick="switchMainTab('tab-custo', this)"><i class="fa-solid fa-coins"></i> Custo & Margem</li>
-          <li class="nav-item" onclick="switchMainTab('tab-pedidos-carga', this)"><i class="fa-solid fa-truck-ramp-box"></i> Pedidos de Carga</li>
-          <li class="nav-item" onclick="switchMainTab('tab-kpi', this)"><i class="fa-solid fa-chart-pie"></i> Painel de KPI</li>
-        </ul>
-      </nav>
-    </aside>
+<!-- ===== TOPBAR ===== -->
+<header class="topbar" id="main-topbar" style="display:none">
+  <div class="brand-group">
+    <div class="logo">JB</div>
+    <div class="title-group">
+      <div class="main-t">JBRETAS LOGÍSTICA</div>
+      <div class="sub-t">// Enterprise Resource Center</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema"><i class="fa-solid fa-sun" id="theme-icon"></i></button>
+    <div style="font-family:var(--mono); font-size:0.75rem; color:var(--tx2);">Ref: <span style="color:var(--ac);">JUN 2026</span></div>
+    <div class="user-badge" id="user-badge"><i class="fa-solid fa-circle-user"></i> <span id="user-name">—</span></div>
+    <button class="btn-logout" onclick="fazerLogout()"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+  </div>
+</header>
 
-    <!-- WORKSPACE VIEWPORT -->
-    <main class="workspace">
-      
-      <!-- ABA PRINCIPAL 1: MEDIÇÃO DIÁRIA -->
-      <section id="tab-medicao" class="view-panel active">
-        <div class="table-actions">
-          <div class="table-title">Matriz Integrada de Suprimentos <span id="medicao-subtitle">• Carregando posto...</span></div>
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <div class="scroll-indicator"><i class="fa-solid fa-left-right"></i> Use o scroll horizontal para ver tudo</div>
-            <button class="btn-save" id="btn-salvar-matriz" disabled onclick="salvarAlteracoesMatriz()"><i class="fa-solid fa-floppy-disk"></i> Salvar Alterações</button>
-            <button class="btn-save btn-save-pre" id="btn-enviar-prepedido" disabled onclick="enviarPrePedido()"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
+<div class="app-container" id="main-app" style="display:none">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div>
+      <div class="sb-section-title">Filtro Operacional</div>
+      <select class="sel-posto" id="global-posto" onchange="onPostoChange()">
+        <option value="P. ALEX">P. ALEX</option>
+        <option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
+        <option value="P. ARAPONGA">P. ARAPONGA</option>
+        <option value="P. AVIVA">P. AVIVA</option>
+        <option value="P. BAHAMAS">P. BAHAMAS</option>
+        <option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
+        <option value="P. BERNARDO">P. BERNARDO</option>
+        <option value="P. BIANCA">P. BIANCA</option>
+        <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option>
+        <option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
+        <option value="P. BRUNA">P. BRUNA</option>
+        <option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
+        <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option>
+        <option value="P. FELIPAO">P. FELIPAO</option>
+        <option value="P. GLÓRIA">P. GLÓRIA</option>
+        <option value="P. ITAPOA">P. ITAPOA</option>
+        <option value="P. JA">P. JA</option>
+        <option value="P. JOCA">P. JOCA</option>
+        <option value="P. LEANDRO">P. LEANDRO</option>
+        <option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
+        <option value="P. MANGABEIRAS">P. MANGABEIRAS</option>
+        <option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
+        <option value="P. OURO BRANCO">P. OURO BRANCO</option>
+        <option value="P. PLANALTO">P. PLANALTO</option>
+        <option value="P. QUATRO RODAS">P. QUATRO RODAS</option>
+        <option value="P. RODRIGO">P. RODRIGO</option>
+        <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option>
+        <option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
+        <option value="P. SANTA MARIA">P. SANTA MARIA</option>
+        <option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
+        <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option>
+        <option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
+        <option value="P. TOPAZIO">P. TOPAZIO</option>
+        <option value="P. TRANCOSO">P. TRANCOSO</option>
+        <option value="P. TUNEL">P. TUNEL</option>
+        <option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
+        <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
+      </select>
+    </div>
+    <nav style="flex:1;">
+      <div class="sb-section-title">Módulos Administrativos</div>
+      <ul class="nav-list">
+        <li class="nav-item active" onclick="switchMainTab('tab-medicao', this)"><i class="fa-solid fa-calculator"></i> Medição Diária</li>
+        <li class="nav-item" onclick="switchMainTab('tab-precos', this)"><i class="fa-solid fa-tags"></i> Coleta de Preços</li>
+        <li class="nav-item" onclick="switchMainTab('tab-custo', this)"><i class="fa-solid fa-coins"></i> Custo &amp; Margem</li>
+        <li class="nav-item" onclick="switchMainTab('tab-pedidos-carga', this)"><i class="fa-solid fa-truck-ramp-box"></i> Pedidos de Carga</li>
+        <li class="nav-item" onclick="switchMainTab('tab-motorista', this)"><i class="fa-solid fa-truck"></i> Motorista</li>
+        <li class="nav-item" onclick="switchMainTab('tab-kpi', this)"><i class="fa-solid fa-chart-pie"></i> Painel de KPI</li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- WORKSPACE -->
+  <main class="workspace">
+
+    <!-- ABA 1: MEDIÇÃO DIÁRIA -->
+    <section id="tab-medicao" class="view-panel active">
+      <div class="table-actions">
+        <div class="table-title">Matriz Integrada de Suprimentos <span id="medicao-subtitle">• Carregando posto...</span></div>
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="scroll-indicator"><i class="fa-solid fa-left-right"></i> Scroll horizontal para ver tudo</div>
+          <button class="btn-save" id="btn-salvar-matriz" disabled onclick="salvarAlteracoesMatriz()"><i class="fa-solid fa-floppy-disk"></i> Salvar Alterações</button>
+          <button class="btn-save btn-save-pre" id="btn-enviar-prepedido" disabled onclick="enviarPrePedido()"><i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido</button>
+        </div>
+      </div>
+      <div class="spreadsheet-frame">
+        <table class="ss-table">
+          <thead id="medicao-thead"></thead>
+          <tbody id="matriz-corpo"><tr><td style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ABA 2: COLETA DE PREÇOS -->
+    <section id="tab-precos" class="view-panel">
+      <div class="table-actions">
+        <div class="table-title">Histórico de Coletas — Coleta de Preços <span id="coleta-subtitle">• Painel Auditor Integrado</span></div>
+        <div class="scroll-indicator"><i class="fa-solid fa-camera"></i> Passe o mouse em "Ver Foto" para auditar</div>
+      </div>
+      <div class="coleta-filtros">
+        <div class="filtro-campo"><label>De</label><input type="date" class="filtro-input" id="flt-data-de" oninput="aplicarFiltrosColeta()"></div>
+        <div class="filtro-campo"><label>Até</label><input type="date" class="filtro-input" id="flt-data-ate" oninput="aplicarFiltrosColeta()"></div>
+        <div class="filtro-campo"><label>Posto Alvo</label><input type="text" class="filtro-input" id="flt-posto" placeholder="Buscar posto..." oninput="aplicarFiltrosColeta()"></div>
+        <div class="filtro-campo"><label>Gerente</label><input type="text" class="filtro-input" id="flt-gerente" placeholder="Buscar gerente..." oninput="aplicarFiltrosColeta()"></div>
+        <div class="filtro-campo"><label>Tipo</label><select class="filtro-select" id="flt-tipo" onchange="aplicarFiltrosColeta()"><option value="">Todos</option><option value="Próprio">Próprio</option><option value="Concorrente">Concorrente</option></select></div>
+        <div class="filtro-campo"><label>Supervisor</label><select class="filtro-select" id="flt-supervisor" onchange="aplicarFiltrosColeta()"><option value="">Todos</option><option>Mauricio</option><option>Fabricio</option><option>Paulo</option><option>Gledson</option><option>Rodrigo</option></select></div>
+        <button class="btn-limpar-filtro" onclick="limparFiltrosColeta()"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros</button>
+      </div>
+      <div class="spreadsheet-frame">
+        <table class="ss-table">
+          <thead>
+            <tr><th>Data</th><th>Hora</th><th>Posto</th><th>Gerente</th><th>Posto Alvo</th><th>Tipo</th><th>Bandeira</th><th>Rede</th><th>Supervisor</th>
+            <th style="color:var(--b-pre)">ET</th><th style="color:var(--b-ven)">GC</th><th style="color:var(--b-med)">GA</th><th style="color:var(--b-dif)">S10</th><th style="color:var(--b-pvn)">S500</th>
+            <th>Latitude</th><th>Longitude</th><th>Foto</th></tr>
+          </thead>
+          <tbody id="coleta-corpo"><tr><td colspan="17" style="padding:1.5rem; color:var(--tx3);">Carregando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ABA 3: CUSTO & MARGEM -->
+    <section id="tab-custo" class="view-panel">
+      <div class="table-actions">
+        <div class="table-title">Custo &amp; Margem <span>• Lançamento por Distribuidora e Apuração por Posto</span></div>
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div class="custo-subnav">
+            <button class="subnav-btn active" id="btn-sub-lanc" onclick="switchCustoSub('lancamento')">Lançar Custo</button>
+            <button class="subnav-btn" id="btn-sub-marg" onclick="switchCustoSub('margem')">Margem por Posto</button>
+          </div>
+          <div class="print-modes">
+            <button class="btn-print" onclick="imprimirQuadro('interno')"><i class="fa-solid fa-print"></i> Quadro Interno</button>
+            <button class="btn-print" onclick="imprimirQuadro('posto')"><i class="fa-solid fa-print"></i> Quadro do Posto</button>
           </div>
         </div>
-
+      </div>
+      <div class="custo-view active" id="view-lancamento"><div class="dist-grid" id="dist-grid"></div></div>
+      <div class="custo-view" id="view-margem">
         <div class="spreadsheet-frame">
           <table class="ss-table">
-            <thead id="medicao-thead">
-              <!-- Cabeçalho montado dinamicamente — cada posto tem seu próprio conjunto de combustíveis -->
-            </thead>
-            <tbody id="matriz-corpo">
-              <tr><td style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>
-            </tbody>
+            <thead><tr><th>Posto</th><th>Distribuidora</th><th>Combustível</th><th class="h-cus">Custo Efetivo</th><th>Ajuste Posto</th><th class="h-ven">Venda Atual</th><th class="h-dif">Margem</th><th>Reajuste (vs. ontem)</th><th>Status</th></tr></thead>
+            <tbody id="margem-corpo"></tbody>
           </table>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ABA PRINCIPAL 2: COLETA DE PREÇOS (DADOS REAIS — Apps Script) -->
-      <section id="tab-precos" class="view-panel">
-        <div class="table-actions">
-          <div class="table-title">Histórico de Coletas — Coleta de Preços <span id="coleta-subtitle">• Painel Auditor Integrado</span></div>
-          <div class="scroll-indicator"><i class="fa-solid fa-camera"></i> Passe o mouse ou clique em "Ver Foto" para auditar</div>
+    <!-- ABA 4: PEDIDOS DE CARGA -->
+    <section id="tab-pedidos-carga" class="view-panel">
+      <div class="placeholder-panel" style="border-left:4px solid var(--b-pre);">
+        <h2><i class="fa-solid fa-truck-ramp-box"></i> Painel de Aprovação de Carga (ADM)</h2>
+        <p style="margin-top:1rem; color:var(--tx2);">Aqui o administrativo visualiza as sugestões enviadas pela logística no <b>📦 PRÉ-PEDIDO</b>, realiza ajustes finos e ao clicar em "Aprovar" os volumes são injetados na coluna <b>📋 PEDIDO FINAL</b>.</p>
+      </div>
+    </section>
+
+    <!-- ABA 5: MOTORISTA -->
+    <section id="tab-motorista" class="view-panel">
+      <div class="table-actions">
+        <div class="table-title" style="color:var(--b-mot)"><i class="fa-solid fa-truck"></i> Módulo Motorista <span>• Descarga · Empréstimo · Devolução · Conciliação</span></div>
+        <div class="mot-subnav">
+          <button class="mot-subnav-btn active" id="btn-mot-desc" onclick="switchMotorista('descarga')"><i class="fa-solid fa-gas-pump"></i> Descarga</button>
+          <button class="mot-subnav-btn" id="btn-mot-emp" onclick="switchMotorista('emprestimo')"><i class="fa-solid fa-right-left"></i> Empréstimo</button>
+          <button class="mot-subnav-btn" id="btn-mot-dev" onclick="switchMotorista('devolucao')"><i class="fa-solid fa-rotate-left"></i> Devolução</button>
+          <button class="mot-subnav-btn" id="btn-mot-concil" onclick="switchMotorista('conciliacao')"><i class="fa-solid fa-scale-balanced"></i> Conciliação</button>
         </div>
+      </div>
 
-        <div class="coleta-filtros">
+      <!-- DESCARGA -->
+      <div class="mot-view active" id="view-descarga">
+        <div class="mot-form-grid">
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-calendar"></i> Data</label>
+            <input type="date" id="mot-desc-data">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-clock"></i> Hora</label>
+            <input type="time" id="mot-desc-hora">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-id-badge"></i> Motorista</label>
+            <input type="text" id="mot-desc-motorista" placeholder="Nome do motorista">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-truck"></i> Placa</label>
+            <input type="text" id="mot-desc-placa" placeholder="ABC-1234" style="text-transform:uppercase">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-location-dot"></i> Posto de Descarga</label>
+            <select id="mot-desc-posto" onchange="carregarCombsDescarga()">
+              <option value="">— Selecione o posto —</option>
+              <option value="P. ALEX">P. ALEX</option>
+              <option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
+              <option value="P. ARAPONGA">P. ARAPONGA</option>
+              <option value="P. AVIVA">P. AVIVA</option>
+              <option value="P. BAHAMAS">P. BAHAMAS</option>
+              <option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
+              <option value="P. BERNARDO">P. BERNARDO</option>
+              <option value="P. BIANCA">P. BIANCA</option>
+              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option>
+              <option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
+              <option value="P. BRUNA">P. BRUNA</option>
+              <option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
+              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option>
+              <option value="P. FELIPAO">P. FELIPAO</option>
+              <option value="P. GLÓRIA">P. GLÓRIA</option>
+              <option value="P. ITAPOA">P. ITAPOA</option>
+              <option value="P. JA">P. JA</option>
+              <option value="P. JOCA">P. JOCA</option>
+              <option value="P. LEANDRO">P. LEANDRO</option>
+              <option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
+              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option>
+              <option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
+              <option value="P. OURO BRANCO">P. OURO BRANCO</option>
+              <option value="P. PLANALTO">P. PLANALTO</option>
+              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option>
+              <option value="P. RODRIGO">P. RODRIGO</option>
+              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option>
+              <option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
+              <option value="P. SANTA MARIA">P. SANTA MARIA</option>
+              <option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
+              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option>
+              <option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
+              <option value="P. TOPAZIO">P. TOPAZIO</option>
+              <option value="P. TRANCOSO">P. TRANCOSO</option>
+              <option value="P. TUNEL">P. TUNEL</option>
+              <option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
+              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
+            </select>
+          </div>
+          <div class="mot-form-section-title"><i class="fa-solid fa-droplet"></i> Litros descarregados por combustível</div>
+          <div class="mot-fuels-container">
+            <div class="mot-fuels-box" id="desc-fuels-box">
+              <div class="fuels-title">Selecione o posto para carregar os combustíveis</div>
+            </div>
+          </div>
+          <div class="mot-form-group full">
+            <label><i class="fa-solid fa-note-sticky"></i> Observações (opcional)</label>
+            <input type="text" id="mot-desc-obs" placeholder="Alguma anotação sobre esta descarga...">
+          </div>
+          <button class="btn-mot-submit" onclick="enviarDescarga()"><i class="fa-solid fa-cloud-arrow-up"></i> Registrar Descarga</button>
+        </div>
+      </div>
+
+      <!-- EMPRÉSTIMO -->
+      <div class="mot-view" id="view-emprestimo">
+        <div class="mot-form-grid">
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-calendar"></i> Data</label>
+            <input type="date" id="mot-emp-data">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-clock"></i> Hora</label>
+            <input type="time" id="mot-emp-hora">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-id-badge"></i> Motorista</label>
+            <input type="text" id="mot-emp-motorista" placeholder="Nome do motorista">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-truck"></i> Placa</label>
+            <input type="text" id="mot-emp-placa" placeholder="ABC-1234" style="text-transform:uppercase">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-location-dot"></i> Posto de Origem</label>
+            <select id="mot-emp-origem">
+              <option value="">— Selecione o posto origem —</option>
+              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
+              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
+              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
+              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
+              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
+              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
+              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
+              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
+              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
+              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
+              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
+              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
+              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
+              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
+              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
+              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
+              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
+              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
+              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
+            </select>
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-location-arrow"></i> Posto de Destino</label>
+            <select id="mot-emp-destino">
+              <option value="">— Selecione o posto destino —</option>
+              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
+              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
+              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
+              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
+              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
+              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
+              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
+              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
+              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
+              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
+              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
+              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
+              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
+              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
+              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
+              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
+              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
+              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
+              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
+            </select>
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-droplet"></i> Combustível</label>
+            <select id="mot-emp-comb">
+              <option value="GASOLINA COMUM">GASOLINA COMUM</option>
+              <option value="GASOLINA ADITIVADA">GASOLINA ADITIVADA</option>
+              <option value="ETANOL">ETANOL</option>
+              <option value="ETANOL ADITIVADO">ETANOL ADITIVADO</option>
+              <option value="DIESEL S-10">DIESEL S-10</option>
+              <option value="DIESEL S-500">DIESEL S-500</option>
+            </select>
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-flask"></i> Litros Emprestados</label>
+            <input type="number" id="mot-emp-litros" placeholder="0" min="0" step="1">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-hourglass"></i> Tempo Previsto p/ Devolução</label>
+            <input type="text" id="mot-emp-tempo" placeholder="ex: 48h / 3 dias">
+          </div>
+          <div class="mot-form-group full">
+            <label><i class="fa-solid fa-note-sticky"></i> Observações (opcional)</label>
+            <input type="text" id="mot-emp-obs" placeholder="Motivo do empréstimo...">
+          </div>
+          <button class="btn-mot-submit" onclick="enviarEmprestimo()"><i class="fa-solid fa-right-left"></i> Registrar Empréstimo</button>
+        </div>
+      </div>
+
+      <!-- DEVOLUÇÃO -->
+      <div class="mot-view" id="view-devolucao">
+        <div class="mot-form-grid">
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-calendar"></i> Data</label>
+            <input type="date" id="mot-dev-data">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-clock"></i> Hora</label>
+            <input type="time" id="mot-dev-hora">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-id-badge"></i> Motorista</label>
+            <input type="text" id="mot-dev-motorista" placeholder="Nome do motorista">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-truck"></i> Placa</label>
+            <input type="text" id="mot-dev-placa" placeholder="ABC-1234" style="text-transform:uppercase">
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-location-dot"></i> Posto que está devolvendo</label>
+            <select id="mot-dev-origem">
+              <option value="">— Selecione o posto —</option>
+              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
+              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
+              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
+              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
+              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
+              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
+              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
+              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
+              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
+              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
+              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
+              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
+              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
+              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
+              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
+              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
+              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
+              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
+              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
+            </select>
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-location-arrow"></i> Devolvendo para o posto</label>
+            <select id="mot-dev-destino">
+              <option value="">— Selecione o posto —</option>
+              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
+              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
+              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
+              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
+              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
+              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
+              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
+              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
+              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
+              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
+              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
+              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
+              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
+              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
+              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
+              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
+              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
+              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
+              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
+            </select>
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-droplet"></i> Combustível</label>
+            <select id="mot-dev-comb">
+              <option value="GASOLINA COMUM">GASOLINA COMUM</option>
+              <option value="GASOLINA ADITIVADA">GASOLINA ADITIVADA</option>
+              <option value="ETANOL">ETANOL</option>
+              <option value="ETANOL ADITIVADO">ETANOL ADITIVADO</option>
+              <option value="DIESEL S-10">DIESEL S-10</option>
+              <option value="DIESEL S-500">DIESEL S-500</option>
+            </select>
+          </div>
+          <div class="mot-form-group">
+            <label><i class="fa-solid fa-flask"></i> Litros Devolvidos</label>
+            <input type="number" id="mot-dev-litros" placeholder="0" min="0" step="1">
+          </div>
+          <div class="mot-form-group full">
+            <label><i class="fa-solid fa-note-sticky"></i> Observações (opcional)</label>
+            <input type="text" id="mot-dev-obs" placeholder="Anotações sobre a devolução...">
+          </div>
+          <button class="btn-mot-submit" onclick="enviarDevolucao()"><i class="fa-solid fa-rotate-left"></i> Registrar Devolução</button>
+        </div>
+      </div>
+
+      <!-- CONCILIAÇÃO -->
+      <div class="mot-view" id="view-conciliacao">
+        <div class="coleta-filtros" style="border-top:1px solid var(--bd); border-radius:0;">
           <div class="filtro-campo">
-            <label>De</label>
-            <input type="date" class="filtro-input" id="flt-data-de" oninput="aplicarFiltrosColeta()">
+            <label>Posto</label>
+            <input type="text" class="filtro-input" id="concil-flt-posto" placeholder="Filtrar posto..." oninput="filtrarConciliacao()">
           </div>
           <div class="filtro-campo">
-            <label>Até</label>
-            <input type="date" class="filtro-input" id="flt-data-ate" oninput="aplicarFiltrosColeta()">
-          </div>
-          <div class="filtro-campo">
-            <label>Posto Alvo</label>
-            <input type="text" class="filtro-input" id="flt-posto" placeholder="Buscar posto..." oninput="aplicarFiltrosColeta()">
-          </div>
-          <div class="filtro-campo">
-            <label>Gerente</label>
-            <input type="text" class="filtro-input" id="flt-gerente" placeholder="Buscar gerente..." oninput="aplicarFiltrosColeta()">
-          </div>
-          <div class="filtro-campo">
-            <label>Tipo</label>
-            <select class="filtro-select" id="flt-tipo" onchange="aplicarFiltrosColeta()">
+            <label>Status</label>
+            <select class="filtro-select" id="concil-flt-status" onchange="filtrarConciliacao()">
               <option value="">Todos</option>
-              <option value="Próprio">Próprio</option>
-              <option value="Concorrente">Concorrente</option>
+              <option value="OK">OK</option>
+              <option value="Pendente">Pendente</option>
+              <option value="Divergente">Divergente</option>
             </select>
           </div>
           <div class="filtro-campo">
-            <label>Supervisor</label>
-            <select class="filtro-select" id="flt-supervisor" onchange="aplicarFiltrosColeta()">
-              <option value="">Todos</option>
-              <option value="Mauricio">Mauricio</option>
-              <option value="Fabricio">Fabricio</option>
-              <option value="Paulo">Paulo</option>
-              <option value="Gledson">Gledson</option>
-              <option value="Rodrigo">Rodrigo</option>
+            <label>Período (dias)</label>
+            <select class="filtro-select" id="concil-flt-dias" onchange="carregarConciliacao()">
+              <option value="7">Últimos 7 dias</option>
+              <option value="15" selected>Últimos 15 dias</option>
+              <option value="30">Últimos 30 dias</option>
             </select>
           </div>
-          <button class="btn-limpar-filtro" onclick="limparFiltrosColeta()"><i class="fa-solid fa-filter-circle-xmark"></i> Limpar filtros</button>
+          <button class="btn-limpar-filtro" onclick="carregarConciliacao()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
         </div>
-        
         <div class="spreadsheet-frame">
           <table class="ss-table">
             <thead>
               <tr>
-                <th>Data</th><th>Hora</th><th>Posto</th><th>Gerente</th><th>Posto Alvo</th><th>Tipo</th><th>Bandeira</th><th>Rede</th><th>Supervisor</th>
-                <th style="color:var(--b-pre)">ET</th><th style="color:var(--b-ven)">GC</th><th style="color:var(--b-med)">GA</th><th style="color:var(--b-dif)">S10</th><th style="color:var(--b-pvn)">S500</th>
-                <th>Latitude</th><th>Longitude</th><th>Foto</th>
+                <th>Data</th><th>Hora</th><th>Motorista</th><th>Placa</th>
+                <th>Posto</th><th>Tipo</th><th>Combustível</th>
+                <th style="color:var(--b-mot)">Litros (Motorista)</th>
+                <th style="color:var(--b-ven)">Litros (Gerente)</th>
+                <th style="color:var(--b-dif)">Diferença</th>
+                <th>Status</th>
               </tr>
             </thead>
-            <tbody id="coleta-corpo">
-              <tr><td colspan="17" style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>
+            <tbody id="concil-corpo">
+              <tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);">Clique em "Conciliação" para carregar os dados...</td></tr>
             </tbody>
           </table>
         </div>
-      </section>
-
-      <!-- ABA PRINCIPAL 3: CUSTO & MARGEM -->
-      <section id="tab-custo" class="view-panel">
-        <div class="table-actions">
-          <div class="table-title">Custo & Margem <span>• Lançamento por Distribuidora e Apuração por Posto</span></div>
-          <div style="display: flex; align-items: center; gap: 1rem;">
-            <div class="custo-subnav">
-              <button class="subnav-btn active" id="btn-sub-lanc" onclick="switchCustoSub('lancamento')">Lançar Custo</button>
-              <button class="subnav-btn" id="btn-sub-marg" onclick="switchCustoSub('margem')">Margem por Posto</button>
-            </div>
-            <div class="print-modes">
-              <button class="btn-print" onclick="imprimirQuadro('interno')"><i class="fa-solid fa-print"></i> Quadro Interno</button>
-              <button class="btn-print" onclick="imprimirQuadro('posto')"><i class="fa-solid fa-print"></i> Quadro do Posto</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="custo-view active" id="view-lancamento">
-          <div class="dist-grid" id="dist-grid"></div>
-        </div>
-
-        <div class="custo-view" id="view-margem">
-          <div class="spreadsheet-frame">
-            <table class="ss-table">
-              <thead>
-                <tr>
-                  <th>Posto</th><th>Distribuidora</th><th>Combustível</th>
-                  <th class="h-cus">Custo Efetivo</th><th>Ajuste Posto</th>
-                  <th class="h-ven">Venda Atual</th><th class="h-dif">Margem</th><th>Reajuste (vs. ontem)</th><th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="margem-corpo"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- ABA PRINCIPAL 4: PEDIDOS DE CARGA -->
-      <section id="tab-pedidos-carga" class="view-panel">
-        <div class="placeholder-panel" style="border-left: 4px solid var(--b-pre);">
-          <h2><i class="fa-solid fa-truck-ramp-box"></i> Painel de Aprovação de Carga (ADM)</h2>
-          <p style="margin-top: 1rem; color: var(--tx2);">Aqui o administrativo visualiza as sugestões enviadas pela logística no <b>📦 PRÉ-PEDIDO</b>, realiza ajustes finos se necessário, e ao clicar em "Aprovar", os volumes são injetados automaticamente na coluna <b>📋 PEDIDO FINAL</b> da tela anterior.</p>
-        </div>
-      </section>
-
-      <!-- ABA PRINCIPAL 5: PAINEL DE KPI -->
-      <section id="tab-kpi" class="view-panel">
-        <div class="placeholder-panel">
-          <h2><i class="fa-solid fa-chart-pie"></i> Painel de KPI</h2>
-          <p style="margin-top: 1rem;">Métricas de frentistas, estoques consolidados e auditoria de margens.</p>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- COMPONENTE FLUTUANTE (POPOVER DE IMAGEM ESTILO GOOGLE SHEETS) -->
-  <div id="global-photo-popover" class="photo-popover">
-    <div class="popover-hdr">
-      <span id="popover-filename"><i class="fa-solid fa-image"></i> Arquivo</span>
-      <div style="display:flex; gap:8px; color:var(--tx2)">
-        <i class="fa-regular fa-copy"></i>
-        <i class="fa-solid fa-pen"></i>
       </div>
-    </div>
-    <div class="popover-body">
-      <img id="popover-img" src="" alt="Foto da coleta">
-    </div>
-    <div class="popover-ftr">
-      <a id="popover-link" href="#" target="_blank" rel="noopener" style="color:var(--ac); text-decoration:underline;">Abrir foto original no Drive</a>
-    </div>
-  </div>
+    </section>
 
-  <!-- CONTAINER EXCLUSIVO DE IMPRESSÃO (QUADRO INTERNO OU QUADRO DO POSTO) -->
-  <div id="quadro-impressao">
-    <div id="qi-conteudo"></div>
-  </div>
+    <!-- ABA 6: KPI -->
+    <section id="tab-kpi" class="view-panel">
+      <div class="placeholder-panel">
+        <h2><i class="fa-solid fa-chart-pie"></i> Painel de KPI</h2>
+        <p style="margin-top:1rem;">Métricas de frentistas, estoques consolidados e auditoria de margens.</p>
+      </div>
+    </section>
 
-  <script>
-    // ===== CONFIGURAÇÃO DO BACKEND (Apps Script) =====
-    // Cole aqui a URL do seu Web App publicado (a mesma usada pelo PWA Fechamento).
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoJ3-g48frwYtMlnpVj5EIYapInPP11OJXrkOPUzCULrbIZWMQW51xFe-Ot4cox00r/exec';
+  </main>
+</div>
 
-    async function chamarApi(params) {
-      const qs = new URLSearchParams(params).toString();
-      const resp = await fetch(APPS_SCRIPT_URL + '?' + qs);
-      if (!resp.ok) throw new Error('HTTP ' + resp.status);
-      return resp.json();
+<!-- POPOVER FOTO -->
+<div id="global-photo-popover" class="photo-popover">
+  <div class="popover-hdr"><span id="popover-filename"><i class="fa-solid fa-image"></i> Arquivo</span></div>
+  <div class="popover-body"><img id="popover-img" src="" alt="Foto da coleta"></div>
+  <div class="popover-ftr"><a id="popover-link" href="#" target="_blank" rel="noopener" style="color:var(--ac); text-decoration:underline;">Abrir foto original no Drive</a></div>
+</div>
+<div id="quadro-impressao"><div id="qi-conteudo"></div></div>
+
+<script>
+// ================================================================
+// CONFIGURAÇÃO
+// ================================================================
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoJ3-g48frwYtMlnpVj5EIYapInPP11OJXrkOPUzCULrbIZWMQW51xFe-Ot4cox00r/exec';
+
+// Perfis autorizados neste app — apenas ADM e LOGISTICA
+const PERFIS_PERMITIDOS = ['ADM', 'LOGISTICA'];
+
+// Combustíveis por posto (subconjunto para o form de descarga)
+// Buscados dinamicamente do Apps Script via tipo=cadastroPostos
+let COMBUSTIVEIS_POSTOS = {};
+
+// ================================================================
+// LOGIN
+// ================================================================
+let USUARIO_LOGADO = null;
+
+async function fazerLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const senha = document.getElementById('login-senha').value.trim();
+  const btn   = document.getElementById('login-btn');
+  const errEl = document.getElementById('login-error');
+  const loadEl = document.getElementById('login-loading');
+
+  if (!email || !senha) {
+    mostrarErroLogin('Preencha e-mail e senha.'); return;
+  }
+
+  errEl.classList.remove('show');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verificando...';
+  loadEl.style.display = 'block';
+
+  try {
+    const qs = new URLSearchParams({ tipo: 'login', email, senha }).toString();
+    const resp = await fetch(APPS_SCRIPT_URL + '?' + qs);
+    const data = await resp.json();
+
+    if (data.erro || !data.usuario) {
+      mostrarErroLogin('Credenciais inválidas. Verifique e tente novamente.');
+      return;
     }
 
-    // Estado em memória da matriz carregada — espelha o JSON do mesCompleto e é
-    // atualizado a cada digitação, pra Previsão/Diferença recalcularem na hora
-    // sem precisar voltar no Apps Script a cada tecla.
-    let DADOS_ATUAIS = null;
-    let EDICOES_PENDENTES = {}; // chave "dia|campo|combustivel" -> {dia, campo, comb, valor}
-
-    // Mapa de cores por categoria — mesma lógica de cores que você já usa no Code.gs
-    // editavel:false = Previsão e Diferença são CALCULADAS (na tela e na planilha),
-    // nunca digitadas direto — por isso viram texto, não input.
-    const CATEGORIAS_MEDICAO = [
-      { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
-      { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',            classe: 'h-ven', cor: 'var(--b-ven)', editavel: true  },
-      { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',          classe: 'h-pvn', cor: 'var(--b-pvn)', editavel: true  },
-      { chave: 'prePedido', titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',  classe: 'h-pre', cor: 'var(--b-pre)', editavel: true  },
-      { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)', classe: 'h-cus', cor: 'var(--b-cus)', editavel: true  },
-      { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',           classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
-      { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',      classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
-    ];
-
-    // Cada categoria usa sua própria lista de colunas: Venda usa os combustíveis
-    // de venda do posto; todas as outras usam os grupos de tanque (que podem
-    // combinar 2 tanques do mesmo combustível numa coluna só, com capacidade somada).
-    function colunasDaCategoria(chave, grupos, combustiveisVenda) {
-      return chave === 'venda' ? combustiveisVenda : grupos;
+    const perfil = data.usuario.postoKey;
+    if (!PERFIS_PERMITIDOS.includes(perfil)) {
+      mostrarErroLogin('Acesso não autorizado para este perfil neste módulo.');
+      return;
     }
 
-    function montarCabecalhoMedicao(grupos, combustiveisVenda) {
-      const thead = document.getElementById('medicao-thead');
-      let row1 = '<tr><th rowspan="2" class="sticky-col" style="background: var(--sf2); border-bottom: 2px solid var(--bd2)">DIA</th>';
-      CATEGORIAS_MEDICAO.forEach((cat, ci) => {
-        const n = colunasDaCategoria(cat.chave, grupos, combustiveisVenda).length;
-        const grpEndCls = (ci < CATEGORIAS_MEDICAO.length - 1) ? ' grp-end' : '';
-        const grpStartCls = (ci > 0) ? ' grp-start' : '';
-        row1 += '<th colspan="' + n + '" class="' + cat.classe + grpEndCls + grpStartCls + '">' + cat.titulo + '</th>';
-      });
-      row1 += '</tr>';
-      let row2 = '<tr>';
-      CATEGORIAS_MEDICAO.forEach((cat, ci) => {
-        const cols = colunasDaCategoria(cat.chave, grupos, combustiveisVenda);
-        cols.forEach((g, gi) => {
-          let classes = '';
-          if (gi === cols.length - 1) classes += ' grp-end';
-          if (ci > 0 && gi === 0) classes += ' grp-start';
-          const cls = classes ? ' class="' + classes.trim() + '"' : '';
-          row2 += '<th' + cls + ' style="color:' + cat.cor + '" title="' + g.comb + '">' + g.abv + '</th>';
-        });
-      });
-      row2 += '</tr>';
-      thead.innerHTML = row1 + row2;
+    USUARIO_LOGADO = data.usuario;
 
-      // Mede a altura real da 1ª linha do cabeçalho pra 2ª linha (sticky) colar exatamente debaixo dela.
-      const linha1 = thead.querySelector('tr:first-child th:not(.sticky-col)');
-      if (linha1) {
-        document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
-      }
+    // Guarda sessão simples (sem senha)
+    try { sessionStorage.setItem('jb_log_user', JSON.stringify(USUARIO_LOGADO)); } catch(e) {}
+
+    entrarNoApp();
+  } catch(err) {
+    mostrarErroLogin('Erro de conexão: ' + err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar';
+    loadEl.style.display = 'none';
+  }
+}
+
+function mostrarErroLogin(msg) {
+  const el = document.getElementById('login-error');
+  document.getElementById('login-error-msg').textContent = msg;
+  el.classList.add('show');
+}
+
+function entrarNoApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('main-topbar').style.display = 'flex';
+  document.getElementById('main-app').style.display = 'flex';
+  document.getElementById('user-name').textContent = USUARIO_LOGADO.gerente;
+  updateThemeIcon();
+  // Inicializa dados
+  carregarMedicao(document.getElementById('global-posto').value);
+  carregarColetas();
+  renderLancamento();
+  renderMargemPostos();
+  carregarCombustiveisPostos();
+  preencherDataHoraMotorista();
+}
+
+function fazerLogout() {
+  USUARIO_LOGADO = null;
+  try { sessionStorage.removeItem('jb_log_user'); } catch(e) {}
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('main-topbar').style.display = 'none';
+  document.getElementById('main-app').style.display = 'none';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-senha').value = '';
+  document.getElementById('login-error').classList.remove('show');
+}
+
+// Tenta restaurar sessão ao abrir a página
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    const stored = sessionStorage.getItem('jb_log_user');
+    if (stored) {
+      USUARIO_LOGADO = JSON.parse(stored);
+      entrarNoApp();
+      return;
     }
-
-    function fmtL(v) {
-      if (v === null || v === undefined || v === '') return '—';
-      return Math.round(Number(v)).toLocaleString('pt-BR');
-    }
-
-    // Converte texto digitado em pt-BR (ponto de milhar, vírgula decimal) pra número.
-    // Campo vazio vira null (= "não preenchido"), não zero — importante pra Previsão
-    // saber distinguir "0 litros de verdade" de "ainda não digitado".
-    function parseNumBR(str) {
-      if (str === null || str === undefined) return null;
-      const limpo = String(str).replace(/\./g, '').replace(',', '.').replace('—', '').trim();
-      if (limpo === '') return null;
-      const n = parseFloat(limpo);
-      return isNaN(n) ? null : n;
-    }
-
-    function montarLinhasMedicao(dados) {
-      const tbody = document.getElementById('matriz-corpo');
-      const grupos = dados.grupos;
-      const vendaCols = dados.combustiveisVenda;
-      let html = '';
-
-      dados.dias.forEach((d, diaIdx) => {
-        html += '<tr><td class="sticky-col">' + String(d.dia).padStart(2,'0') + '/' + dados.mes + '</td>';
-
-        CATEGORIAS_MEDICAO.forEach((cat, ci) => {
-          const cols = colunasDaCategoria(cat.chave, grupos, vendaCols);
-          const valores = d[cat.chave] || [];
-
-          cols.forEach((col, i) => {
-            const val = valores[i];
-            const tdCls = (i === cols.length - 1) ? ' class="grp-end"' : ((ci > 0 && i === 0) ? ' class="grp-start"' : '');
-
-            if (cat.chave === 'previsao') {
-              html += '<td' + tdCls + '><span id="prev_' + diaIdx + '_' + i + '">' + fmtL(val) + '</span></td>';
-            } else if (cat.chave === 'diferenca') {
-              const cor = val > 0 ? 'var(--b-ven)' : (val < 0 ? 'var(--b-dif)' : 'var(--tx3)');
-              html += '<td' + tdCls + '><span id="diff_' + diaIdx + '_' + i + '" style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' +
-                (val === null || val === undefined ? '—' : ((val > 0 ? '+' : '') + fmtL(val))) + '</span></td>';
-            } else {
-              const combAttr = String(col.comb).replace(/"/g, '&quot;');
-              html += '<td' + tdCls + '><input type="text" inputmode="numeric" class="cell-in"' +
-                ' data-dia="' + diaIdx + '" data-campo="' + cat.chave + '" data-comb="' + combAttr + '"' +
-                ' value="' + fmtL(val).replace('—','') + '"' +
-                ' oninput="onCelulaEditada(this)" onblur="onCelulaBlur(this)"></td>';
-            }
-          });
-        });
-
-        html += '</tr>';
-      });
-      tbody.innerHTML = html || '<tr><td style="padding:1.5rem; color:var(--tx3);">Sem dados para este posto neste mês.</td></tr>';
-    }
-
-    // Recalcula Previsão e Diferença de UM dia específico (índice no array `dias`,
-    // não o número do dia do mês) usando a MESMA fórmula da planilha:
-    // Previsão = Medição de ONTEM + Carga de hoje − Venda de hoje
-    // Diferença = Medição de hoje − Previsão de hoje
-    // Pedido (Pré-Pedido e Pedido Final) NÃO entra aqui — é só solicitação/histórico.
-    // Se entrasse, o mesmo litro seria contado 2x quando o caminhão chegasse de
-    // verdade e a Carga Recebida também fosse preenchida pro mesmo dia.
-    function recalcularPrevisaoEDiff(diaIdx) {
-      if (!DADOS_ATUAIS) return;
-      const dias = DADOS_ATUAIS.dias;
-      const dia = dias[diaIdx];
-      if (!dia) return; // fora do mês (ex: tentou recalcular o dia seguinte ao dia 30/31)
-      const diaOntem = dias[diaIdx - 1];
-      const grupos = DADOS_ATUAIS.grupos;
-      const vendaCols = DADOS_ATUAIS.combustiveisVenda;
-
-      grupos.forEach((g, i) => {
-        let prevVal = null;
-        if (diaOntem) {
-          const medOntem = diaOntem.medicao[i];
-          if (medOntem !== null && medOntem !== undefined) {
-            const carga  = Number(dia.carga[i])  || 0;
-            const idxVenda = vendaCols.findIndex(c => c.comb === g.comb);
-            const venda = (idxVenda === -1 || dia.venda[idxVenda] === null || dia.venda[idxVenda] === undefined)
-              ? 0 : Number(dia.venda[idxVenda]);
-            prevVal = Number(medOntem) + carga - venda;
-          }
-        }
-        dia.previsao[i] = prevVal;
-
-        const medHoje = dia.medicao[i];
-        const diffVal = (prevVal !== null && medHoje !== null && medHoje !== undefined)
-          ? Number(medHoje) - prevVal : null;
-        dia.diferenca[i] = diffVal;
-
-        const prevEl = document.getElementById('prev_' + diaIdx + '_' + i);
-        if (prevEl) prevEl.textContent = fmtL(prevVal);
-        const diffEl = document.getElementById('diff_' + diaIdx + '_' + i);
-        if (diffEl) {
-          const cor = diffVal > 0 ? 'var(--b-ven)' : (diffVal < 0 ? 'var(--b-dif)' : 'var(--tx3)');
-          diffEl.style.color = cor;
-          diffEl.textContent = (diffVal === null ? '—' : ((diffVal > 0 ? '+' : '') + fmtL(diffVal)));
-        }
-      });
-    }
-
-    function onCelulaEditada(input) {
-      if (!DADOS_ATUAIS) return;
-      const diaIdx = parseInt(input.dataset.dia);
-      const campo  = input.dataset.campo;
-      const comb   = input.dataset.comb;
-      const valor  = parseNumBR(input.value);
-
-      input.classList.add('cell-dirty');
-
-      const diaObj = DADOS_ATUAIS.dias[diaIdx];
-      const cols = campo === 'venda' ? DADOS_ATUAIS.combustiveisVenda : DADOS_ATUAIS.grupos;
-      const idx = cols.findIndex(c => c.comb === comb);
-      if (idx === -1) return;
-      diaObj[campo][idx] = valor;
-
-      EDICOES_PENDENTES[diaIdx + '|' + campo + '|' + comb] = { dia: diaIdx, campo, comb, valor };
-
-      // Só recalcula o que realmente afeta a Previsão. Pedido (Pré-Pedido e
-      // Pedido Final) é só solicitação/histórico — não entra na conta, pra não
-      // duplicar com Carga Recebida quando o caminhão chegar de verdade.
-      if (campo === 'medicao') recalcularPrevisaoEDiff(diaIdx + 1);
-      else if (campo === 'carga' || campo === 'venda') recalcularPrevisaoEDiff(diaIdx);
-
-      atualizarBotoesSalvar();
-    }
-
-    function onCelulaBlur(input) {
-      const valor = parseNumBR(input.value);
-      input.value = fmtL(valor).replace('—', '');
-    }
-
-    function atualizarBotoesSalvar() {
-      const pendentes  = Object.values(EDICOES_PENDENTES);
-      const matrizQtd  = pendentes.filter(e => e.campo !== 'prePedido').length;
-      const preQtd     = pendentes.filter(e => e.campo === 'prePedido').length;
-
-      const btnMatriz = document.getElementById('btn-salvar-matriz');
-      const btnPre    = document.getElementById('btn-enviar-prepedido');
-      if (btnMatriz) {
-        btnMatriz.disabled = matrizQtd === 0;
-        btnMatriz.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações' + (matrizQtd ? ' (' + matrizQtd + ')' : '');
-      }
-      if (btnPre) {
-        btnPre.disabled = preQtd === 0;
-        btnPre.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido' + (preQtd ? ' (' + preQtd + ')' : '');
-      }
-    }
-
-    function limparDestaqueEdicoes() {
-      document.querySelectorAll('#matriz-corpo .cell-in.cell-dirty').forEach(el => el.classList.remove('cell-dirty'));
-    }
-
-    // Grava Medição, Venda, Carga e Pedido Final direto nas células da aba mensal.
-    // Previsão/Diferença continuam sendo fórmula nativa da planilha — como elas
-    // leem dessas mesmas células, recalculam sozinhas assim que isso salva.
-    async function salvarAlteracoesMatriz() {
-      const posto = document.getElementById('global-posto').value;
-      const itens = Object.values(EDICOES_PENDENTES)
-        .filter(e => e.campo !== 'prePedido')
-        .map(e => ({ data: DADOS_ATUAIS.dias[e.dia].data, campo: e.campo, combustivel: e.comb, valor: e.valor }));
-      if (!itens.length || !posto) return;
-
-      const btn = document.getElementById('btn-salvar-matriz');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
-
-      try {
-        // mode:'no-cors' — mesma limitação do app de Fechamento: não dá pra ler a
-        // resposta do Apps Script daqui, só saber se a rede respondeu ou não.
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST', mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tipo: 'editar_matriz', posto: posto, itens: itens, user: 'ADM Logística (desktop)' })
-        });
-        Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo !== 'prePedido') delete EDICOES_PENDENTES[k]; });
-        limparDestaqueEdicoes();
-        atualizarBotoesSalvar();
-        await carregarMedicao(posto); // recarrega da planilha pra confirmar os valores gravados
-      } catch (err) {
-        alert('Erro ao salvar: ' + err.message + '\n\nConfira sua conexão e tente novamente.');
-        btn.disabled = false;
-        atualizarBotoesSalvar();
-      }
-    }
-
-    // Envia só as sugestões de Pré-Pedido pra aba separada "Pré-Pedidos" —
-    // não mexe na coluna oficial de Pedido (essa só muda com Salvar Alterações).
-    async function enviarPrePedido() {
-      const posto = document.getElementById('global-posto').value;
-      const itens = Object.values(EDICOES_PENDENTES)
-        .filter(e => e.campo === 'prePedido')
-        .map(e => ({ data: DADOS_ATUAIS.dias[e.dia].data, combustivel: e.comb, valor: e.valor }));
-      if (!itens.length || !posto) return;
-
-      const btn = document.getElementById('btn-enviar-prepedido');
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
-
-      try {
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST', mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tipo: 'pre_pedido', posto: posto, itens: itens, user: 'ADM Logística (desktop)' })
-        });
-        Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo === 'prePedido') delete EDICOES_PENDENTES[k]; });
-        limparDestaqueEdicoes();
-        atualizarBotoesSalvar();
-        alert('✅ Pré-Pedido enviado com sucesso.');
-      } catch (err) {
-        alert('Erro ao enviar: ' + err.message + '\n\nConfira sua conexão e tente novamente.');
-      }
-      btn.disabled = Object.values(EDICOES_PENDENTES).filter(e => e.campo === 'prePedido').length === 0;
-      atualizarBotoesSalvar();
-    }
-
-    async function carregarMedicao(posto) {
-      const subtitle = document.getElementById('medicao-subtitle');
-      const tbody = document.getElementById('matriz-corpo');
-      subtitle.textContent = '• Carregando ' + posto + '...';
-      tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>';
-      EDICOES_PENDENTES = {};
-      atualizarBotoesSalvar();
-      try {
-        const dados = await chamarApi({ tipo: 'mesCompleto', posto: posto });
-        if (dados.erro) {
-          subtitle.textContent = '• Erro: ' + dados.erro;
-          tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">' + dados.erro + '</td></tr>';
-          return;
-        }
-        DADOS_ATUAIS = dados;
-        subtitle.textContent = '• ' + dados.posto + ' — ' + dados.mes + '/' + dados.ano + ' (atualizado em tempo real do Sheets)';
-        montarCabecalhoMedicao(dados.grupos, dados.combustiveisVenda);
-        montarLinhasMedicao(dados);
-      } catch (err) {
-        subtitle.textContent = '• Falha ao conectar com o Apps Script';
-        tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">Não foi possível carregar: ' + err.message + '. Confira a URL em APPS_SCRIPT_URL.</td></tr>';
-      }
-    }
-
-    function onPostoChange() {
-      const posto = document.getElementById('global-posto').value;
-      carregarMedicao(posto);
-    }
-
-    // Controle do Popover de Imagem (Aparece ao passar o mouse ou clicar)
-    const popover = document.getElementById('global-photo-popover');
-    const popoverName = document.getElementById('popover-filename');
-    const popoverImg = document.getElementById('popover-img');
-    const popoverLink = document.getElementById('popover-link');
-
-    // Converte um link de visualização do Drive (gerado por arq.getUrl() no Code.gs)
-    // num link de imagem direta, pro <img> conseguir exibir inline.
-    function driveThumb(url) {
-      const m = url && url.match(/[-\w]{25,}/);
-      return m ? ('https://lh3.googleusercontent.com/d/' + m[0] + '=w400') : '';
-    }
-
-    function showPhoto(event, fotoUrl, label) {
-      popoverName.innerHTML = '<i class="fa-solid fa-image"></i> ' + (label || 'Foto');
-      popover.style.display = 'flex';
-      if (fotoUrl && fotoUrl.startsWith('http')) {
-        popoverImg.src = driveThumb(fotoUrl);
-        popoverLink.href = fotoUrl;
-        popoverLink.style.display = 'block';
-      } else {
-        popoverImg.src = '';
-        popoverLink.style.display = 'none';
-      }
-
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
-
-      // Centraliza e posiciona dinamicamente perto do gatilho do ponteiro
-      popover.style.left = (mouseX - 300) + 'px'; 
-      popover.style.top = (mouseY - 80) + 'px';
-    }
-
-    function hidePhoto() {
-      popover.style.display = 'none';
-    }
-
-    // ===== COLETA DE PREÇOS — dados reais via tipo=coletaRecentes =====
-    let COLETAS_TODAS = []; // guarda tudo que veio do Apps Script; os filtros recortam em cima disso, sem nova chamada
-
-    function badgeTipo(tipo) {
-      const cls = tipo === 'Próprio' ? 'proprio' : 'concorrente';
-      return '<span class="badge-tipo ' + cls + '">' + (tipo || '-') + '</span>';
-    }
-
-    function fmtPreco(v) { return (v === null || v === undefined || isNaN(v)) ? '-' : Number(v).toFixed(2).replace('.', ','); }
-
-    function montarLinhasColeta(registros) {
-      const tbody = document.getElementById('coleta-corpo');
-      if (!registros.length) {
-        tbody.innerHTML = '<tr><td colspan="17" style="padding:1.5rem; color:var(--tx3);">Nenhuma coleta encontrada com esse filtro.</td></tr>';
-        return;
-      }
-      let html = '';
-      registros.forEach(r => {
-        const linhaClasse = r.tipo === 'Próprio' ? 'row-proprio' : 'row-concorrente';
-        const temFoto = r.foto && String(r.foto).startsWith('http');
-        const fotoCell = temFoto
-          ? '<span class="link-foto" onmouseenter="showPhoto(event, \'' + r.foto + '\', \'' + (r.postoAlvo||'').replace(/'/g,"") + '\')" onmouseleave="hidePhoto()" onclick="showPhoto(event, \'' + r.foto + '\', \'' + (r.postoAlvo||'').replace(/'/g,"") + '\')"><i class="fa-regular fa-image"></i> Ver Foto</span>'
-          : '<span style="color:var(--tx3)">—</span>';
-        html += '<tr class="' + linhaClasse + '">' +
-          '<td>' + (r.data||'-') + '</td><td>' + (r.hora||'-') + '</td><td>' + (r.posto||'-') + '</td><td>' + (r.gerente||'-') + '</td><td>' + (r.postoAlvo||'-') + '</td>' +
-          '<td>' + badgeTipo(r.tipo) + '</td><td>' + (r.bandeira||'-') + '</td><td>' + (r.rede||'-') + '</td><td>' + (r.supervisor||'-') + '</td>' +
-          '<td>' + fmtPreco(r.ET) + '</td><td>' + fmtPreco(r.GC) + '</td><td>' + fmtPreco(r.GA) + '</td><td>' + fmtPreco(r.S10) + '</td><td>' + fmtPreco(r.S500) + '</td>' +
-          '<td>' + (r.lat||'-') + '</td><td>' + (r.lng||'-') + '</td><td>' + fotoCell + '</td></tr>';
-      });
-      tbody.innerHTML = html;
-    }
-
-    // Converte "DD/MM/AAAA" pra Date, pra dar pra comparar com os campos <input type="date">
-    function parseDataBR(str) {
-      if (!str) return null;
-      const p = String(str).split('/');
-      if (p.length !== 3) return null;
-      return new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
-    }
-
-    // Recorta COLETAS_TODAS de acordo com os campos de filtro preenchidos e
-    // redesenha a tabela — não faz nenhuma chamada nova ao Apps Script.
-    function aplicarFiltrosColeta() {
-      const de       = document.getElementById('flt-data-de').value;
-      const ate      = document.getElementById('flt-data-ate').value;
-      const posto    = document.getElementById('flt-posto').value.trim().toUpperCase();
-      const gerente  = document.getElementById('flt-gerente').value.trim().toUpperCase();
-      const tipo     = document.getElementById('flt-tipo').value;
-      const sup      = document.getElementById('flt-supervisor').value;
-
-      const dataDe  = de  ? new Date(de  + 'T00:00:00') : null;
-      const dataAte = ate ? new Date(ate + 'T23:59:59') : null;
-
-      const filtrados = COLETAS_TODAS.filter(r => {
-        if (posto   && !String(r.postoAlvo || '').toUpperCase().includes(posto))   return false;
-        if (gerente && !String(r.gerente   || '').toUpperCase().includes(gerente)) return false;
-        if (tipo    && r.tipo !== tipo)                                            return false;
-        if (sup     && r.supervisor !== sup)                                       return false;
-        if (dataDe || dataAte) {
-          const d = parseDataBR(r.data);
-          if (!d) return false;
-          if (dataDe  && d < dataDe)  return false;
-          if (dataAte && d > dataAte) return false;
-        }
-        return true;
-      });
-
-      montarLinhasColeta(filtrados);
-
-      const filtrosAtivos = !!(de || ate || posto || gerente || tipo || sup);
-      document.getElementById('coleta-subtitle').textContent = filtrosAtivos
-        ? '• ' + filtrados.length + ' de ' + COLETAS_TODAS.length + ' coletas (filtro ativo)'
-        : '• ' + COLETAS_TODAS.length + ' coletas nos últimos 15 dias (atualizado em tempo real)';
-    }
-
-    function limparFiltrosColeta() {
-      document.getElementById('flt-data-de').value = '';
-      document.getElementById('flt-data-ate').value = '';
-      document.getElementById('flt-posto').value = '';
-      document.getElementById('flt-gerente').value = '';
-      document.getElementById('flt-tipo').value = '';
-      document.getElementById('flt-supervisor').value = '';
-      aplicarFiltrosColeta();
-    }
-
-    async function carregarColetas() {
-      const subtitle = document.getElementById('coleta-subtitle');
-      const tbody = document.getElementById('coleta-corpo');
-      try {
-        const dados = await chamarApi({ tipo: 'coletaRecentes', dias: '15' });
-        if (!dados.success) {
-          subtitle.textContent = '• Erro ao carregar';
-          return;
-        }
-        COLETAS_TODAS = dados.registros;
-        aplicarFiltrosColeta();
-      } catch (err) {
-        subtitle.textContent = '• Falha ao conectar com o Apps Script';
-        tbody.innerHTML = '<tr><td colspan="17" style="padding:1.5rem; color:var(--b-dif);">Não foi possível carregar: ' + err.message + '</td></tr>';
-      }
-    }
-
-    // Troca de Módulos pela Sidebar Principal
-    function switchMainTab(tabId, element) {
-      document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      
-      document.getElementById(tabId).classList.add('active');
-      element.classList.add('active');
-    }
-
-    // ===== MÓDULO CUSTO & MARGEM (dados reais — extraídos de ALTERAÇÕES_DE_PREÇOS_2026.xlsx, aba "Preços impressos", snapshot de 12/06/2026) =====
-    // As 37 estações foram agrupadas em 4 clusters de custo idêntico/quase idêntico por combustível — isso é o que a planilha
-    // mostra acontecer na prática, mas o arquivo não nomeia o fornecedor de cada cluster nessa data. Os nomes "Distribuidora 1-4"
-    // são provisórios: troque por CIAPETRO/ALE/RIO BRANCO/IPIRANGA/BR (ou o que for correto) assim que confirmar com a logística.
-
-    const distribuidoras = [
-      {
-        id: 'd1', nome: "Distribuidora 1",
-        postos: ["POSTO J.A.", "ITAPOA", "PLANALTO", "LOURA", "TOPAZIO", "BRUNA", "DIFERENCIAL", "MANGABEIRAS", "GLÓRIA", "RODRIGO", "ARAPONGA", "TÚNEL", "QUATRO RODAS", "BERNARDO", "DUDU", "S. LUIZ"],
-        custoHoje: { ET: 3.3490, GC: 5.3595, GA: 5.4995, S10: 6.2225, S500: 5.6565 },
-        custoOntem: { ET: 3.3490, GC: 5.3695, GA: 5.5088, S10: 6.2475, S500: 5.6565 }
-      },
-      {
-        id: 'd2', nome: "Distribuidora 2",
-        postos: ["Urbano Ferraz", "SANTA INES", "ANA LUCIA", "JOCA", "SANTA MARIA", "JOAQUIM", "MIRAGEM", "LEANDRO", "TRANCOSO", "S. COLIBRI", "AVIVA", "BIANCA", "FELIPAO", "O. Branco"],
-        custoHoje: { ET: 3.3495, GC: 5.3791, GA: 5.5142, S10: 6.2218, S500: 5.6968 },
-        custoOntem: { ET: 3.3495, GC: 5.3791, GA: 5.5142, S10: 6.2218, S500: 5.6968 }
-      },
-      {
-        id: 'd3', nome: "Distribuidora 3",
-        postos: ["BAHAMAS", "S. BERNARDO", "BOMBOM M", "BOMBOM FIL.", "E. REAL"],
-        custoHoje: { ET: 3.3492, GC: 5.3599, GA: 5.5095, S10: 6.2225, S500: 5.6558 },
-        custoOntem: { ET: 3.3492, GC: 5.3695, GA: 5.5095, S10: 6.2475, S500: 5.6558 }
-      },
-      {
-        id: 'd4', nome: "Distribuidora 4",
-        postos: ["BEATRIZ", "ALEX"],
-        custoHoje: { ET: 3.4058, GC: 5.2824, GA: 5.2925, S10: 5.8186, S500: 5.7527 },
-        custoOntem: { ET: 3.4058, GC: 5.2824, GA: 5.2925, S10: 5.8186, S500: 5.7527 }
-      }
-    ];
-
-    const vendaAtual = {
-      "POSTO J.A.": { ET: 4.4900, GC: 6.6900, GA: 6.9900, S10: 6.9900 },
-      "ITAPOA": { ET: 3.8900, GC: 5.8700, GA: 6.1700, S10: 6.9900 },
-      "PLANALTO": { ET: 3.8900, GC: 5.8900, GA: 6.1900, S10: 6.7900, S500: 6.6900 },
-      "LOURA": { ET: 3.5900, GC: 5.8500, GA: 6.1500, S10: 6.8400, S500: 6.7400 },
-      "TOPAZIO": { ET: 3.7900, GC: 5.7900, GA: 6.0900, S10: 6.7500 },
-      "BRUNA": { ET: 3.8900, GC: 5.8900, GA: 6.1900, S10: 6.6900, S500: 6.3900 },
-      "DIFERENCIAL": { ET: 3.8700, GC: 5.9400, GA: 6.2400, S10: 6.7700 },
-      "MANGABEIRAS": { ET: 4.4900, GC: 6.6900, GA: 6.9900, S10: 6.9900 },
-      "GLÓRIA": { ET: 3.6900, GC: 5.8900, S10: 6.7900 },
-      "RODRIGO": { ET: 3.8500, GC: 5.8900, GA: 6.1900, S10: 6.7500, S500: 6.5900 },
-      "ARAPONGA": { ET: 3.9900, GC: 5.9900, GA: 6.2900, S10: 6.9900 },
-      "TÚNEL": { ET: 3.7700, GC: 5.9500, GA: 6.2500 },
-      "QUATRO RODAS": { ET: 3.6500, GC: 5.7900, GA: 6.0900, S10: 6.7900 },
-      "E. REAL": { ET: 4.5500, GC: 6.4500, GA: 6.7500, S10: 6.8900, S500: 6.5400 },
-      "BEATRIZ": { ET: 4.5500, GC: 6.4900, GA: 6.7900, S10: 6.4900, S500: 6.2900 },
-      "ALEX": { ET: 3.9900, GC: 6.2900, GA: 6.5900, S10: 6.9900 },
-      "Urbano Ferraz": { ET: 4.2900, GC: 6.3900, GA: 6.6900, S10: 6.9900 },
-      "SANTA INES": { ET: 3.8900, GC: 5.9500, GA: 6.2500, S10: 6.8800 },
-      "ANA LUCIA": { ET: 3.8900, GC: 5.9500, S10: 6.8800 },
-      "JOCA": { ET: 3.9900, GC: 5.9900, S10: 6.9900 },
-      "SANTA MARIA": { ET: 3.9700, GC: 5.8700, GA: 6.1700, S10: 6.8900 },
-      "JOAQUIM": { ET: 3.8500, GC: 5.8700, GA: 6.1700, S10: 6.6400, S500: 6.2500 },
-      "MIRAGEM": { ET: 3.8900, GC: 5.8900, GA: 6.1900, S10: 6.9900, S500: 6.8900 },
-      "LEANDRO": { ET: 3.6900, GC: 5.8900, GA: 6.1900, S10: 6.8500, S500: 6.5900 },
-      "TRANCOSO": { ET: 3.9900, GC: 5.9900, GA: 6.2900, S10: 6.8900 },
-      "S. COLIBRI": { ET: 3.6700, GC: 5.8700, GA: 6.1700, S10: 6.7500, S500: 6.6900 },
-      "AVIVA": { ET: 4.7900, GC: 6.3900, GA: 6.6900, S10: 6.8500, S500: 6.7500 },
-      "BIANCA": { ET: 4.3800, GC: 6.2800, GA: 6.5800, S10: 6.9900, S500: 6.6900 },
-      "FELIPAO": { ET: 4.5500, GC: 6.4900, S10: 6.8900, S500: 6.5400 },
-      "DUDU": { ET: 3.7900, GC: 5.6900, S10: 6.8900 },
-      "BERNARDO": { ET: 4.2700, GC: 6.1700, S10: 6.5500, S500: 6.3900 },
-      "S. LUIZ": { ET: 4.7900, GC: 6.3900, S10: 6.7500, S500: 6.6500 },
-      "O. Branco": { ET: 3.6700, GC: 5.8500, GA: 6.1500, S10: 6.6500, S500: 6.3500 },
-      "BAHAMAS": { ET: 3.8700, GC: 5.8500, GA: 6.1500 },
-      "S. BERNARDO": { ET: 3.5500, GC: 5.6700, GA: 5.9700 },
-      "BOMBOM M": { ET: 3.8700, GC: 5.9400, GA: 6.2400 },
-      "BOMBOM FIL.": { ET: 3.7900, GC: 5.7900, GA: 6.0900, S10: 6.7500 }
-    };
-
-    const custoOverride = {
-      "BRUNA_S500": 5.6215,
-      "BRUNA_S10": 6.1875,
-      "E. REAL_ET": 3.3493,
-      "E. REAL_GC": 5.3588,
-      "E. REAL_GA": 5.4986,
-      "E. REAL_S10": 6.2219,
-      "DUDU_ET": 3.3539,
-      "DUDU_GC": 5.3649,
-      "DUDU_S10": 6.2859,
-      "BERNARDO_S500": 5.6215,
-      "BERNARDO_S10": 6.1875,
-      "S. LUIZ_ET": 3.3443,
-      "S. LUIZ_GC": 5.3685,
-      "S. LUIZ_S500": 5.6165,
-      "S. LUIZ_S10": 6.2115,
-      "O. Branco_GA": 5.9698,
-      "O. Branco_S10": 6.2618
-    };
-
-    const reajusteReal = {
-      "POSTO J.A._ET": 0.0000,
-      "POSTO J.A._GC": -0.0100,
-      "POSTO J.A._GA": 0.0006,
-      "POSTO J.A._S10": -0.0250,
-      "ITAPOA_ET": 0.0000,
-      "ITAPOA_GC": -0.0100,
-      "ITAPOA_GA": -0.0093,
-      "ITAPOA_S10": -0.0250,
-      "PLANALTO_ET": 0.0000,
-      "PLANALTO_GC": -0.0100,
-      "PLANALTO_GA": -0.0093,
-      "PLANALTO_S500": 0.0000,
-      "PLANALTO_S10": -0.0250,
-      "LOURA_ET": 0.0000,
-      "LOURA_GC": -0.0100,
-      "LOURA_GA": -0.0093,
-      "LOURA_S500": 0.0000,
-      "LOURA_S10": -0.0250,
-      "TOPAZIO_ET": 0.0000,
-      "TOPAZIO_GC": -0.0100,
-      "TOPAZIO_GA": -0.0093,
-      "TOPAZIO_S10": -0.0250,
-      "BRUNA_ET": 0.0000,
-      "BRUNA_GC": -0.0100,
-      "BRUNA_GA": -0.0093,
-      "BRUNA_S500": 0.0000,
-      "BRUNA_S10": -0.0250,
-      "DIFERENCIAL_ET": 0.0000,
-      "DIFERENCIAL_GC": -0.0100,
-      "DIFERENCIAL_GA": -0.0093,
-      "DIFERENCIAL_S10": -0.0250,
-      "MANGABEIRAS_ET": 0.0000,
-      "MANGABEIRAS_GC": -0.0100,
-      "MANGABEIRAS_GA": -0.0093,
-      "MANGABEIRAS_S10": -0.0250,
-      "GLÓRIA_ET": 0.0000,
-      "GLÓRIA_GC": -0.0100,
-      "GLÓRIA_S10": -0.0250,
-      "RODRIGO_ET": 0.0000,
-      "RODRIGO_GC": -0.0100,
-      "RODRIGO_GA": -0.0093,
-      "RODRIGO_S500": 0.0000,
-      "RODRIGO_S10": -0.0250,
-      "ARAPONGA_ET": 0.0000,
-      "ARAPONGA_GC": -0.0100,
-      "ARAPONGA_GA": -0.0093,
-      "ARAPONGA_S10": -0.0250,
-      "TÚNEL_ET": 0.0000,
-      "TÚNEL_GC": -0.0100,
-      "TÚNEL_GA": -0.0093,
-      "QUATRO RODAS_ET": 0.0000,
-      "QUATRO RODAS_GC": -0.0100,
-      "QUATRO RODAS_GA": -0.0093,
-      "QUATRO RODAS_S10": -0.0250,
-      "E. REAL_ET": 0.0000,
-      "E. REAL_GC": -0.0097,
-      "E. REAL_GA": -0.0099,
-      "E. REAL_S500": 0.0000,
-      "E. REAL_S10": -0.0249,
-      "BEATRIZ_ET": 0.0000,
-      "BEATRIZ_GC": 0.0000,
-      "BEATRIZ_GA": 0.0000,
-      "BEATRIZ_S500": 0.0000,
-      "BEATRIZ_S10": 0.0000,
-      "ALEX_ET": 0.0000,
-      "ALEX_GC": 0.0000,
-      "ALEX_GA": 0.0000,
-      "ALEX_S10": 0.0000,
-      "Urbano Ferraz_ET": 0.0000,
-      "Urbano Ferraz_GC": 0.0000,
-      "Urbano Ferraz_GA": 0.0000,
-      "Urbano Ferraz_S10": 0.0000,
-      "SANTA INES_ET": 0.0000,
-      "SANTA INES_GC": 0.0000,
-      "SANTA INES_GA": 0.0000,
-      "SANTA INES_S10": 0.0000,
-      "ANA LUCIA_ET": 0.0000,
-      "ANA LUCIA_GC": 0.0000,
-      "ANA LUCIA_S10": 0.0000,
-      "JOCA_ET": 0.0000,
-      "JOCA_GC": 0.0000,
-      "JOCA_S10": 0.0000,
-      "SANTA MARIA_ET": 0.0000,
-      "SANTA MARIA_GC": 0.0000,
-      "SANTA MARIA_GA": 0.0000,
-      "SANTA MARIA_S10": 0.0000,
-      "JOAQUIM_ET": 0.0000,
-      "JOAQUIM_GC": 0.0000,
-      "JOAQUIM_GA": 0.0000,
-      "JOAQUIM_S500": 0.0000,
-      "JOAQUIM_S10": 0.0000,
-      "MIRAGEM_ET": 0.0000,
-      "MIRAGEM_GC": 0.0000,
-      "MIRAGEM_GA": 0.0000,
-      "MIRAGEM_S500": 0.0000,
-      "MIRAGEM_S10": 0.0000,
-      "LEANDRO_ET": 0.0000,
-      "LEANDRO_GC": 0.0000,
-      "LEANDRO_GA": 0.0000,
-      "LEANDRO_S500": 0.0000,
-      "LEANDRO_S10": 0.0000,
-      "TRANCOSO_ET": 0.0000,
-      "TRANCOSO_GC": 0.0000,
-      "TRANCOSO_GA": 0.0000,
-      "TRANCOSO_S10": 0.0000,
-      "S. COLIBRI_ET": 0.0000,
-      "S. COLIBRI_GC": 0.0000,
-      "S. COLIBRI_GA": 0.0000,
-      "S. COLIBRI_S500": 0.0000,
-      "S. COLIBRI_S10": 0.0000,
-      "AVIVA_ET": 0.0000,
-      "AVIVA_GC": 0.0000,
-      "AVIVA_GA": 0.0000,
-      "AVIVA_S500": 0.0000,
-      "AVIVA_S10": 0.0000,
-      "BIANCA_ET": 0.0000,
-      "BIANCA_GC": 0.0000,
-      "BIANCA_GA": 0.0000,
-      "BIANCA_S500": 0.0000,
-      "BIANCA_S10": 0.0000,
-      "FELIPAO_ET": 0.0000,
-      "FELIPAO_GC": 0.0000,
-      "FELIPAO_S500": 0.0000,
-      "FELIPAO_S10": 0.0000,
-      "DUDU_ET": 0.0000,
-      "DUDU_GC": 0.0000,
-      "DUDU_S10": 0.0000,
-      "BERNARDO_ET": 0.0000,
-      "BERNARDO_GC": -0.0100,
-      "BERNARDO_S500": 0.0000,
-      "BERNARDO_S10": -0.0250,
-      "S. LUIZ_ET": 0.0000,
-      "S. LUIZ_GC": 0.0000,
-      "S. LUIZ_S500": 0.0000,
-      "S. LUIZ_S10": 0.0000,
-      "O. Branco_ET": 0.0000,
-      "O. Branco_GC": 0.0000,
-      "O. Branco_GA": 0.0000,
-      "O. Branco_S500": 0.0000,
-      "O. Branco_S10": 0.0000,
-      "BAHAMAS_ET": 0.0000,
-      "BAHAMAS_GC": -0.0096,
-      "BAHAMAS_GA": 0.0000,
-      "S. BERNARDO_ET": 0.0000,
-      "S. BERNARDO_GC": -0.0096,
-      "S. BERNARDO_GA": 0.0000,
-      "BOMBOM M_ET": 0.0000,
-      "BOMBOM M_GC": -0.0096,
-      "BOMBOM M_GA": 0.0000,
-      "BOMBOM FIL._ET": 0.0000,
-      "BOMBOM FIL._GC": -0.0096,
-      "BOMBOM FIL._GA": 0.0000,
-      "BOMBOM FIL._S10": -0.0250
-    };
-
-    // Ajustes pontuais de custo por posto (frete, exceção) — sobrepõem o valor da distribuidora. Calculados comparando
-    // o custo individual de cada posto, na planilha, com a base do seu cluster.
-
-    // Piso de margem por combustível — abaixo de 60% disso vira "crítico"
-    const margemMinima = { ET: 0.4000, GC: 0.4500, GA: 0.4500, S10: 0.4500, S500: 0.4000 };
-
-    function getDistribuidoraDoPosto(posto) {
-      return distribuidoras.find(d => d.postos.includes(posto));
-    }
-
-    function getCustoEfetivo(posto, comb) {
-      const key = posto + '_' + comb;
-      if (custoOverride[key] !== undefined) return custoOverride[key];
-      const dist = getDistribuidoraDoPosto(posto);
-      return dist ? dist.custoHoje[comb] : 0;
-    }
-
-    // O reajuste vem direto da planilha (coluna "reajustes" do dia 12/06) — é mais fiel do que recalcular
-    // a partir do custo de ontem da distribuidora, já que cada posto pode ter tido seu próprio histórico.
-    function getReajuste(posto, comb) {
-      const key = posto + '_' + comb;
-      if (reajusteReal[key] !== undefined) return reajusteReal[key];
-      const dist = getDistribuidoraDoPosto(posto);
-      if (!dist) return 0;
-      return dist.custoHoje[comb] - dist.custoOntem[comb];
-    }
-
-    function statusMargem(margem, comb) {
-      const min = margemMinima[comb] !== undefined ? margemMinima[comb] : 0.40;
-      if (margem >= min) return 'ok';
-      if (margem >= min * 0.6) return 'atencao';
-      return 'critico';
-    }
-
-    function corReajuste(v) { return v > 0 ? 'var(--b-dif)' : (v < 0 ? 'var(--ac)' : 'var(--tx3)'); }
-
-    // Cards de lançamento — uma entrada por distribuidora alimenta todos os postos vinculados
-    function renderLancamento() {
-      const grid = document.getElementById('dist-grid');
-      let html = '';
-      distribuidoras.forEach(dist => {
-        html += '<div class="dist-card"><div class="dist-card-hdr">' +
-          '<span class="dist-nome">' + dist.nome + '</span>' +
-          '<span class="dist-postos">' + dist.postos.length + ' postos</span></div>' +
-          '<details class="dist-postos-detail"><summary>ver postos vinculados</summary>' +
-          '<div class="dist-postos-list">' + dist.postos.join(' • ') + '</div></details>';
-        Object.keys(dist.custoHoje).forEach(comb => {
-          const reaj = dist.custoHoje[comb] - dist.custoOntem[comb];
-          const reajTxt = (reaj > 0 ? '+' : '') + reaj.toFixed(4);
-          html += '<div class="dist-fuel-row"><label>' + comb + '</label>' +
-            '<input type="text" value="' + dist.custoHoje[comb].toFixed(4) + '" data-dist="' + dist.id + '" data-comb="' + comb + '" onchange="atualizarCustoBase(this)">' +
-            '<span class="reaj-tag" style="color:' + corReajuste(reaj) + '">' + reajTxt + '</span></div>';
-        });
-        html += '</div>';
-      });
-      grid.innerHTML = html;
-    }
-
-    function atualizarCustoBase(input) {
-      const dist = distribuidoras.find(d => d.id === input.dataset.dist);
-      const comb = input.dataset.comb;
-      const valor = parseFloat(input.value.replace(',', '.'));
-      if (isNaN(valor)) { renderLancamento(); return; }
-      dist.custoOntem[comb] = dist.custoHoje[comb];
-      dist.custoHoje[comb] = valor;
-      renderLancamento();
-      renderMargemPostos();
-    }
-
-    // Tabela de margem por posto — cruza custo efetivo x venda atual, com ajuste opcional por posto
-    function renderMargemPostos() {
-      const tbody = document.getElementById('margem-corpo');
-      let html = '';
-      Object.keys(vendaAtual).forEach(posto => {
-        const dist = getDistribuidoraDoPosto(posto);
-        Object.keys(vendaAtual[posto]).forEach(comb => {
-          const custo = getCustoEfetivo(posto, comb);
-          const venda = vendaAtual[posto][comb];
-          const margem = venda - custo;
-          const reaj = getReajuste(posto, comb);
-          const status = statusMargem(margem, comb);
-          const key = posto + '_' + comb;
-          const overrideVal = custoOverride[key] !== undefined ? custoOverride[key].toFixed(4) : '';
-          const corMargem = status === 'ok' ? 'var(--ac)' : (status === 'atencao' ? 'var(--b-pre)' : 'var(--b-dif)');
-          const statusTxt = status === 'ok' ? 'OK' : (status === 'atencao' ? 'Atenção' : 'Crítico');
-          html += '<tr><td>' + posto + '</td><td>' + (dist ? dist.nome : '-') + '</td><td>' + comb + '</td>' +
-            '<td style="color:var(--b-cus); font-family:var(--mono);">R$ ' + custo.toFixed(4) + '</td>' +
-            '<td><input type="text" class="custo-override" placeholder="—" value="' + overrideVal + '" data-posto="' + posto + '" data-comb="' + comb + '" onchange="ajustarCustoPosto(this)"></td>' +
-            '<td style="font-family:var(--mono);">R$ ' + venda.toFixed(4) + '</td>' +
-            '<td style="font-family:var(--mono); font-weight:bold; color:' + corMargem + '">R$ ' + margem.toFixed(4) + '</td>' +
-            '<td style="font-family:var(--mono); color:' + corReajuste(reaj) + '">' + (reaj > 0 ? '+' : '') + reaj.toFixed(4) + '</td>' +
-            '<td><span class="badge-margem badge-' + status + '">' + statusTxt + '</span></td></tr>';
-        });
-      });
-      tbody.innerHTML = html;
-    }
-
-    function ajustarCustoPosto(input) {
-      const key = input.dataset.posto + '_' + input.dataset.comb;
-      const valor = parseFloat(input.value.replace(',', '.'));
-      if (isNaN(valor) || input.value.trim() === '') {
-        delete custoOverride[key];
-      } else {
-        custoOverride[key] = valor;
-      }
-      renderMargemPostos();
-    }
-
-    function switchCustoSub(view) {
-      document.querySelectorAll('.custo-view').forEach(v => v.classList.remove('active'));
-      document.querySelectorAll('.subnav-btn').forEach(b => b.classList.remove('active'));
-      if (view === 'lancamento') {
-        document.getElementById('view-lancamento').classList.add('active');
-        document.getElementById('btn-sub-lanc').classList.add('active');
-      } else {
-        document.getElementById('view-margem').classList.add('active');
-        document.getElementById('btn-sub-marg').classList.add('active');
-      }
-    }
-
-    // Gera o quadro para impressão — "interno" mostra custo/margem (uso ADM), "posto" mostra só o preço de venda
-    function imprimirQuadro(modo) {
-      const cont = document.getElementById('qi-conteudo');
-      const hoje = new Date().toLocaleDateString('pt-BR');
-      let html = '';
-      if (modo === 'interno') {
-        html += '<h3>Quadro interno de custo &amp; margem — ADM</h3><div class="qi-data">Data de referência: ' + hoje + '</div>';
-        Object.keys(vendaAtual).forEach(posto => {
-          const dist = getDistribuidoraDoPosto(posto);
-          html += '<h4>' + posto + ' <span style="font-weight:normal;font-size:11px;color:#555;">(' + (dist ? dist.nome : '-') + ')</span></h4>';
-          html += '<table><tr><th>Combustível</th><th>Custo</th><th>Venda</th><th>Margem</th><th>Reajuste</th></tr>';
-          Object.keys(vendaAtual[posto]).forEach(comb => {
-            const custo = getCustoEfetivo(posto, comb);
-            const venda = vendaAtual[posto][comb];
-            const margem = venda - custo;
-            const reaj = getReajuste(posto, comb);
-            html += '<tr><td>' + comb + '</td><td>R$ ' + custo.toFixed(4) + '</td><td>R$ ' + venda.toFixed(4) + '</td><td>R$ ' + margem.toFixed(4) + '</td><td>' + (reaj > 0 ? '+' : '') + reaj.toFixed(4) + '</td></tr>';
-          });
-          html += '</table>';
-        });
-      } else {
-        html += '<h3>Quadro de preços — vigência ' + hoje + '</h3><div class="qi-data">Conforme exigência de exibição ao consumidor (sem custo/margem)</div>';
-        Object.keys(vendaAtual).forEach(posto => {
-          html += '<h4>' + posto + '</h4><table><tr><th>Combustível</th><th>Preço (R$/L)</th></tr>';
-          Object.keys(vendaAtual[posto]).forEach(comb => {
-            html += '<tr><td>' + comb + '</td><td>R$ ' + vendaAtual[posto][comb].toFixed(3) + '</td></tr>';
-          });
-          html += '</table>';
-        });
-      }
-      cont.innerHTML = html;
-      window.print();
-    }
-
-    // Alternância de tema claro/escuro
-    function toggleTheme() {
-      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if (isLight) {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('jb_theme', 'dark');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('jb_theme', 'light');
-      }
-      updateThemeIcon();
-    }
-
-    function updateThemeIcon() {
-      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      document.getElementById('theme-icon').className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
-    }
-
-    window.addEventListener('resize', () => {
-      const linha1 = document.querySelector('#medicao-thead tr:first-child th:not(.sticky-col)');
-      if (linha1) document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
+  } catch(e) {}
+  updateThemeIcon();
+});
+
+// ================================================================
+// API HELPER
+// ================================================================
+async function chamarApi(params) {
+  const qs = new URLSearchParams(params).toString();
+  const resp = await fetch(APPS_SCRIPT_URL + '?' + qs);
+  if (!resp.ok) throw new Error('HTTP ' + resp.status);
+  return resp.json();
+}
+
+// ================================================================
+// ESTADO GLOBAL
+// ================================================================
+let DADOS_ATUAIS = null;
+let EDICOES_PENDENTES = {};
+let CONCIL_TODOS = [];
+
+const CATEGORIAS_MEDICAO = [
+  { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
+  { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',            classe: 'h-ven', cor: 'var(--b-ven)', editavel: true  },
+  { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',          classe: 'h-pvn', cor: 'var(--b-pvn)', editavel: true  },
+  { chave: 'prePedido', titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',  classe: 'h-pre', cor: 'var(--b-pre)', editavel: true  },
+  { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)', classe: 'h-cus', cor: 'var(--b-cus)', editavel: true  },
+  { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',           classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
+  { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',      classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
+];
+
+function colunasDaCategoria(chave, grupos, combustiveisVenda) {
+  return chave === 'venda' ? combustiveisVenda : grupos;
+}
+
+// ================================================================
+// MEDIÇÃO DIÁRIA
+// ================================================================
+function montarCabecalhoMedicao(grupos, combustiveisVenda) {
+  const thead = document.getElementById('medicao-thead');
+  let row1 = '<tr><th rowspan="2" class="sticky-col" style="background:var(--sf2); border-bottom:2px solid var(--bd2)">DIA</th>';
+  CATEGORIAS_MEDICAO.forEach((cat, ci) => {
+    const n = colunasDaCategoria(cat.chave, grupos, combustiveisVenda).length;
+    const grpEndCls = (ci < CATEGORIAS_MEDICAO.length - 1) ? ' grp-end' : '';
+    const grpStartCls = (ci > 0) ? ' grp-start' : '';
+    row1 += '<th colspan="' + n + '" class="' + cat.classe + grpEndCls + grpStartCls + '">' + cat.titulo + '</th>';
+  });
+  row1 += '</tr>';
+  let row2 = '<tr>';
+  CATEGORIAS_MEDICAO.forEach((cat, ci) => {
+    const cols = colunasDaCategoria(cat.chave, grupos, combustiveisVenda);
+    cols.forEach((g, gi) => {
+      let classes = '';
+      if (gi === cols.length - 1) classes += ' grp-end';
+      if (ci > 0 && gi === 0) classes += ' grp-start';
+      const cls = classes ? ' class="' + classes.trim() + '"' : '';
+      row2 += '<th' + cls + ' style="color:' + cat.cor + '" title="' + g.comb + '">' + g.abv + '</th>';
     });
+  });
+  row2 += '</tr>';
+  thead.innerHTML = row1 + row2;
+  const linha1 = thead.querySelector('tr:first-child th:not(.sticky-col)');
+  if (linha1) document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
+}
 
-    // Inicialização automática
-    window.addEventListener('DOMContentLoaded', () => {
-      carregarMedicao(document.getElementById('global-posto').value);
-      carregarColetas();
-      renderLancamento();
-      renderMargemPostos();
-      updateThemeIcon();
+function fmtL(v) {
+  if (v === null || v === undefined || v === '') return '—';
+  return Math.round(Number(v)).toLocaleString('pt-BR');
+}
+function parseNumBR(str) {
+  if (str === null || str === undefined) return null;
+  const limpo = String(str).replace(/\./g, '').replace(',', '.').replace('—', '').trim();
+  if (limpo === '') return null;
+  const n = parseFloat(limpo);
+  return isNaN(n) ? null : n;
+}
+
+function montarLinhasMedicao(dados) {
+  const tbody = document.getElementById('matriz-corpo');
+  const grupos = dados.grupos;
+  const vendaCols = dados.combustiveisVenda;
+  let html = '';
+  dados.dias.forEach((d, diaIdx) => {
+    html += '<tr><td class="sticky-col">' + String(d.dia).padStart(2,'0') + '/' + dados.mes + '</td>';
+    CATEGORIAS_MEDICAO.forEach((cat, ci) => {
+      const cols = colunasDaCategoria(cat.chave, grupos, vendaCols);
+      const valores = d[cat.chave] || [];
+      cols.forEach((col, i) => {
+        const val = valores[i];
+        const tdCls = (i === cols.length - 1) ? ' class="grp-end"' : ((ci > 0 && i === 0) ? ' class="grp-start"' : '');
+        if (cat.chave === 'previsao') {
+          html += '<td' + tdCls + '><span id="prev_' + diaIdx + '_' + i + '">' + fmtL(val) + '</span></td>';
+        } else if (cat.chave === 'diferenca') {
+          const cor = val > 0 ? 'var(--b-ven)' : (val < 0 ? 'var(--b-dif)' : 'var(--tx3)');
+          html += '<td' + tdCls + '><span id="diff_' + diaIdx + '_' + i + '" style="color:' + cor + '; font-family:var(--mono); font-weight:bold;">' +
+            (val === null || val === undefined ? '—' : ((val > 0 ? '+' : '') + fmtL(val))) + '</span></td>';
+        } else {
+          const combAttr = String(col.comb).replace(/"/g, '&quot;');
+          html += '<td' + tdCls + '><input type="text" inputmode="numeric" class="cell-in"' +
+            ' data-dia="' + diaIdx + '" data-campo="' + cat.chave + '" data-comb="' + combAttr + '"' +
+            ' value="' + fmtL(val).replace('—','') + '"' +
+            ' oninput="onCelulaEditada(this)" onblur="onCelulaBlur(this)"></td>';
+        }
+      });
     });
-  </script>
+    html += '</tr>';
+  });
+  tbody.innerHTML = html || '<tr><td style="padding:1.5rem; color:var(--tx3);">Sem dados.</td></tr>';
+}
+
+function recalcularPrevisaoEDiff(diaIdx) {
+  if (!DADOS_ATUAIS) return;
+  const dias = DADOS_ATUAIS.dias;
+  const dia = dias[diaIdx];
+  if (!dia) return;
+  const diaOntem = dias[diaIdx - 1];
+  const grupos = DADOS_ATUAIS.grupos;
+  const vendaCols = DADOS_ATUAIS.combustiveisVenda;
+  grupos.forEach((g, i) => {
+    let prevVal = null;
+    if (diaOntem) {
+      const medOntem = diaOntem.medicao[i];
+      if (medOntem !== null && medOntem !== undefined) {
+        const carga = Number(dia.carga[i]) || 0;
+        const idxVenda = vendaCols.findIndex(c => c.comb === g.comb);
+        const venda = (idxVenda === -1 || dia.venda[idxVenda] === null) ? 0 : Number(dia.venda[idxVenda]);
+        prevVal = Number(medOntem) + carga - venda;
+      }
+    }
+    dia.previsao[i] = prevVal;
+    const medHoje = dia.medicao[i];
+    const diffVal = (prevVal !== null && medHoje !== null && medHoje !== undefined) ? Number(medHoje) - prevVal : null;
+    dia.diferenca[i] = diffVal;
+    const prevEl = document.getElementById('prev_' + diaIdx + '_' + i);
+    if (prevEl) prevEl.textContent = fmtL(prevVal);
+    const diffEl = document.getElementById('diff_' + diaIdx + '_' + i);
+    if (diffEl) {
+      const cor = diffVal > 0 ? 'var(--b-ven)' : (diffVal < 0 ? 'var(--b-dif)' : 'var(--tx3)');
+      diffEl.style.color = cor;
+      diffEl.textContent = (diffVal === null ? '—' : ((diffVal > 0 ? '+' : '') + fmtL(diffVal)));
+    }
+  });
+}
+
+function onCelulaEditada(input) {
+  if (!DADOS_ATUAIS) return;
+  const diaIdx = parseInt(input.dataset.dia);
+  const campo  = input.dataset.campo;
+  const comb   = input.dataset.comb;
+  const valor  = parseNumBR(input.value);
+  input.classList.add('cell-dirty');
+  const diaObj = DADOS_ATUAIS.dias[diaIdx];
+  const cols = campo === 'venda' ? DADOS_ATUAIS.combustiveisVenda : DADOS_ATUAIS.grupos;
+  const idx = cols.findIndex(c => c.comb === comb);
+  if (idx === -1) return;
+  diaObj[campo][idx] = valor;
+  EDICOES_PENDENTES[diaIdx + '|' + campo + '|' + comb] = { dia: diaIdx, campo, comb, valor };
+  if (campo === 'medicao') recalcularPrevisaoEDiff(diaIdx + 1);
+  else if (campo === 'carga' || campo === 'venda') recalcularPrevisaoEDiff(diaIdx);
+  atualizarBotoesSalvar();
+}
+function onCelulaBlur(input) {
+  const valor = parseNumBR(input.value);
+  input.value = fmtL(valor).replace('—', '');
+}
+function atualizarBotoesSalvar() {
+  const pendentes = Object.values(EDICOES_PENDENTES);
+  const matrizQtd = pendentes.filter(e => e.campo !== 'prePedido').length;
+  const preQtd    = pendentes.filter(e => e.campo === 'prePedido').length;
+  const btnMatriz = document.getElementById('btn-salvar-matriz');
+  const btnPre    = document.getElementById('btn-enviar-prepedido');
+  if (btnMatriz) { btnMatriz.disabled = matrizQtd === 0; btnMatriz.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações' + (matrizQtd ? ' (' + matrizQtd + ')' : ''); }
+  if (btnPre)    { btnPre.disabled = preQtd === 0; btnPre.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido' + (preQtd ? ' (' + preQtd + ')' : ''); }
+}
+function limparDestaqueEdicoes() { document.querySelectorAll('#matriz-corpo .cell-in.cell-dirty').forEach(el => el.classList.remove('cell-dirty')); }
+
+async function salvarAlteracoesMatriz() {
+  const posto = document.getElementById('global-posto').value;
+  const itens = Object.values(EDICOES_PENDENTES).filter(e => e.campo !== 'prePedido')
+    .map(e => ({ data: DADOS_ATUAIS.dias[e.dia].data, campo: e.campo, combustivel: e.comb, valor: e.valor }));
+  if (!itens.length || !posto) return;
+  const btn = document.getElementById('btn-salvar-matriz');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+  try {
+    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ tipo:'editar_matriz', posto, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'ADM Logística' }) });
+    Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo !== 'prePedido') delete EDICOES_PENDENTES[k]; });
+    limparDestaqueEdicoes(); atualizarBotoesSalvar();
+    await carregarMedicao(posto);
+  } catch(err) { alert('Erro ao salvar: ' + err.message); btn.disabled = false; atualizarBotoesSalvar(); }
+}
+
+async function enviarPrePedido() {
+  const posto = document.getElementById('global-posto').value;
+  const itens = Object.values(EDICOES_PENDENTES).filter(e => e.campo === 'prePedido')
+    .map(e => ({ data: DADOS_ATUAIS.dias[e.dia].data, combustivel: e.comb, valor: e.valor }));
+  if (!itens.length || !posto) return;
+  const btn = document.getElementById('btn-enviar-prepedido');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+  try {
+    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ tipo:'pre_pedido', posto, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'ADM' }) });
+    Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo === 'prePedido') delete EDICOES_PENDENTES[k]; });
+    limparDestaqueEdicoes(); atualizarBotoesSalvar();
+    alert('✅ Pré-Pedido enviado com sucesso.');
+  } catch(err) { alert('Erro: ' + err.message); }
+  btn.disabled = Object.values(EDICOES_PENDENTES).filter(e => e.campo === 'prePedido').length === 0;
+  atualizarBotoesSalvar();
+}
+
+async function carregarMedicao(posto) {
+  const subtitle = document.getElementById('medicao-subtitle');
+  const tbody = document.getElementById('matriz-corpo');
+  subtitle.textContent = '• Carregando ' + posto + '...';
+  tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>';
+  EDICOES_PENDENTES = {}; atualizarBotoesSalvar();
+  try {
+    const dados = await chamarApi({ tipo:'mesCompleto', posto });
+    if (dados.erro) { subtitle.textContent = '• Erro: ' + dados.erro; tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">' + dados.erro + '</td></tr>'; return; }
+    DADOS_ATUAIS = dados;
+    subtitle.textContent = '• ' + dados.posto + ' — ' + dados.mes + '/' + dados.ano;
+    montarCabecalhoMedicao(dados.grupos, dados.combustiveisVenda);
+    montarLinhasMedicao(dados);
+  } catch(err) {
+    subtitle.textContent = '• Falha ao conectar';
+    tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">Erro: ' + err.message + '</td></tr>';
+  }
+}
+function onPostoChange() { carregarMedicao(document.getElementById('global-posto').value); }
+
+// ================================================================
+// COLETA DE PREÇOS
+// ================================================================
+let COLETAS_TODAS = [];
+function badgeTipo(tipo) { const cls = tipo==='Próprio'?'proprio':'concorrente'; return '<span class="badge-tipo '+cls+'">'+(tipo||'-')+'</span>'; }
+function fmtPreco(v) { return (v===null||v===undefined||isNaN(v))?'-':Number(v).toFixed(2).replace('.',','); }
+function montarLinhasColeta(registros) {
+  const tbody = document.getElementById('coleta-corpo');
+  if (!registros.length) { tbody.innerHTML = '<tr><td colspan="17" style="padding:1.5rem; color:var(--tx3);">Nenhuma coleta encontrada.</td></tr>'; return; }
+  let html = '';
+  registros.forEach(r => {
+    const lc = r.tipo==='Próprio'?'row-proprio':'row-concorrente';
+    const temFoto = r.foto && String(r.foto).startsWith('http');
+    const fotoCell = temFoto
+      ? '<span class="link-foto" onmouseenter="showPhoto(event,\''+r.foto+'\',\''+(r.postoAlvo||'').replace(/'/g,'')+'\' )" onmouseleave="hidePhoto()"><i class="fa-regular fa-image"></i> Ver Foto</span>'
+      : '<span style="color:var(--tx3)">—</span>';
+    html += '<tr class="'+lc+'"><td>'+(r.data||'-')+'</td><td>'+(r.hora||'-')+'</td><td>'+(r.posto||'-')+'</td><td>'+(r.gerente||'-')+'</td><td>'+(r.postoAlvo||'-')+'</td>'
+      +'<td>'+badgeTipo(r.tipo)+'</td><td>'+(r.bandeira||'-')+'</td><td>'+(r.rede||'-')+'</td><td>'+(r.supervisor||'-')+'</td>'
+      +'<td>'+fmtPreco(r.ET)+'</td><td>'+fmtPreco(r.GC)+'</td><td>'+fmtPreco(r.GA)+'</td><td>'+fmtPreco(r.S10)+'</td><td>'+fmtPreco(r.S500)+'</td>'
+      +'<td>'+(r.lat||'-')+'</td><td>'+(r.lng||'-')+'</td><td>'+fotoCell+'</td></tr>';
+  });
+  tbody.innerHTML = html;
+}
+function parseDataBR(str) { if(!str) return null; const p=String(str).split('/'); if(p.length!==3) return null; return new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0])); }
+function aplicarFiltrosColeta() {
+  const de=document.getElementById('flt-data-de').value, ate=document.getElementById('flt-data-ate').value;
+  const posto=document.getElementById('flt-posto').value.trim().toUpperCase(), gerente=document.getElementById('flt-gerente').value.trim().toUpperCase();
+  const tipo=document.getElementById('flt-tipo').value, sup=document.getElementById('flt-supervisor').value;
+  const dataDe=de?new Date(de+'T00:00:00'):null, dataAte=ate?new Date(ate+'T23:59:59'):null;
+  const filtrados=COLETAS_TODAS.filter(r => {
+    if(posto&&!String(r.postoAlvo||'').toUpperCase().includes(posto)) return false;
+    if(gerente&&!String(r.gerente||'').toUpperCase().includes(gerente)) return false;
+    if(tipo&&r.tipo!==tipo) return false;
+    if(sup&&r.supervisor!==sup) return false;
+    if(dataDe||dataAte){const d=parseDataBR(r.data);if(!d) return false;if(dataDe&&d<dataDe) return false;if(dataAte&&d>dataAte) return false;}
+    return true;
+  });
+  montarLinhasColeta(filtrados);
+  const ativos=!!(de||ate||posto||gerente||tipo||sup);
+  document.getElementById('coleta-subtitle').textContent=ativos?'• '+filtrados.length+' de '+COLETAS_TODAS.length+' coletas (filtro)':'• '+COLETAS_TODAS.length+' coletas nos últimos 15 dias';
+}
+function limparFiltrosColeta() { ['flt-data-de','flt-data-ate','flt-posto','flt-gerente','flt-tipo','flt-supervisor'].forEach(id=>{ const el=document.getElementById(id); el.value=''; }); aplicarFiltrosColeta(); }
+async function carregarColetas() {
+  try {
+    const dados = await chamarApi({ tipo:'coletaRecentes', dias:'15' });
+    if (!dados.success) return;
+    COLETAS_TODAS = dados.registros;
+    aplicarFiltrosColeta();
+  } catch(err) { document.getElementById('coleta-corpo').innerHTML='<tr><td colspan="17" style="padding:1.5rem;color:var(--b-dif);">Erro: '+err.message+'</td></tr>'; }
+}
+
+// Popover foto
+const popover=document.getElementById('global-photo-popover');
+function driveThumb(url){const m=url&&url.match(/[-\w]{25,}/);return m?('https://lh3.googleusercontent.com/d/'+m[0]+'=w400'):'';}
+function showPhoto(event,fotoUrl,label){document.getElementById('popover-filename').innerHTML='<i class="fa-solid fa-image"></i> '+(label||'Foto');popover.style.display='flex';document.getElementById('popover-img').src=fotoUrl&&fotoUrl.startsWith('http')?driveThumb(fotoUrl):'';document.getElementById('popover-link').href=fotoUrl||'#';popover.style.left=(event.clientX-300)+'px';popover.style.top=(event.clientY-80)+'px';}
+function hidePhoto(){popover.style.display='none';}
+
+// ================================================================
+// CUSTO & MARGEM
+// ================================================================
+const distribuidoras=[
+  {id:'d1',nome:"Distribuidora 1",postos:["POSTO J.A.","ITAPOA","PLANALTO","LOURA","TOPAZIO","BRUNA","DIFERENCIAL","MANGABEIRAS","GLÓRIA","RODRIGO","ARAPONGA","TÚNEL","QUATRO RODAS","BERNARDO","DUDU","S. LUIZ"],custoHoje:{ET:3.3490,GC:5.3595,GA:5.4995,S10:6.2225,S500:5.6565},custoOntem:{ET:3.3490,GC:5.3695,GA:5.5088,S10:6.2475,S500:5.6565}},
+  {id:'d2',nome:"Distribuidora 2",postos:["Urbano Ferraz","SANTA INES","ANA LUCIA","JOCA","SANTA MARIA","JOAQUIM","MIRAGEM","LEANDRO","TRANCOSO","S. COLIBRI","AVIVA","BIANCA","FELIPAO","O. Branco"],custoHoje:{ET:3.3495,GC:5.3791,GA:5.5142,S10:6.2218,S500:5.6968},custoOntem:{ET:3.3495,GC:5.3791,GA:5.5142,S10:6.2218,S500:5.6968}},
+  {id:'d3',nome:"Distribuidora 3",postos:["BAHAMAS","S. BERNARDO","BOMBOM M","BOMBOM FIL.","E. REAL"],custoHoje:{ET:3.3492,GC:5.3599,GA:5.5095,S10:6.2225,S500:5.6558},custoOntem:{ET:3.3492,GC:5.3695,GA:5.5095,S10:6.2475,S500:5.6558}},
+  {id:'d4',nome:"Distribuidora 4",postos:["BEATRIZ","ALEX"],custoHoje:{ET:3.4058,GC:5.2824,GA:5.2925,S10:5.8186,S500:5.7527},custoOntem:{ET:3.4058,GC:5.2824,GA:5.2925,S10:5.8186,S500:5.7527}}
+];
+const vendaAtual={"POSTO J.A.":{ET:4.4900,GC:6.6900,GA:6.9900,S10:6.9900},"ITAPOA":{ET:3.8900,GC:5.8700,GA:6.1700,S10:6.9900},"PLANALTO":{ET:3.8900,GC:5.8900,GA:6.1900,S10:6.7900,S500:6.6900},"LOURA":{ET:3.5900,GC:5.8500,GA:6.1500,S10:6.8400,S500:6.7400},"TOPAZIO":{ET:3.7900,GC:5.7900,GA:6.0900,S10:6.7500},"BRUNA":{ET:3.8900,GC:5.8900,GA:6.1900,S10:6.6900,S500:6.3900},"DIFERENCIAL":{ET:3.8700,GC:5.9400,GA:6.2400,S10:6.7700},"MANGABEIRAS":{ET:4.4900,GC:6.6900,GA:6.9900,S10:6.9900},"GLÓRIA":{ET:3.6900,GC:5.8900,S10:6.7900},"RODRIGO":{ET:3.8500,GC:5.8900,GA:6.1900,S10:6.7500,S500:6.5900},"ARAPONGA":{ET:3.9900,GC:5.9900,GA:6.2900,S10:6.9900},"TÚNEL":{ET:3.7700,GC:5.9500,GA:6.2500},"QUATRO RODAS":{ET:3.6500,GC:5.7900,GA:6.0900,S10:6.7900},"E. REAL":{ET:4.5500,GC:6.4500,GA:6.7500,S10:6.8900,S500:6.5400},"BEATRIZ":{ET:4.5500,GC:6.4900,GA:6.7900,S10:6.4900,S500:6.2900},"ALEX":{ET:3.9900,GC:6.2900,GA:6.5900,S10:6.9900},"Urbano Ferraz":{ET:4.2900,GC:6.3900,GA:6.6900,S10:6.9900},"SANTA INES":{ET:3.8900,GC:5.9500,GA:6.2500,S10:6.8800},"ANA LUCIA":{ET:3.8900,GC:5.9500,S10:6.8800},"JOCA":{ET:3.9900,GC:5.9900,S10:6.9900},"SANTA MARIA":{ET:3.9700,GC:5.8700,GA:6.1700,S10:6.8900},"JOAQUIM":{ET:3.8500,GC:5.8700,GA:6.1700,S10:6.6400,S500:6.2500},"MIRAGEM":{ET:3.8900,GC:5.8900,GA:6.1900,S10:6.9900,S500:6.8900},"LEANDRO":{ET:3.6900,GC:5.8900,GA:6.1900,S10:6.8500,S500:6.5900},"TRANCOSO":{ET:3.9900,GC:5.9900,GA:6.2900,S10:6.8900},"S. COLIBRI":{ET:3.6700,GC:5.8700,GA:6.1700,S10:6.7500,S500:6.6900},"AVIVA":{ET:4.7900,GC:6.3900,GA:6.6900,S10:6.8500,S500:6.7500},"BIANCA":{ET:4.3800,GC:6.2800,GA:6.5800,S10:6.9900,S500:6.6900},"FELIPAO":{ET:4.5500,GC:6.4900,S10:6.8900,S500:6.5400},"DUDU":{ET:3.7900,GC:5.6900,S10:6.8900},"BERNARDO":{ET:4.2700,GC:6.1700,S10:6.5500,S500:6.3900},"S. LUIZ":{ET:4.7900,GC:6.3900,S10:6.7500,S500:6.6500},"O. Branco":{ET:3.6700,GC:5.8500,GA:6.1500,S10:6.6500,S500:6.3500},"BAHAMAS":{ET:3.8700,GC:5.8500,GA:6.1500},"S. BERNARDO":{ET:3.5500,GC:5.6700,GA:5.9700},"BOMBOM M":{ET:3.8700,GC:5.9400,GA:6.2400},"BOMBOM FIL.":{ET:3.7900,GC:5.7900,GA:6.0900,S10:6.7500}};
+const custoOverride={"BRUNA_S500":5.6215,"BRUNA_S10":6.1875,"E. REAL_ET":3.3493,"E. REAL_GC":5.3588,"E. REAL_GA":5.4986,"E. REAL_S10":6.2219,"DUDU_ET":3.3539,"DUDU_GC":5.3649,"DUDU_S10":6.2859,"BERNARDO_S500":5.6215,"BERNARDO_S10":6.1875,"S. LUIZ_ET":3.3443,"S. LUIZ_GC":5.3685,"S. LUIZ_S500":5.6165,"S. LUIZ_S10":6.2115,"O. Branco_GA":5.9698,"O. Branco_S10":6.2618};
+const reajusteReal={"POSTO J.A._GC":-0.0100,"POSTO J.A._GA":0.0006,"POSTO J.A._S10":-0.0250,"ITAPOA_GC":-0.0100,"ITAPOA_GA":-0.0093,"ITAPOA_S10":-0.0250,"PLANALTO_GC":-0.0100,"PLANALTO_GA":-0.0093,"PLANALTO_S10":-0.0250,"BAHAMAS_GC":-0.0096,"S. BERNARDO_GC":-0.0096,"BOMBOM M_GC":-0.0096,"BOMBOM FIL._GC":-0.0096,"BOMBOM FIL._S10":-0.0250,"BERNARDO_GC":-0.0100,"BERNARDO_S10":-0.0250};
+const margemMinima={ET:0.4000,GC:0.4500,GA:0.4500,S10:0.4500,S500:0.4000};
+function getDistribuidoraDoPosto(posto){return distribuidoras.find(d=>d.postos.includes(posto));}
+function getCustoEfetivo(posto,comb){const key=posto+'_'+comb;if(custoOverride[key]!==undefined)return custoOverride[key];const dist=getDistribuidoraDoPosto(posto);return dist?dist.custoHoje[comb]:0;}
+function getReajuste(posto,comb){const key=posto+'_'+comb;if(reajusteReal[key]!==undefined)return reajusteReal[key];const dist=getDistribuidoraDoPosto(posto);if(!dist)return 0;return dist.custoHoje[comb]-dist.custoOntem[comb];}
+function statusMargem(margem,comb){const min=margemMinima[comb]!==undefined?margemMinima[comb]:0.40;if(margem>=min)return'ok';if(margem>=min*0.6)return'atencao';return'critico';}
+function corReajuste(v){return v>0?'var(--b-dif)':(v<0?'var(--ac)':'var(--tx3)');}
+function renderLancamento(){const grid=document.getElementById('dist-grid');let html='';distribuidoras.forEach(dist=>{html+='<div class="dist-card"><div class="dist-card-hdr"><span class="dist-nome">'+dist.nome+'</span><span class="dist-postos">'+dist.postos.length+' postos</span></div><details class="dist-postos-detail"><summary>ver postos vinculados</summary><div class="dist-postos-list">'+dist.postos.join(' • ')+'</div></details>';Object.keys(dist.custoHoje).forEach(comb=>{const reaj=dist.custoHoje[comb]-dist.custoOntem[comb];const reajTxt=(reaj>0?'+':'')+reaj.toFixed(4);html+='<div class="dist-fuel-row"><label>'+comb+'</label><input type="text" value="'+dist.custoHoje[comb].toFixed(4)+'" data-dist="'+dist.id+'" data-comb="'+comb+'" onchange="atualizarCustoBase(this)"><span class="reaj-tag" style="color:'+corReajuste(reaj)+'">'+reajTxt+'</span></div>';});html+='</div>';});grid.innerHTML=html;}
+function atualizarCustoBase(input){const dist=distribuidoras.find(d=>d.id===input.dataset.dist);const comb=input.dataset.comb;const valor=parseFloat(input.value.replace(',','.'));if(isNaN(valor)){renderLancamento();return;}dist.custoOntem[comb]=dist.custoHoje[comb];dist.custoHoje[comb]=valor;renderLancamento();renderMargemPostos();}
+function renderMargemPostos(){const tbody=document.getElementById('margem-corpo');let html='';Object.keys(vendaAtual).forEach(posto=>{const dist=getDistribuidoraDoPosto(posto);Object.keys(vendaAtual[posto]).forEach(comb=>{const custo=getCustoEfetivo(posto,comb);const venda=vendaAtual[posto][comb];const margem=venda-custo;const reaj=getReajuste(posto,comb);const status=statusMargem(margem,comb);const key=posto+'_'+comb;const overrideVal=custoOverride[key]!==undefined?custoOverride[key].toFixed(4):'';const corMargem=status==='ok'?'var(--ac)':(status==='atencao'?'var(--b-pre)':'var(--b-dif)');const statusTxt=status==='ok'?'OK':(status==='atencao'?'Atenção':'Crítico');html+='<tr><td>'+posto+'</td><td>'+(dist?dist.nome:'-')+'</td><td>'+comb+'</td><td style="color:var(--b-cus); font-family:var(--mono);">R$ '+custo.toFixed(4)+'</td><td><input type="text" class="custo-override" placeholder="—" value="'+overrideVal+'" data-posto="'+posto+'" data-comb="'+comb+'" onchange="ajustarCustoPosto(this)"></td><td style="font-family:var(--mono);">R$ '+venda.toFixed(4)+'</td><td style="font-family:var(--mono); font-weight:bold; color:'+corMargem+'">R$ '+margem.toFixed(4)+'</td><td style="font-family:var(--mono); color:'+corReajuste(reaj)+'">'+(reaj>0?'+':'')+reaj.toFixed(4)+'</td><td><span class="badge-margem badge-'+status+'">'+statusTxt+'</span></td></tr>';});});tbody.innerHTML=html;}
+function ajustarCustoPosto(input){const key=input.dataset.posto+'_'+input.dataset.comb;const valor=parseFloat(input.value.replace(',','.'));if(isNaN(valor)||input.value.trim()===''){delete custoOverride[key];}else{custoOverride[key]=valor;}renderMargemPostos();}
+function switchCustoSub(view){document.querySelectorAll('.custo-view').forEach(v=>v.classList.remove('active'));document.querySelectorAll('.subnav-btn').forEach(b=>b.classList.remove('active'));if(view==='lancamento'){document.getElementById('view-lancamento').classList.add('active');document.getElementById('btn-sub-lanc').classList.add('active');}else{document.getElementById('view-margem').classList.add('active');document.getElementById('btn-sub-marg').classList.add('active');}}
+function imprimirQuadro(modo){const cont=document.getElementById('qi-conteudo');const hoje=new Date().toLocaleDateString('pt-BR');let html='';if(modo==='interno'){html+='<h3>Quadro interno de custo & margem</h3><div class="qi-data">'+hoje+'</div>';Object.keys(vendaAtual).forEach(posto=>{const dist=getDistribuidoraDoPosto(posto);html+='<h4>'+posto+'</h4><table><tr><th>Combustível</th><th>Custo</th><th>Venda</th><th>Margem</th></tr>';Object.keys(vendaAtual[posto]).forEach(comb=>{const custo=getCustoEfetivo(posto,comb);const venda=vendaAtual[posto][comb];const margem=venda-custo;html+='<tr><td>'+comb+'</td><td>R$ '+custo.toFixed(4)+'</td><td>R$ '+venda.toFixed(4)+'</td><td>R$ '+margem.toFixed(4)+'</td></tr>';});html+='</table>';});}else{html+='<h3>Quadro de preços — '+hoje+'</h3>';Object.keys(vendaAtual).forEach(posto=>{html+='<h4>'+posto+'</h4><table><tr><th>Combustível</th><th>Preço (R$/L)</th></tr>';Object.keys(vendaAtual[posto]).forEach(comb=>{html+='<tr><td>'+comb+'</td><td>R$ '+vendaAtual[posto][comb].toFixed(3)+'</td></tr>';});html+='</table>';});}cont.innerHTML=html;window.print();}
+
+// ================================================================
+// MÓDULO MOTORISTA
+// ================================================================
+async function carregarCombustiveisPostos() {
+  try {
+    const dados = await chamarApi({ tipo: 'cadastroPostos' });
+    if (dados.success) {
+      dados.postos.forEach(p => { COMBUSTIVEIS_POSTOS[p.nome] = p.combustiveis; });
+    }
+  } catch(e) { /* silencia — fallback usa lista genérica */ }
+}
+
+function preencherDataHoraMotorista() {
+  const agora = new Date();
+  const dataStr = agora.toISOString().slice(0, 10);
+  const horaStr = agora.toTimeString().slice(0, 5);
+  ['mot-desc-data','mot-emp-data','mot-dev-data'].forEach(id => { const el=document.getElementById(id); if(el) el.value=dataStr; });
+  ['mot-desc-hora','mot-emp-hora','mot-dev-hora'].forEach(id => { const el=document.getElementById(id); if(el) el.value=horaStr; });
+}
+
+function carregarCombsDescarga() {
+  const posto = document.getElementById('mot-desc-posto').value;
+  const box = document.getElementById('desc-fuels-box');
+  if (!posto) { box.innerHTML = '<div class="fuels-title">Selecione o posto para carregar os combustíveis</div>'; return; }
+  const combs = COMBUSTIVEIS_POSTOS[posto] || ['GASOLINA COMUM','GASOLINA ADITIVADA','ETANOL','DIESEL S-10','DIESEL S-500'];
+  let html = '<div class="fuels-title"><i class="fa-solid fa-droplet" style="color:var(--b-mot)"></i> Litros por combustível — <b>' + posto + '</b></div>';
+  combs.forEach(c => {
+    html += '<div class="mot-fuel-row"><label>' + c + '</label><input type="number" id="desc-fuel-'+c.replace(/\s/g,'_')+'" placeholder="0" min="0" step="1" style="max-width:130px"></div>';
+  });
+  box.innerHTML = html;
+}
+
+async function enviarDescarga() {
+  const posto = document.getElementById('mot-desc-posto').value;
+  if (!posto) { alert('Selecione o posto de descarga.'); return; }
+  const motorista = document.getElementById('mot-desc-motorista').value.trim();
+  const placa     = document.getElementById('mot-desc-placa').value.trim().toUpperCase();
+  const data      = document.getElementById('mot-desc-data').value;
+  const hora      = document.getElementById('mot-desc-hora').value;
+  if (!motorista || !placa || !data || !hora) { alert('Preencha motorista, placa, data e hora.'); return; }
+
+  const combs = COMBUSTIVEIS_POSTOS[posto] || ['GASOLINA COMUM','GASOLINA ADITIVADA','ETANOL','DIESEL S-10','DIESEL S-500'];
+  const itens = [];
+  combs.forEach(c => {
+    const el = document.getElementById('desc-fuel-' + c.replace(/\s/g,'_'));
+    const val = el ? (parseInt(el.value) || 0) : 0;
+    if (val > 0) itens.push({ combustivel: c, litros: val });
+  });
+  if (!itens.length) { alert('Informe pelo menos um combustível com quantidade > 0.'); return; }
+
+  const btn = document.querySelector('#view-descarga .btn-mot-submit');
+  btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
+
+  try {
+    const dataFmt = data.split('-').reverse().join('/');
+    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ tipo:'lancamento_motorista', subtipo:'descarga', posto, motorista, placa, data: dataFmt, hora, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'LOG' }) });
+    alert('✅ Descarga registrada com sucesso!\n\nA conciliação com o fechamento do gerente será feita automaticamente quando ele enviar o dado do dia.');
+    // Limpa os campos de litros
+    combs.forEach(c => { const el=document.getElementById('desc-fuel-'+c.replace(/\s/g,'_')); if(el) el.value=''; });
+  } catch(err) { alert('Erro: ' + err.message); }
+  btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-cloud-arrow-up"></i> Registrar Descarga';
+}
+
+async function enviarEmprestimo() {
+  const origem  = document.getElementById('mot-emp-origem').value;
+  const destino = document.getElementById('mot-emp-destino').value;
+  const motorista = document.getElementById('mot-emp-motorista').value.trim();
+  const placa   = document.getElementById('mot-emp-placa').value.trim().toUpperCase();
+  const comb    = document.getElementById('mot-emp-comb').value;
+  const litros  = parseInt(document.getElementById('mot-emp-litros').value) || 0;
+  const tempo   = document.getElementById('mot-emp-tempo').value.trim();
+  const data    = document.getElementById('mot-emp-data').value;
+  const hora    = document.getElementById('mot-emp-hora').value;
+
+  if (!origem||!destino||!motorista||!placa||!comb||litros<=0||!data||!hora) { alert('Preencha todos os campos obrigatórios e informe os litros.'); return; }
+
+  const btn = document.querySelector('#view-emprestimo .btn-mot-submit');
+  btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
+  try {
+    const dataFmt = data.split('-').reverse().join('/');
+    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ tipo:'lancamento_motorista', subtipo:'emprestimo', posto: origem, postoRelacionado: destino, motorista, placa, data: dataFmt, hora, combustivel: comb, litros, tempoTotal: tempo, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'LOG' }) });
+    alert('✅ Empréstimo registrado com sucesso!');
+    document.getElementById('mot-emp-litros').value='';
+    document.getElementById('mot-emp-tempo').value='';
+  } catch(err) { alert('Erro: ' + err.message); }
+  btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-right-left"></i> Registrar Empréstimo';
+}
+
+async function enviarDevolucao() {
+  const origem  = document.getElementById('mot-dev-origem').value;
+  const destino = document.getElementById('mot-dev-destino').value;
+  const motorista = document.getElementById('mot-dev-motorista').value.trim();
+  const placa   = document.getElementById('mot-dev-placa').value.trim().toUpperCase();
+  const comb    = document.getElementById('mot-dev-comb').value;
+  const litros  = parseInt(document.getElementById('mot-dev-litros').value) || 0;
+  const data    = document.getElementById('mot-dev-data').value;
+  const hora    = document.getElementById('mot-dev-hora').value;
+
+  if (!origem||!destino||!motorista||!placa||!comb||litros<=0||!data||!hora) { alert('Preencha todos os campos obrigatórios e informe os litros.'); return; }
+
+  const btn = document.querySelector('#view-devolucao .btn-mot-submit');
+  btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
+  try {
+    const dataFmt = data.split('-').reverse().join('/');
+    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ tipo:'lancamento_motorista', subtipo:'devolucao', posto: destino, postoRelacionado: origem, motorista, placa, data: dataFmt, hora, combustivel: comb, litros, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'LOG' }) });
+    alert('✅ Devolução registrada com sucesso!');
+    document.getElementById('mot-dev-litros').value='';
+  } catch(err) { alert('Erro: ' + err.message); }
+  btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-rotate-left"></i> Registrar Devolução';
+}
+
+// CONCILIAÇÃO
+async function carregarConciliacao() {
+  const dias = document.getElementById('concil-flt-dias').value;
+  const tbody = document.getElementById('concil-corpo');
+  tbody.innerHTML = '<tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);"><i class="fa-solid fa-spinner fa-spin"></i> Carregando conciliação...</td></tr>';
+  try {
+    const dados = await chamarApi({ tipo: 'lancamentosMotorista', dias });
+    if (!dados.success) { tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--b-dif);">Erro ao carregar.</td></tr>'; return; }
+    CONCIL_TODOS = dados.registros;
+    filtrarConciliacao();
+  } catch(err) { tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--b-dif);">Erro: '+err.message+'</td></tr>'; }
+}
+
+function filtrarConciliacao() {
+  const filtPosto  = document.getElementById('concil-flt-posto').value.trim().toUpperCase();
+  const filtStatus = document.getElementById('concil-flt-status').value;
+  const tbody = document.getElementById('concil-corpo');
+
+  const filtrados = CONCIL_TODOS.filter(r => {
+    if (filtPosto && !String(r.posto||'').toUpperCase().includes(filtPosto)) return false;
+    if (filtStatus && !String(r.status||'').includes(filtStatus)) return false;
+    return true;
+  });
+
+  if (!filtrados.length) { tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);">Nenhum registro encontrado.</td></tr>'; return; }
+
+  let html = '';
+  filtrados.forEach(r => {
+    const s = String(r.status || 'Pendente');
+    let badgeCls = 'badge-pendente';
+    if (s.includes('OK')) badgeCls = 'badge-ok2';
+    else if (s.includes('Divergente Maior')) badgeCls = 'badge-divergente';
+    else if (s.includes('Divergente Menor')) badgeCls = 'badge-menor';
+
+    const diff = r.diferenca !== null && r.diferenca !== undefined ? r.diferenca : '—';
+    const diffStr = diff === '—' ? '—' : ((diff > 0 ? '+' : '') + Number(diff).toLocaleString('pt-BR') + ' L');
+    const diffCor = diff === '—' ? 'var(--tx3)' : (diff > 0 ? 'var(--b-dif)' : (diff < 0 ? 'var(--b-pvn)' : 'var(--ac)'));
+
+    html += '<tr>'
+      + '<td>' + (r.data||'-') + '</td>'
+      + '<td>' + (r.hora||'-') + '</td>'
+      + '<td>' + (r.motorista||'-') + '</td>'
+      + '<td style="font-family:var(--mono)">' + (r.placa||'-') + '</td>'
+      + '<td>' + (r.posto||'-') + '</td>'
+      + '<td><span class="badge-tipo ' + (r.tipo==='Descarga'?'proprio':'concorrente') + '">' + (r.tipo||'-') + '</span></td>'
+      + '<td style="font-family:var(--mono); font-size:0.78rem">' + (r.combustivel||'-') + '</td>'
+      + '<td style="font-family:var(--mono); color:var(--b-mot); font-weight:700">' + (r.litros !== null ? Number(r.litros).toLocaleString('pt-BR') + ' L' : '—') + '</td>'
+      + '<td style="font-family:var(--mono); color:var(--b-ven)">' + (r.status==='OK'||r.status==='Divergente Maior'||r.status==='Divergente Menor' ? '✓ Lançado' : '⏳ Aguardando') + '</td>'
+      + '<td style="font-family:var(--mono); font-weight:700; color:' + diffCor + '">' + diffStr + '</td>'
+      + '<td><span class="badge-status ' + badgeCls + '">' + s + '</span></td>'
+      + '</tr>';
+  });
+  tbody.innerHTML = html;
+}
+
+function switchMotorista(view) {
+  document.querySelectorAll('.mot-view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.mot-subnav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.getElementById('btn-mot-' + (view==='descarga'?'desc':view==='emprestimo'?'emp':view==='devolucao'?'dev':'concil')).classList.add('active');
+  if (view === 'conciliacao' && !CONCIL_TODOS.length) carregarConciliacao();
+}
+
+// ================================================================
+// NAVEGAÇÃO GERAL
+// ================================================================
+function switchMainTab(tabId, element) {
+  document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  element.classList.add('active');
+}
+
+// ================================================================
+// TEMA
+// ================================================================
+function toggleTheme() {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  if (isLight) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('jb_theme','dark'); }
+  else { document.documentElement.setAttribute('data-theme','light'); localStorage.setItem('jb_theme','light'); }
+  updateThemeIcon();
+}
+function updateThemeIcon() {
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  const icon = document.getElementById('theme-icon');
+  if (icon) icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+}
+
+window.addEventListener('resize', () => {
+  const linha1 = document.querySelector('#medicao-thead tr:first-child th:not(.sticky-col)');
+  if (linha1) document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
+});
+</script>
 </body>
 </html>

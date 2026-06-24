@@ -374,6 +374,10 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 <script>
 (function(){try{var t=localStorage.getItem('jb_theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
 </script>
+
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00e5a0">
+  <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
 
@@ -1565,6 +1569,14 @@ window.addEventListener('resize', () => {
   const linha1 = document.querySelector('#medicao-thead tr:first-child th:not(.sticky-col)');
   if (linha1) document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
 });
+</script>
+  
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/Logistica-JBretas/sw.js');
+  });
+}
 </script>
 </body>
 </html>

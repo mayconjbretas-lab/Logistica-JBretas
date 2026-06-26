@@ -919,9 +919,16 @@ function recalcularPrevisaoEDiff(diaIdx) {
 
 // ── Input estilo calculadora (igual fechamento) ──────────────────
 function onCelulaFocus(input) {
-  // Ao focar: seleciona tudo, mostra "0" se vazio
-  input._digitos = '';
-  input.value = '0';
+  // Ao focar: preserva valor existente, inicializa _digitos com o número atual
+  // Se vazio mostra 0, senão mantém o que tem e apenas seleciona
+  const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+  if (!raw || raw === '0') {
+    input._digitos = '';
+    input.value = '0';
+  } else {
+    input._digitos = raw;
+    // mantém o valor formatado já exibido
+  }
   input.select();
 }
 

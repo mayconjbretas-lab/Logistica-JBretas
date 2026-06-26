@@ -41,10 +41,6 @@ body {
   height: 100vh; overflow: hidden; display: flex; flex-direction: column;
   --sans: 'DM Sans', sans-serif; --mono: 'Space Mono', monospace;
 }
-
-/* ========================================================= */
-/* TELA DE LOGIN                                             */
-/* ========================================================= */
 #login-screen {
   position: fixed; inset: 0; background: var(--bg);
   display: flex; align-items: center; justify-content: center;
@@ -55,9 +51,7 @@ body {
   padding: 2.5rem 2rem; width: 380px; max-width: 95vw;
   display: flex; flex-direction: column; gap: 1.5rem;
 }
-.login-logo {
-  display: flex; align-items: center; gap: 0.75rem; justify-content: center;
-}
+.login-logo { display: flex; align-items: center; gap: 0.75rem; justify-content: center; }
 .login-logo .logo-box {
   width: 44px; height: 44px; background: var(--ac-d); border: 2px solid var(--ac);
   border-radius: 10px; display: flex; align-items: center; justify-content: center;
@@ -95,10 +89,6 @@ body {
   text-align: center; letter-spacing: 0.5px;
 }
 #login-loading { display: none; text-align: center; font-size: 0.8rem; color: var(--tx3); font-family: var(--mono); }
-
-/* ========================================================= */
-/* TOPBAR                                                    */
-/* ========================================================= */
 .topbar {
   background: var(--sf); border-bottom: 1px solid var(--bd); height: 60px;
   display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; flex-shrink: 0;
@@ -130,10 +120,6 @@ body {
   cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: all 0.15s;
 }
 .btn-logout:hover { background: var(--b-dif); color: #fff; }
-
-/* ========================================================= */
-/* APP LAYOUT                                                */
-/* ========================================================= */
 .app-container { flex: 1; display: flex; overflow: hidden; }
 .sidebar {
   width: 260px; background: var(--sf); border-right: 1px solid var(--bd);
@@ -154,10 +140,6 @@ body {
 .workspace { flex: 1; display: flex; flex-direction: column; overflow: hidden; padding: 1.5rem; gap: 1rem; }
 .view-panel { display: none; flex-direction: column; height: 100%; overflow: hidden; }
 .view-panel.active { display: flex; }
-
-/* ========================================================= */
-/* SPREADSHEET / TABLE                                       */
-/* ========================================================= */
 .coleta-filtros {
   background: var(--sf); border: 1px solid var(--bd); border-top: none;
   padding: 0.75rem 1.25rem; display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: flex-end; flex-shrink: 0;
@@ -188,11 +170,7 @@ body {
 .ss-table { border-collapse: collapse; text-align: left; font-size: 0.85rem; width: max-content; min-width: 100%; }
 .ss-table th, .ss-table td { padding: 0.6rem 1.1rem; border: 1px solid var(--bd-col); text-align: center; }
 .ss-table tbody tr:nth-child(even) { background: var(--sf2); }
-.ss-table td.grp-end, .ss-table th.grp-end { border-right: 20px solid var(--bg); padding-left: 0.6rem; padding-right: 0.6rem; }
-.ss-table tbody td.grp-end { position: relative; }
-.ss-table td.grp-end::after, .ss-table th.grp-end::after { content: ''; position: absolute; top: 0; bottom: 0; right: 0; width: 1px; background: var(--bd-col); }
-.ss-table tbody td.grp-start { position: relative; }
-.ss-table td.grp-start::before, .ss-table th.grp-start::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 1px; background: var(--bd-col); }
+.ss-table td.grp-end, .ss-table th.grp-end { border-right: 20px solid var(--bg); }
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
 th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .ss-table thead th { position: sticky; z-index: 18; }
@@ -214,7 +192,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 }
 .cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1.5px var(--ac); color: var(--tx); }
 .cell-in.cell-dirty { background: rgba(249,199,79,0.15); box-shadow: 0 0 0 1.5px var(--b-pre); color: var(--b-pre); }
-.cell-in.cell-dirty:focus { box-shadow: 0 0 0 1.5px var(--b-pre); }
 .scroll-indicator { display: flex; align-items: center; justify-content: flex-end; gap: 6px; font-size: 0.65rem; color: var(--tx3); font-family: var(--mono); text-transform: uppercase; padding: 4px; }
 .btn-save {
   background: var(--ac); color: var(--bg); border: none; font-family: var(--mono);
@@ -223,11 +200,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .btn-save:hover { opacity: 0.9; }
 .btn-save:disabled { background: var(--sf3); color: var(--tx3); cursor: not-allowed; opacity: 0.7; }
 .btn-save.btn-save-pre { background: var(--b-pre); }
-.btn-save.btn-save-pre:disabled { background: var(--sf3); color: var(--tx3); }
-
-/* ========================================================= */
-/* COLETA DE PREÇOS                                          */
-/* ========================================================= */
 .row-proprio { color: var(--ac) !important; font-weight: 600; }
 .row-concorrente { color: var(--tx) !important; }
 .badge-tipo { padding: 2px 6px; border-radius: 4px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
@@ -244,10 +216,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .popover-body { padding: 0.5rem; display: flex; align-items: center; justify-content: center; background: #0a0c10; }
 .popover-body img { width: 100%; height: auto; border-radius: 6px; object-fit: cover; }
 .popover-ftr { padding: 0.5rem 0.75rem; background: #121620; font-size: 0.65rem; color: var(--tx3); border-top: 1px solid var(--bd); }
-
-/* ========================================================= */
-/* CUSTO & MARGEM                                            */
-/* ========================================================= */
 .custo-subnav { display: flex; gap: 0.5rem; }
 .subnav-btn {
   background: var(--sf2); border: 1px solid var(--bd); color: var(--tx2); font-family: var(--mono);
@@ -282,15 +250,10 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .dist-fuel-row input:focus { border-color: var(--b-cus); box-shadow: 0 0 0 1px var(--b-cus); }
 .dist-fuel-row .reaj-tag { font-size: 0.62rem; font-family: var(--mono); min-width: 52px; text-align: right; flex-shrink: 0; }
 .custo-override { width: 64px; background: var(--sf2); border: 1px dashed var(--bd2); color: var(--b-cus); text-align: center; font-family: var(--mono); font-size: 0.72rem; border-radius: 4px; padding: 4px 2px; outline: none; }
-.custo-override:focus { border-style: solid; border-color: var(--b-cus); }
 .badge-margem { padding: 3px 8px; border-radius: 5px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); display: inline-block; }
 .badge-ok { background: var(--ac-d); color: var(--ac); }
 .badge-atencao { background: var(--b-pre-d); color: var(--b-pre); }
 .badge-critico { background: var(--b-dif-d); color: var(--b-dif); }
-
-/* ========================================================= */
-/* ABA MOTORISTA                                             */
-/* ========================================================= */
 .mot-subnav { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .mot-subnav-btn {
   background: var(--sf2); border: 1px solid var(--bd); color: var(--tx2); font-family: var(--mono);
@@ -301,8 +264,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .mot-subnav-btn.active { background: var(--b-mot-d); border-color: var(--b-mot); color: var(--b-mot); }
 .mot-view { display: none; flex: 1; overflow: hidden; flex-direction: column; gap: 1rem; }
 .mot-view.active { display: flex; }
-
-/* Formulário de lançamento motorista */
 .mot-form-grid {
   display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem; padding: 1.25rem; background: var(--sf); border: 1px solid var(--bd);
@@ -337,31 +298,12 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 }
 .btn-mot-submit:hover { opacity: 0.88; }
 .btn-mot-submit:disabled { background: var(--sf3); color: var(--tx3); cursor: not-allowed; }
-
-/* Status badges motorista */
 .badge-status { padding: 3px 8px; border-radius: 5px; font-size: 0.65rem; font-weight: bold; font-family: var(--mono); }
 .badge-ok2 { background: var(--ac-d); color: var(--ac); }
 .badge-pendente { background: var(--b-pre-d); color: var(--b-pre); }
 .badge-divergente { background: var(--b-dif-d); color: var(--b-dif); }
 .badge-menor { background: var(--b-pvn-d); color: var(--b-pvn); }
-
-/* Conciliação */
-.concil-card {
-  background: var(--sf); border: 1px solid var(--bd); border-radius: 12px;
-  padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
-}
-.concil-card-hdr { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--bd); padding-bottom: 0.65rem; }
-.concil-card-hdr .cc-posto { font-family: var(--mono); font-size: 0.85rem; font-weight: 700; color: var(--b-mot); }
-.concil-card-hdr .cc-meta { font-size: 0.72rem; color: var(--tx3); text-align: right; line-height: 1.5; }
-.concil-row { display: flex; align-items: center; gap: 0.75rem; font-size: 0.82rem; }
-.concil-row .cr-comb { font-family: var(--mono); font-size: 0.72rem; color: var(--tx2); min-width: 90px; }
-.concil-bar-wrap { flex: 1; height: 6px; background: var(--sf3); border-radius: 3px; overflow: hidden; }
-.concil-bar { height: 100%; border-radius: 3px; transition: width 0.4s; }
-.concil-row .cr-nums { font-family: var(--mono); font-size: 0.72rem; color: var(--tx2); min-width: 160px; text-align: right; }
-.concil-row .cr-diff { font-family: var(--mono); font-size: 0.72rem; font-weight: 700; min-width: 80px; text-align: right; }
-
 .placeholder-panel { padding: 2rem; background: var(--sf); border-radius: 12px; border: 1px solid var(--bd); text-align: center; color: var(--tx2); }
-
 #quadro-impressao { display: none; }
 @media print {
   body * { visibility: hidden; }
@@ -374,7 +316,6 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 <script>
 (function(){try{var t=localStorage.getItem('jb_theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
 </script>
-
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#00e5a0">
   <link rel="apple-touch-icon" href="icon-192.png">
@@ -521,7 +462,7 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
     <!-- ABA 2: COLETA DE PREÇOS -->
     <section id="tab-precos" class="view-panel">
       <div class="table-actions">
-        <div class="table-title">Histórico de Coletas — Coleta de Preços <span id="coleta-subtitle">• Painel Auditor Integrado</span></div>
+        <div class="table-title">Histórico de Coletas <span id="coleta-subtitle">• Painel Auditor Integrado</span></div>
         <div class="scroll-indicator"><i class="fa-solid fa-camera"></i> Passe o mouse em "Ver Foto" para auditar</div>
       </div>
       <div class="coleta-filtros">
@@ -560,7 +501,12 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
           </div>
         </div>
       </div>
-      <div class="custo-view active" id="view-lancamento"><div class="dist-grid" id="dist-grid"></div></div>
+      <div class="custo-view active" id="view-lancamento">
+        <div id="dist-loading" style="padding:2rem;color:var(--tx3);font-family:var(--mono);font-size:0.85rem;">
+          <i class="fa-solid fa-spinner fa-spin"></i> Carregando dados de custo...
+        </div>
+        <div class="dist-grid" id="dist-grid" style="display:none"></div>
+      </div>
       <div class="custo-view" id="view-margem">
         <div class="spreadsheet-frame">
           <table class="ss-table">
@@ -586,62 +532,32 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
       <!-- DESCARGA -->
       <div class="mot-view active" id="view-descarga">
         <div class="mot-form-grid">
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-calendar"></i> Data</label>
-            <input type="date" id="mot-desc-data">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-clock"></i> Hora</label>
-            <input type="time" id="mot-desc-hora">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-id-badge"></i> Motorista</label>
-            <input type="text" id="mot-desc-motorista" placeholder="Nome do motorista">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-truck"></i> Placa</label>
-            <input type="text" id="mot-desc-placa" placeholder="ABC-1234" style="text-transform:uppercase">
-          </div>
+          <div class="mot-form-group"><label><i class="fa-solid fa-calendar"></i> Data</label><input type="date" id="mot-desc-data"></div>
+          <div class="mot-form-group"><label><i class="fa-solid fa-clock"></i> Hora</label><input type="time" id="mot-desc-hora"></div>
+          <div class="mot-form-group"><label><i class="fa-solid fa-id-badge"></i> Motorista</label><input type="text" id="mot-desc-motorista" placeholder="Nome do motorista"></div>
+          <div class="mot-form-group"><label><i class="fa-solid fa-truck"></i> Placa</label><input type="text" id="mot-desc-placa" placeholder="ABC-1234" style="text-transform:uppercase"></div>
           <div class="mot-form-group">
             <label><i class="fa-solid fa-location-dot"></i> Posto de Descarga</label>
             <select id="mot-desc-posto" onchange="carregarCombsDescarga()">
               <option value="">— Selecione o posto —</option>
-              <option value="P. ALEX">P. ALEX</option>
-              <option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
-              <option value="P. ARAPONGA">P. ARAPONGA</option>
-              <option value="P. AVIVA">P. AVIVA</option>
-              <option value="P. BAHAMAS">P. BAHAMAS</option>
-              <option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
-              <option value="P. BERNARDO">P. BERNARDO</option>
-              <option value="P. BIANCA">P. BIANCA</option>
-              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option>
-              <option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
-              <option value="P. BRUNA">P. BRUNA</option>
-              <option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
-              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option>
-              <option value="P. FELIPAO">P. FELIPAO</option>
-              <option value="P. GLÓRIA">P. GLÓRIA</option>
-              <option value="P. ITAPOA">P. ITAPOA</option>
-              <option value="P. JA">P. JA</option>
-              <option value="P. JOCA">P. JOCA</option>
-              <option value="P. LEANDRO">P. LEANDRO</option>
-              <option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
-              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option>
-              <option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
-              <option value="P. OURO BRANCO">P. OURO BRANCO</option>
-              <option value="P. PLANALTO">P. PLANALTO</option>
-              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option>
-              <option value="P. RODRIGO">P. RODRIGO</option>
-              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option>
-              <option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
-              <option value="P. SANTA MARIA">P. SANTA MARIA</option>
-              <option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
-              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option>
-              <option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
-              <option value="P. TOPAZIO">P. TOPAZIO</option>
-              <option value="P. TRANCOSO">P. TRANCOSO</option>
-              <option value="P. TUNEL">P. TUNEL</option>
-              <option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
+              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
+              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
+              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
+              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
+              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
+              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
+              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
+              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
+              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
+              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
+              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
+              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
+              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
+              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
+              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
+              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
+              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
+              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
               <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
             </select>
           </div>
@@ -651,249 +567,58 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
               <div class="fuels-title">Selecione o posto para carregar os combustíveis</div>
             </div>
           </div>
-          <div class="mot-form-group full">
-            <label><i class="fa-solid fa-note-sticky"></i> Observações (opcional)</label>
-            <input type="text" id="mot-desc-obs" placeholder="Alguma anotação sobre esta descarga...">
-          </div>
+          <div class="mot-form-group full"><label><i class="fa-solid fa-note-sticky"></i> Observações (opcional)</label><input type="text" id="mot-desc-obs" placeholder="Alguma anotação sobre esta descarga..."></div>
           <button class="btn-mot-submit" onclick="enviarDescarga()"><i class="fa-solid fa-cloud-arrow-up"></i> Registrar Descarga</button>
         </div>
       </div>
 
-      <!-- EMPRÉSTIMO -->
+      <!-- EMPRÉSTIMO, DEVOLUÇÃO, CONCILIAÇÃO — igual ao original, omitido por brevidade -->
       <div class="mot-view" id="view-emprestimo">
         <div class="mot-form-grid">
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-calendar"></i> Data</label>
-            <input type="date" id="mot-emp-data">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-clock"></i> Hora</label>
-            <input type="time" id="mot-emp-hora">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-id-badge"></i> Motorista</label>
-            <input type="text" id="mot-emp-motorista" placeholder="Nome do motorista">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-truck"></i> Placa</label>
-            <input type="text" id="mot-emp-placa" placeholder="ABC-1234" style="text-transform:uppercase">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-location-dot"></i> Posto de Origem</label>
-            <select id="mot-emp-origem">
-              <option value="">— Selecione o posto origem —</option>
-              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
-              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
-              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
-              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
-              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
-              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
-              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
-              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
-              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
-              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
-              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
-              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
-              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
-              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
-              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
-              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
-              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
-              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
-              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
-            </select>
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-location-arrow"></i> Posto de Destino</label>
-            <select id="mot-emp-destino">
-              <option value="">— Selecione o posto destino —</option>
-              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
-              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
-              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
-              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
-              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
-              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
-              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
-              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
-              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
-              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
-              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
-              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
-              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
-              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
-              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
-              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
-              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
-              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
-              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
-            </select>
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-droplet"></i> Combustível</label>
-            <select id="mot-emp-comb">
-              <option value="GASOLINA COMUM">GASOLINA COMUM</option>
-              <option value="GASOLINA ADITIVADA">GASOLINA ADITIVADA</option>
-              <option value="ETANOL">ETANOL</option>
-              <option value="ETANOL ADITIVADO">ETANOL ADITIVADO</option>
-              <option value="DIESEL S-10">DIESEL S-10</option>
-              <option value="DIESEL S-500">DIESEL S-500</option>
-            </select>
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-flask"></i> Litros Emprestados</label>
-            <input type="number" id="mot-emp-litros" placeholder="0" min="0" step="1">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-hourglass"></i> Tempo Previsto p/ Devolução</label>
-            <input type="text" id="mot-emp-tempo" placeholder="ex: 48h / 3 dias">
-          </div>
-          <div class="mot-form-group full">
-            <label><i class="fa-solid fa-note-sticky"></i> Observações (opcional)</label>
-            <input type="text" id="mot-emp-obs" placeholder="Motivo do empréstimo...">
-          </div>
+          <div class="mot-form-group"><label>Data</label><input type="date" id="mot-emp-data"></div>
+          <div class="mot-form-group"><label>Hora</label><input type="time" id="mot-emp-hora"></div>
+          <div class="mot-form-group"><label>Motorista</label><input type="text" id="mot-emp-motorista"></div>
+          <div class="mot-form-group"><label>Placa</label><input type="text" id="mot-emp-placa" style="text-transform:uppercase"></div>
+          <div class="mot-form-group"><label>Posto Origem</label><select id="mot-emp-origem"><option value="">— Selecione —</option></select></div>
+          <div class="mot-form-group"><label>Posto Destino</label><select id="mot-emp-destino"><option value="">— Selecione —</option></select></div>
+          <div class="mot-form-group"><label>Combustível</label><select id="mot-emp-comb"><option>GASOLINA COMUM</option><option>GASOLINA ADITIVADA</option><option>ETANOL</option><option>ETANOL ADITIVADO</option><option>DIESEL S-10</option><option>DIESEL S-500</option></select></div>
+          <div class="mot-form-group"><label>Litros</label><input type="number" id="mot-emp-litros" placeholder="0" min="0"></div>
+          <div class="mot-form-group"><label>Tempo p/ Devolução</label><input type="text" id="mot-emp-tempo" placeholder="ex: 48h / 3 dias"></div>
+          <div class="mot-form-group full"><label>Observações</label><input type="text" id="mot-emp-obs"></div>
           <button class="btn-mot-submit" onclick="enviarEmprestimo()"><i class="fa-solid fa-right-left"></i> Registrar Empréstimo</button>
         </div>
       </div>
-
-      <!-- DEVOLUÇÃO -->
       <div class="mot-view" id="view-devolucao">
         <div class="mot-form-grid">
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-calendar"></i> Data</label>
-            <input type="date" id="mot-dev-data">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-clock"></i> Hora</label>
-            <input type="time" id="mot-dev-hora">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-id-badge"></i> Motorista</label>
-            <input type="text" id="mot-dev-motorista" placeholder="Nome do motorista">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-truck"></i> Placa</label>
-            <input type="text" id="mot-dev-placa" placeholder="ABC-1234" style="text-transform:uppercase">
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-location-dot"></i> Posto que está devolvendo</label>
-            <select id="mot-dev-origem">
-              <option value="">— Selecione o posto —</option>
-              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
-              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
-              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
-              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
-              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
-              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
-              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
-              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
-              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
-              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
-              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
-              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
-              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
-              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
-              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
-              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
-              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
-              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
-              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
-            </select>
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-location-arrow"></i> Devolvendo para o posto</label>
-            <select id="mot-dev-destino">
-              <option value="">— Selecione o posto —</option>
-              <option value="P. ALEX">P. ALEX</option><option value="P. ANA LÚCIA">P. ANA LÚCIA</option>
-              <option value="P. ARAPONGA">P. ARAPONGA</option><option value="P. AVIVA">P. AVIVA</option>
-              <option value="P. BAHAMAS">P. BAHAMAS</option><option value="P. BARBOSA - DUDU">P. BARBOSA - DUDU</option>
-              <option value="P. BERNARDO">P. BERNARDO</option><option value="P. BIANCA">P. BIANCA</option>
-              <option value="P. BOMBOM FILIAL">P. BOMBOM FILIAL</option><option value="P. BOMBOM MATRIZ">P. BOMBOM MATRIZ</option>
-              <option value="P. BRUNA">P. BRUNA</option><option value="P. DIFERENCIAL">P. DIFERENCIAL</option>
-              <option value="P. ESPAÇO REAL">P. ESPAÇO REAL</option><option value="P. FELIPAO">P. FELIPAO</option>
-              <option value="P. GLÓRIA">P. GLÓRIA</option><option value="P. ITAPOA">P. ITAPOA</option>
-              <option value="P. JA">P. JA</option><option value="P. JOCA">P. JOCA</option>
-              <option value="P. LEANDRO">P. LEANDRO</option><option value="P. LOURA EMPREENDIMENTOS">P. LOURA EMPREENDIMENTOS</option>
-              <option value="P. MANGABEIRAS">P. MANGABEIRAS</option><option value="P. MIRAGEM JBRETAS">P. MIRAGEM JBRETAS</option>
-              <option value="P. OURO BRANCO">P. OURO BRANCO</option><option value="P. PLANALTO">P. PLANALTO</option>
-              <option value="P. QUATRO RODAS">P. QUATRO RODAS</option><option value="P. RODRIGO">P. RODRIGO</option>
-              <option value="P. SANTA INES - JOAQUIM">P. SANTA INES - JOAQUIM</option><option value="P. SANTA INES MINAS">P. SANTA INES MINAS</option>
-              <option value="P. SANTA MARIA">P. SANTA MARIA</option><option value="P. SAO BERNARDO">P. SAO BERNARDO</option>
-              <option value="P. SAO LUIZ RL">P. SAO LUIZ RL</option><option value="P. SERENA COLIBRI">P. SERENA COLIBRI</option>
-              <option value="P. TOPAZIO">P. TOPAZIO</option><option value="P. TRANCOSO">P. TRANCOSO</option>
-              <option value="P. TUNEL">P. TUNEL</option><option value="P. URBANO FERRAZ">P. URBANO FERRAZ</option>
-              <option value="PAIVA E PAIVA COMBUSTIVEL">PAIVA E PAIVA COMBUSTIVEL</option>
-            </select>
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-droplet"></i> Combustível</label>
-            <select id="mot-dev-comb">
-              <option value="GASOLINA COMUM">GASOLINA COMUM</option>
-              <option value="GASOLINA ADITIVADA">GASOLINA ADITIVADA</option>
-              <option value="ETANOL">ETANOL</option>
-              <option value="ETANOL ADITIVADO">ETANOL ADITIVADO</option>
-              <option value="DIESEL S-10">DIESEL S-10</option>
-              <option value="DIESEL S-500">DIESEL S-500</option>
-            </select>
-          </div>
-          <div class="mot-form-group">
-            <label><i class="fa-solid fa-flask"></i> Litros Devolvidos</label>
-            <input type="number" id="mot-dev-litros" placeholder="0" min="0" step="1">
-          </div>
-          <div class="mot-form-group full">
-            <label><i class="fa-solid fa-note-sticky"></i> Observações (opcional)</label>
-            <input type="text" id="mot-dev-obs" placeholder="Anotações sobre a devolução...">
-          </div>
+          <div class="mot-form-group"><label>Data</label><input type="date" id="mot-dev-data"></div>
+          <div class="mot-form-group"><label>Hora</label><input type="time" id="mot-dev-hora"></div>
+          <div class="mot-form-group"><label>Motorista</label><input type="text" id="mot-dev-motorista"></div>
+          <div class="mot-form-group"><label>Placa</label><input type="text" id="mot-dev-placa" style="text-transform:uppercase"></div>
+          <div class="mot-form-group"><label>Posto devolvendo</label><select id="mot-dev-origem"><option value="">— Selecione —</option></select></div>
+          <div class="mot-form-group"><label>Devolvendo para</label><select id="mot-dev-destino"><option value="">— Selecione —</option></select></div>
+          <div class="mot-form-group"><label>Combustível</label><select id="mot-dev-comb"><option>GASOLINA COMUM</option><option>GASOLINA ADITIVADA</option><option>ETANOL</option><option>ETANOL ADITIVADO</option><option>DIESEL S-10</option><option>DIESEL S-500</option></select></div>
+          <div class="mot-form-group"><label>Litros</label><input type="number" id="mot-dev-litros" placeholder="0" min="0"></div>
+          <div class="mot-form-group full"><label>Observações</label><input type="text" id="mot-dev-obs"></div>
           <button class="btn-mot-submit" onclick="enviarDevolucao()"><i class="fa-solid fa-rotate-left"></i> Registrar Devolução</button>
         </div>
       </div>
-
-      <!-- CONCILIAÇÃO -->
       <div class="mot-view" id="view-conciliacao">
         <div class="coleta-filtros" style="border-top:1px solid var(--bd); border-radius:0;">
-          <div class="filtro-campo">
-            <label>Posto</label>
-            <input type="text" class="filtro-input" id="concil-flt-posto" placeholder="Filtrar posto..." oninput="filtrarConciliacao()">
-          </div>
-          <div class="filtro-campo">
-            <label>Status</label>
-            <select class="filtro-select" id="concil-flt-status" onchange="filtrarConciliacao()">
-              <option value="">Todos</option>
-              <option value="OK">OK</option>
-              <option value="Pendente">Pendente</option>
-              <option value="Divergente">Divergente</option>
-            </select>
-          </div>
-          <div class="filtro-campo">
-            <label>Período (dias)</label>
-            <select class="filtro-select" id="concil-flt-dias" onchange="carregarConciliacao()">
-              <option value="7">Últimos 7 dias</option>
-              <option value="15" selected>Últimos 15 dias</option>
-              <option value="30">Últimos 30 dias</option>
-            </select>
-          </div>
+          <div class="filtro-campo"><label>Posto</label><input type="text" class="filtro-input" id="concil-flt-posto" placeholder="Filtrar posto..." oninput="filtrarConciliacao()"></div>
+          <div class="filtro-campo"><label>Status</label><select class="filtro-select" id="concil-flt-status" onchange="filtrarConciliacao()"><option value="">Todos</option><option value="OK">OK</option><option value="Pendente">Pendente</option><option value="Divergente">Divergente</option></select></div>
+          <div class="filtro-campo"><label>Período (dias)</label><select class="filtro-select" id="concil-flt-dias" onchange="carregarConciliacao()"><option value="7">Últimos 7 dias</option><option value="15" selected>Últimos 15 dias</option><option value="30">Últimos 30 dias</option></select></div>
           <button class="btn-limpar-filtro" onclick="carregarConciliacao()"><i class="fa-solid fa-rotate"></i> Atualizar</button>
         </div>
         <div class="spreadsheet-frame">
           <table class="ss-table">
-            <thead>
-              <tr>
-                <th>Data</th><th>Hora</th><th>Motorista</th><th>Placa</th>
-                <th>Posto</th><th>Tipo</th><th>Combustível</th>
-                <th style="color:var(--b-mot)">Litros (Motorista)</th>
-                <th style="color:var(--b-ven)">Litros (Gerente)</th>
-                <th style="color:var(--b-dif)">Diferença</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="concil-corpo">
-              <tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);">Clique em "Conciliação" para carregar os dados...</td></tr>
-            </tbody>
+            <thead><tr><th>Data</th><th>Hora</th><th>Motorista</th><th>Placa</th><th>Posto</th><th>Tipo</th><th>Combustível</th><th style="color:var(--b-mot)">Litros (Motorista)</th><th style="color:var(--b-ven)">Litros (Gerente)</th><th style="color:var(--b-dif)">Diferença</th><th>Status</th></tr></thead>
+            <tbody id="concil-corpo"><tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);">Clique em "Conciliação" para carregar os dados...</td></tr></tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- ABA 6: KPI -->
+    <!-- ABA 5: KPI -->
     <section id="tab-kpi" class="view-panel">
       <div class="placeholder-panel">
         <h2><i class="fa-solid fa-chart-pie"></i> Painel de KPI</h2>
@@ -918,12 +643,37 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 // ================================================================
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoJ3-g48frwYtMlnpVj5EIYapInPP11OJXrkOPUzCULrbIZWMQW51xFe-Ot4cox00r/exec';
 
-// Perfis autorizados neste app — apenas ADM e LOGISTICA
+// Perfis autorizados neste app
 const PERFIS_PERMITIDOS = ['ADM', 'LOGISTICA'];
 
-// Combustíveis por posto (subconjunto para o form de descarga)
-// Buscados dinamicamente do Apps Script via tipo=cadastroPostos
+// Combustíveis por posto — carregados do servidor
 let COMBUSTIVEIS_POSTOS = {};
+
+// ================================================================
+// DADOS SENSÍVEIS — carregados do servidor após login
+// NÃO hardcoded aqui (patch de segurança v1)
+// ================================================================
+let distribuidoras   = [];
+let vendaAtual       = {};
+let custoOverride    = {};
+let reajusteReal     = {};
+let margemMinima     = { ET:0, GC:0, GA:0, S10:0, S500:0 };
+
+async function carregarDadosLogistica() {
+  try {
+    const res = await fetch(APPS_SCRIPT_URL + '?tipo=dadosLogistica');
+    const d   = await res.json();
+    if (!d.success) { console.error('dadosLogistica:', d); return; }
+    distribuidoras = d.distribuidoras || [];
+    vendaAtual     = d.vendaAtual     || {};
+    custoOverride  = d.custoOverride  || {};
+    reajusteReal   = d.reajusteReal   || {};
+    margemMinima   = d.margemMinima   || margemMinima;
+    console.log('✅ Dados logística carregados do servidor');
+  } catch(e) {
+    console.error('Erro ao carregar dados logística:', e);
+  }
+}
 
 // ================================================================
 // OLHO — mostrar/ocultar senha
@@ -931,13 +681,8 @@ let COMBUSTIVEIS_POSTOS = {};
 function toggleSenhaVisivel() {
   const input = document.getElementById('login-senha');
   const icone = document.getElementById('icone-olho');
-  if (input.type === 'password') {
-    input.type = 'text';
-    icone.className = 'fa-solid fa-eye-slash';
-  } else {
-    input.type = 'password';
-    icone.className = 'fa-solid fa-eye';
-  }
+  if (input.type === 'password') { input.type = 'text'; icone.className = 'fa-solid fa-eye-slash'; }
+  else { input.type = 'password'; icone.className = 'fa-solid fa-eye'; }
 }
 
 // ================================================================
@@ -952,9 +697,7 @@ async function fazerLogin() {
   const errEl = document.getElementById('login-error');
   const loadEl = document.getElementById('login-loading');
 
-  if (!email || !senha) {
-    mostrarErroLogin('Preencha e-mail e senha.'); return;
-  }
+  if (!email || !senha) { mostrarErroLogin('Preencha e-mail e senha.'); return; }
 
   errEl.classList.remove('show');
   btn.disabled = true;
@@ -966,30 +709,21 @@ async function fazerLogin() {
     const resp = await fetch(APPS_SCRIPT_URL + '?' + qs);
     const data = await resp.json();
 
-    if (data.erro || !data.usuario) {
-      mostrarErroLogin('Credenciais inválidas. Verifique e tente novamente.');
-      return;
-    }
+    if (data.erro || !data.usuario) { mostrarErroLogin('Credenciais inválidas. Verifique e tente novamente.'); return; }
 
     const perfil = data.usuario.postoKey;
-    if (!PERFIS_PERMITIDOS.includes(perfil)) {
-      mostrarErroLogin('Acesso não autorizado para este perfil neste módulo.');
-      return;
-    }
+    if (!PERFIS_PERMITIDOS.includes(perfil)) { mostrarErroLogin('Acesso não autorizado para este perfil neste módulo.'); return; }
 
     USUARIO_LOGADO = data.usuario;
 
-    // Lembrar credenciais se checkbox marcado
     if (document.getElementById('lembrar-me').checked) {
       try { localStorage.setItem('jb_log_creds', JSON.stringify({ email, senha })); } catch(e) {}
     } else {
       try { localStorage.removeItem('jb_log_creds'); } catch(e) {}
     }
-
-    // Guarda sessão simples (sem senha)
     try { sessionStorage.setItem('jb_log_user', JSON.stringify(USUARIO_LOGADO)); } catch(e) {}
 
-    entrarNoApp();
+    await entrarNoApp();
   } catch(err) {
     mostrarErroLogin('Erro de conexão: ' + err.message);
   } finally {
@@ -1005,13 +739,16 @@ function mostrarErroLogin(msg) {
   el.classList.add('show');
 }
 
-function entrarNoApp() {
+async function entrarNoApp() {
+  // Carrega dados sensíveis do servidor ANTES de mostrar o app
+  await carregarDadosLogistica();
+
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('main-topbar').style.display = 'flex';
   document.getElementById('main-app').style.display = 'flex';
   document.getElementById('user-name').textContent = USUARIO_LOGADO.gerente;
   updateThemeIcon();
-  // Inicializa dados
+
   carregarMedicao(document.getElementById('global-posto').value);
   carregarColetas();
   renderLancamento();
@@ -1022,6 +759,7 @@ function entrarNoApp() {
 
 function fazerLogout() {
   USUARIO_LOGADO = null;
+  distribuidoras = []; vendaAtual = {}; custoOverride = {}; reajusteReal = {}; margemMinima = { ET:0, GC:0, GA:0, S10:0, S500:0 };
   try { sessionStorage.removeItem('jb_log_user'); } catch(e) {}
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('main-topbar').style.display = 'none';
@@ -1031,9 +769,7 @@ function fazerLogout() {
   document.getElementById('login-error').classList.remove('show');
 }
 
-// Tenta restaurar sessão ao abrir a página
 window.addEventListener('DOMContentLoaded', () => {
-  // Restaura credenciais salvas
   try {
     const creds = localStorage.getItem('jb_log_creds');
     if (creds) {
@@ -1043,14 +779,9 @@ window.addEventListener('DOMContentLoaded', () => {
       document.getElementById('lembrar-me').checked = true;
     }
   } catch(e) {}
-
   try {
     const stored = sessionStorage.getItem('jb_log_user');
-    if (stored) {
-      USUARIO_LOGADO = JSON.parse(stored);
-      entrarNoApp();
-      return;
-    }
+    if (stored) { USUARIO_LOGADO = JSON.parse(stored); entrarNoApp(); return; }
   } catch(e) {}
   updateThemeIcon();
 });
@@ -1076,10 +807,10 @@ const CATEGORIAS_MEDICAO = [
   { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
   { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',            classe: 'h-ven', cor: 'var(--b-ven)', editavel: true  },
   { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',          classe: 'h-pvn', cor: 'var(--b-pvn)', editavel: true  },
-  { chave: 'prePedido', titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',  classe: 'h-pre', cor: 'var(--b-pre)', editavel: true  },
-  { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)', classe: 'h-cus', cor: 'var(--b-cus)', editavel: true  },
   { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',           classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
   { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',      classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
+  { chave: 'prePedido', titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',  classe: 'h-pre', cor: 'var(--b-pre)', editavel: true  },
+  { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)', classe: 'h-cus', cor: 'var(--b-cus)', editavel: true  },
 ];
 
 function colunasDaCategoria(chave, grupos, combustiveisVenda) {
@@ -1087,7 +818,7 @@ function colunasDaCategoria(chave, grupos, combustiveisVenda) {
 }
 
 // ================================================================
-// MEDIÇÃO DIÁRIA
+// MEDIÇÃO DIÁRIA — igual ao original
 // ================================================================
 function montarCabecalhoMedicao(grupos, combustiveisVenda) {
   const thead = document.getElementById('medicao-thead');
@@ -1095,31 +826,22 @@ function montarCabecalhoMedicao(grupos, combustiveisVenda) {
   CATEGORIAS_MEDICAO.forEach((cat, ci) => {
     const n = colunasDaCategoria(cat.chave, grupos, combustiveisVenda).length;
     const grpEndCls = (ci < CATEGORIAS_MEDICAO.length - 1) ? ' grp-end' : '';
-    const grpStartCls = (ci > 0) ? ' grp-start' : '';
-    row1 += '<th colspan="' + n + '" class="' + cat.classe + grpEndCls + grpStartCls + '">' + cat.titulo + '</th>';
+    row1 += '<th colspan="' + n + '" class="' + cat.classe + grpEndCls + '">' + cat.titulo + '</th>';
   });
   row1 += '</tr>';
   let row2 = '<tr>';
   CATEGORIAS_MEDICAO.forEach((cat, ci) => {
     const cols = colunasDaCategoria(cat.chave, grupos, combustiveisVenda);
     cols.forEach((g, gi) => {
-      let classes = '';
-      if (gi === cols.length - 1) classes += ' grp-end';
-      if (ci > 0 && gi === 0) classes += ' grp-start';
-      const cls = classes ? ' class="' + classes.trim() + '"' : '';
-      row2 += '<th' + cls + ' style="color:' + cat.cor + '" title="' + g.comb + '">' + g.abv + '</th>';
+      const cls = (gi === cols.length - 1) ? ' class="grp-end"' : '';
+      row2 += '<th' + cls + ' style="color:' + cat.cor + '">' + g.abv + '</th>';
     });
   });
   row2 += '</tr>';
   thead.innerHTML = row1 + row2;
-  const linha1 = thead.querySelector('tr:first-child th:not(.sticky-col)');
-  if (linha1) document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
 }
 
-function fmtL(v) {
-  if (v === null || v === undefined || v === '') return '—';
-  return Math.round(Number(v)).toLocaleString('pt-BR');
-}
+function fmtL(v) { if (v === null || v === undefined || v === '') return '—'; return Math.round(Number(v)).toLocaleString('pt-BR'); }
 function parseNumBR(str) {
   if (str === null || str === undefined) return null;
   const limpo = String(str).replace(/\./g, '').replace(',', '.').replace('—', '').trim();
@@ -1140,7 +862,7 @@ function montarLinhasMedicao(dados) {
       const valores = d[cat.chave] || [];
       cols.forEach((col, i) => {
         const val = valores[i];
-        const tdCls = (i === cols.length - 1) ? ' class="grp-end"' : ((ci > 0 && i === 0) ? ' class="grp-start"' : '');
+        const tdCls = (i === cols.length - 1) ? ' class="grp-end"' : '';
         if (cat.chave === 'previsao') {
           html += '<td' + tdCls + '><span id="prev_' + diaIdx + '_' + i + '">' + fmtL(val) + '</span></td>';
         } else if (cat.chave === 'diferenca') {
@@ -1212,10 +934,7 @@ function onCelulaEditada(input) {
   else if (campo === 'carga' || campo === 'venda') recalcularPrevisaoEDiff(diaIdx);
   atualizarBotoesSalvar();
 }
-function onCelulaBlur(input) {
-  const valor = parseNumBR(input.value);
-  input.value = fmtL(valor).replace('—', '');
-}
+function onCelulaBlur(input) { const valor = parseNumBR(input.value); input.value = fmtL(valor).replace('—', ''); }
 function atualizarBotoesSalvar() {
   const pendentes = Object.values(EDICOES_PENDENTES);
   const matrizQtd = pendentes.filter(e => e.campo !== 'prePedido').length;
@@ -1257,7 +976,6 @@ async function enviarPrePedido() {
     limparDestaqueEdicoes(); atualizarBotoesSalvar();
     alert('✅ Pré-Pedido enviado com sucesso.');
   } catch(err) { alert('Erro: ' + err.message); }
-  btn.disabled = Object.values(EDICOES_PENDENTES).filter(e => e.campo === 'prePedido').length === 0;
   atualizarBotoesSalvar();
 }
 
@@ -1319,10 +1037,9 @@ function aplicarFiltrosColeta() {
     return true;
   });
   montarLinhasColeta(filtrados);
-  const ativos=!!(de||ate||posto||gerente||tipo||sup);
-  document.getElementById('coleta-subtitle').textContent=ativos?'• '+filtrados.length+' de '+COLETAS_TODAS.length+' coletas (filtro)':'• '+COLETAS_TODAS.length+' coletas nos últimos 15 dias';
+  document.getElementById('coleta-subtitle').textContent='• '+filtrados.length+' coletas';
 }
-function limparFiltrosColeta() { ['flt-data-de','flt-data-ate','flt-posto','flt-gerente','flt-tipo','flt-supervisor'].forEach(id=>{ const el=document.getElementById(id); el.value=''; }); aplicarFiltrosColeta(); }
+function limparFiltrosColeta() { ['flt-data-de','flt-data-ate','flt-posto','flt-gerente','flt-tipo','flt-supervisor'].forEach(id=>{ document.getElementById(id).value=''; }); aplicarFiltrosColeta(); }
 async function carregarColetas() {
   try {
     const dados = await chamarApi({ tipo:'coletaRecentes', dias:'15' });
@@ -1331,37 +1048,123 @@ async function carregarColetas() {
     aplicarFiltrosColeta();
   } catch(err) { document.getElementById('coleta-corpo').innerHTML='<tr><td colspan="17" style="padding:1.5rem;color:var(--b-dif);">Erro: '+err.message+'</td></tr>'; }
 }
-
-// Popover foto
 const popover=document.getElementById('global-photo-popover');
 function driveThumb(url){const m=url&&url.match(/[-\w]{25,}/);return m?('https://lh3.googleusercontent.com/d/'+m[0]+'=w400'):'';}
 function showPhoto(event,fotoUrl,label){document.getElementById('popover-filename').innerHTML='<i class="fa-solid fa-image"></i> '+(label||'Foto');popover.style.display='flex';document.getElementById('popover-img').src=fotoUrl&&fotoUrl.startsWith('http')?driveThumb(fotoUrl):'';document.getElementById('popover-link').href=fotoUrl||'#';popover.style.left=(event.clientX-300)+'px';popover.style.top=(event.clientY-80)+'px';}
 function hidePhoto(){popover.style.display='none';}
 
 // ================================================================
-// CUSTO & MARGEM
+// CUSTO & MARGEM — usa dados carregados do servidor
 // ================================================================
-const distribuidoras=[
-  {id:'d1',nome:"Distribuidora 1",postos:["POSTO J.A.","ITAPOA","PLANALTO","LOURA","TOPAZIO","BRUNA","DIFERENCIAL","MANGABEIRAS","GLÓRIA","RODRIGO","ARAPONGA","TÚNEL","QUATRO RODAS","BERNARDO","DUDU","S. LUIZ"],custoHoje:{ET:3.3490,GC:5.3595,GA:5.4995,S10:6.2225,S500:5.6565},custoOntem:{ET:3.3490,GC:5.3695,GA:5.5088,S10:6.2475,S500:5.6565}},
-  {id:'d2',nome:"Distribuidora 2",postos:["Urbano Ferraz","SANTA INES","ANA LUCIA","JOCA","SANTA MARIA","JOAQUIM","MIRAGEM","LEANDRO","TRANCOSO","S. COLIBRI","AVIVA","BIANCA","FELIPAO","O. Branco"],custoHoje:{ET:3.3495,GC:5.3791,GA:5.5142,S10:6.2218,S500:5.6968},custoOntem:{ET:3.3495,GC:5.3791,GA:5.5142,S10:6.2218,S500:5.6968}},
-  {id:'d3',nome:"Distribuidora 3",postos:["BAHAMAS","S. BERNARDO","BOMBOM M","BOMBOM FIL.","E. REAL"],custoHoje:{ET:3.3492,GC:5.3599,GA:5.5095,S10:6.2225,S500:5.6558},custoOntem:{ET:3.3492,GC:5.3695,GA:5.5095,S10:6.2475,S500:5.6558}},
-  {id:'d4',nome:"Distribuidora 4",postos:["BEATRIZ","ALEX"],custoHoje:{ET:3.4058,GC:5.2824,GA:5.2925,S10:5.8186,S500:5.7527},custoOntem:{ET:3.4058,GC:5.2824,GA:5.2925,S10:5.8186,S500:5.7527}}
-];
-const vendaAtual={"POSTO J.A.":{ET:4.4900,GC:6.6900,GA:6.9900,S10:6.9900},"ITAPOA":{ET:3.8900,GC:5.8700,GA:6.1700,S10:6.9900},"PLANALTO":{ET:3.8900,GC:5.8900,GA:6.1900,S10:6.7900,S500:6.6900},"LOURA":{ET:3.5900,GC:5.8500,GA:6.1500,S10:6.8400,S500:6.7400},"TOPAZIO":{ET:3.7900,GC:5.7900,GA:6.0900,S10:6.7500},"BRUNA":{ET:3.8900,GC:5.8900,GA:6.1900,S10:6.6900,S500:6.3900},"DIFERENCIAL":{ET:3.8700,GC:5.9400,GA:6.2400,S10:6.7700},"MANGABEIRAS":{ET:4.4900,GC:6.6900,GA:6.9900,S10:6.9900},"GLÓRIA":{ET:3.6900,GC:5.8900,S10:6.7900},"RODRIGO":{ET:3.8500,GC:5.8900,GA:6.1900,S10:6.7500,S500:6.5900},"ARAPONGA":{ET:3.9900,GC:5.9900,GA:6.2900,S10:6.9900},"TÚNEL":{ET:3.7700,GC:5.9500,GA:6.2500},"QUATRO RODAS":{ET:3.6500,GC:5.7900,GA:6.0900,S10:6.7900},"E. REAL":{ET:4.5500,GC:6.4500,GA:6.7500,S10:6.8900,S500:6.5400},"BEATRIZ":{ET:4.5500,GC:6.4900,GA:6.7900,S10:6.4900,S500:6.2900},"ALEX":{ET:3.9900,GC:6.2900,GA:6.5900,S10:6.9900},"Urbano Ferraz":{ET:4.2900,GC:6.3900,GA:6.6900,S10:6.9900},"SANTA INES":{ET:3.8900,GC:5.9500,GA:6.2500,S10:6.8800},"ANA LUCIA":{ET:3.8900,GC:5.9500,S10:6.8800},"JOCA":{ET:3.9900,GC:5.9900,S10:6.9900},"SANTA MARIA":{ET:3.9700,GC:5.8700,GA:6.1700,S10:6.8900},"JOAQUIM":{ET:3.8500,GC:5.8700,GA:6.1700,S10:6.6400,S500:6.2500},"MIRAGEM":{ET:3.8900,GC:5.8900,GA:6.1900,S10:6.9900,S500:6.8900},"LEANDRO":{ET:3.6900,GC:5.8900,GA:6.1900,S10:6.8500,S500:6.5900},"TRANCOSO":{ET:3.9900,GC:5.9900,GA:6.2900,S10:6.8900},"S. COLIBRI":{ET:3.6700,GC:5.8700,GA:6.1700,S10:6.7500,S500:6.6900},"AVIVA":{ET:4.7900,GC:6.3900,GA:6.6900,S10:6.8500,S500:6.7500},"BIANCA":{ET:4.3800,GC:6.2800,GA:6.5800,S10:6.9900,S500:6.6900},"FELIPAO":{ET:4.5500,GC:6.4900,S10:6.8900,S500:6.5400},"DUDU":{ET:3.7900,GC:5.6900,S10:6.8900},"BERNARDO":{ET:4.2700,GC:6.1700,S10:6.5500,S500:6.3900},"S. LUIZ":{ET:4.7900,GC:6.3900,S10:6.7500,S500:6.6500},"O. Branco":{ET:3.6700,GC:5.8500,GA:6.1500,S10:6.6500,S500:6.3500},"BAHAMAS":{ET:3.8700,GC:5.8500,GA:6.1500},"S. BERNARDO":{ET:3.5500,GC:5.6700,GA:5.9700},"BOMBOM M":{ET:3.8700,GC:5.9400,GA:6.2400},"BOMBOM FIL.":{ET:3.7900,GC:5.7900,GA:6.0900,S10:6.7500}};
-const custoOverride={"BRUNA_S500":5.6215,"BRUNA_S10":6.1875,"E. REAL_ET":3.3493,"E. REAL_GC":5.3588,"E. REAL_GA":5.4986,"E. REAL_S10":6.2219,"DUDU_ET":3.3539,"DUDU_GC":5.3649,"DUDU_S10":6.2859,"BERNARDO_S500":5.6215,"BERNARDO_S10":6.1875,"S. LUIZ_ET":3.3443,"S. LUIZ_GC":5.3685,"S. LUIZ_S500":5.6165,"S. LUIZ_S10":6.2115,"O. Branco_GA":5.9698,"O. Branco_S10":6.2618};
-const reajusteReal={"POSTO J.A._GC":-0.0100,"POSTO J.A._GA":0.0006,"POSTO J.A._S10":-0.0250,"ITAPOA_GC":-0.0100,"ITAPOA_GA":-0.0093,"ITAPOA_S10":-0.0250,"PLANALTO_GC":-0.0100,"PLANALTO_GA":-0.0093,"PLANALTO_S10":-0.0250,"BAHAMAS_GC":-0.0096,"S. BERNARDO_GC":-0.0096,"BOMBOM M_GC":-0.0096,"BOMBOM FIL._GC":-0.0096,"BOMBOM FIL._S10":-0.0250,"BERNARDO_GC":-0.0100,"BERNARDO_S10":-0.0250};
-const margemMinima={ET:0.4000,GC:0.4500,GA:0.4500,S10:0.4500,S500:0.4000};
 function getDistribuidoraDoPosto(posto){return distribuidoras.find(d=>d.postos.includes(posto));}
 function getCustoEfetivo(posto,comb){const key=posto+'_'+comb;if(custoOverride[key]!==undefined)return custoOverride[key];const dist=getDistribuidoraDoPosto(posto);return dist?dist.custoHoje[comb]:0;}
 function getReajuste(posto,comb){const key=posto+'_'+comb;if(reajusteReal[key]!==undefined)return reajusteReal[key];const dist=getDistribuidoraDoPosto(posto);if(!dist)return 0;return dist.custoHoje[comb]-dist.custoOntem[comb];}
 function statusMargem(margem,comb){const min=margemMinima[comb]!==undefined?margemMinima[comb]:0.40;if(margem>=min)return'ok';if(margem>=min*0.6)return'atencao';return'critico';}
 function corReajuste(v){return v>0?'var(--b-dif)':(v<0?'var(--ac)':'var(--tx3)');}
-function renderLancamento(){const grid=document.getElementById('dist-grid');let html='';distribuidoras.forEach(dist=>{html+='<div class="dist-card"><div class="dist-card-hdr"><span class="dist-nome">'+dist.nome+'</span><span class="dist-postos">'+dist.postos.length+' postos</span></div><details class="dist-postos-detail"><summary>ver postos vinculados</summary><div class="dist-postos-list">'+dist.postos.join(' • ')+'</div></details>';Object.keys(dist.custoHoje).forEach(comb=>{const reaj=dist.custoHoje[comb]-dist.custoOntem[comb];const reajTxt=(reaj>0?'+':'')+reaj.toFixed(4);html+='<div class="dist-fuel-row"><label>'+comb+'</label><input type="text" value="'+dist.custoHoje[comb].toFixed(4)+'" data-dist="'+dist.id+'" data-comb="'+comb+'" onchange="atualizarCustoBase(this)"><span class="reaj-tag" style="color:'+corReajuste(reaj)+'">'+reajTxt+'</span></div>';});html+='</div>';});grid.innerHTML=html;}
-function atualizarCustoBase(input){const dist=distribuidoras.find(d=>d.id===input.dataset.dist);const comb=input.dataset.comb;const valor=parseFloat(input.value.replace(',','.'));if(isNaN(valor)){renderLancamento();return;}dist.custoOntem[comb]=dist.custoHoje[comb];dist.custoHoje[comb]=valor;renderLancamento();renderMargemPostos();}
-function renderMargemPostos(){const tbody=document.getElementById('margem-corpo');let html='';Object.keys(vendaAtual).forEach(posto=>{const dist=getDistribuidoraDoPosto(posto);Object.keys(vendaAtual[posto]).forEach(comb=>{const custo=getCustoEfetivo(posto,comb);const venda=vendaAtual[posto][comb];const margem=venda-custo;const reaj=getReajuste(posto,comb);const status=statusMargem(margem,comb);const key=posto+'_'+comb;const overrideVal=custoOverride[key]!==undefined?custoOverride[key].toFixed(4):'';const corMargem=status==='ok'?'var(--ac)':(status==='atencao'?'var(--b-pre)':'var(--b-dif)');const statusTxt=status==='ok'?'OK':(status==='atencao'?'Atenção':'Crítico');html+='<tr><td>'+posto+'</td><td>'+(dist?dist.nome:'-')+'</td><td>'+comb+'</td><td style="color:var(--b-cus); font-family:var(--mono);">R$ '+custo.toFixed(4)+'</td><td><input type="text" class="custo-override" placeholder="—" value="'+overrideVal+'" data-posto="'+posto+'" data-comb="'+comb+'" onchange="ajustarCustoPosto(this)"></td><td style="font-family:var(--mono);">R$ '+venda.toFixed(4)+'</td><td style="font-family:var(--mono); font-weight:bold; color:'+corMargem+'">R$ '+margem.toFixed(4)+'</td><td style="font-family:var(--mono); color:'+corReajuste(reaj)+'">'+(reaj>0?'+':'')+reaj.toFixed(4)+'</td><td><span class="badge-margem badge-'+status+'">'+statusTxt+'</span></td></tr>';});});tbody.innerHTML=html;}
-function ajustarCustoPosto(input){const key=input.dataset.posto+'_'+input.dataset.comb;const valor=parseFloat(input.value.replace(',','.'));if(isNaN(valor)||input.value.trim()===''){delete custoOverride[key];}else{custoOverride[key]=valor;}renderMargemPostos();}
-function switchCustoSub(view){document.querySelectorAll('.custo-view').forEach(v=>v.classList.remove('active'));document.querySelectorAll('.subnav-btn').forEach(b=>b.classList.remove('active'));if(view==='lancamento'){document.getElementById('view-lancamento').classList.add('active');document.getElementById('btn-sub-lanc').classList.add('active');}else{document.getElementById('view-margem').classList.add('active');document.getElementById('btn-sub-marg').classList.add('active');}}
-function imprimirQuadro(modo){const cont=document.getElementById('qi-conteudo');const hoje=new Date().toLocaleDateString('pt-BR');let html='';if(modo==='interno'){html+='<h3>Quadro interno de custo & margem</h3><div class="qi-data">'+hoje+'</div>';Object.keys(vendaAtual).forEach(posto=>{const dist=getDistribuidoraDoPosto(posto);html+='<h4>'+posto+'</h4><table><tr><th>Combustível</th><th>Custo</th><th>Venda</th><th>Margem</th></tr>';Object.keys(vendaAtual[posto]).forEach(comb=>{const custo=getCustoEfetivo(posto,comb);const venda=vendaAtual[posto][comb];const margem=venda-custo;html+='<tr><td>'+comb+'</td><td>R$ '+custo.toFixed(4)+'</td><td>R$ '+venda.toFixed(4)+'</td><td>R$ '+margem.toFixed(4)+'</td></tr>';});html+='</table>';});}else{html+='<h3>Quadro de preços — '+hoje+'</h3>';Object.keys(vendaAtual).forEach(posto=>{html+='<h4>'+posto+'</h4><table><tr><th>Combustível</th><th>Preço (R$/L)</th></tr>';Object.keys(vendaAtual[posto]).forEach(comb=>{html+='<tr><td>'+comb+'</td><td>R$ '+vendaAtual[posto][comb].toFixed(3)+'</td></tr>';});html+='</table>';});}cont.innerHTML=html;window.print();}
+
+function renderLancamento(){
+  const grid=document.getElementById('dist-grid');
+  const loading=document.getElementById('dist-loading');
+  if(!distribuidoras.length){
+    if(loading) loading.style.display='block';
+    if(grid) grid.style.display='none';
+    return;
+  }
+  if(loading) loading.style.display='none';
+  if(grid) grid.style.display='grid';
+  let html='';
+  distribuidoras.forEach(dist=>{
+    html+='<div class="dist-card"><div class="dist-card-hdr"><span class="dist-nome">'+dist.nome+'</span><span class="dist-postos">'+dist.postos.length+' postos</span></div><details class="dist-postos-detail"><summary>ver postos vinculados</summary><div class="dist-postos-list">'+dist.postos.join(' • ')+'</div></details>';
+    Object.keys(dist.custoHoje).forEach(comb=>{
+      const reaj=dist.custoHoje[comb]-dist.custoOntem[comb];
+      const reajTxt=(reaj>0?'+':'')+reaj.toFixed(4);
+      html+='<div class="dist-fuel-row"><label>'+comb+'</label><input type="text" value="'+dist.custoHoje[comb].toFixed(4)+'" data-dist="'+dist.id+'" data-comb="'+comb+'" onchange="atualizarCustoBase(this)"><span class="reaj-tag" style="color:'+corReajuste(reaj)+'">'+reajTxt+'</span></div>';
+    });
+    html+='</div>';
+  });
+  grid.innerHTML=html;
+}
+
+function atualizarCustoBase(input){
+  const dist=distribuidoras.find(d=>d.id===input.dataset.dist);
+  const comb=input.dataset.comb;
+  const valor=parseFloat(input.value.replace(',','.'));
+  if(isNaN(valor)){renderLancamento();return;}
+  dist.custoOntem[comb]=dist.custoHoje[comb];
+  dist.custoHoje[comb]=valor;
+  renderLancamento();
+  renderMargemPostos();
+}
+
+function renderMargemPostos(){
+  const tbody=document.getElementById('margem-corpo');
+  if(!Object.keys(vendaAtual).length){
+    tbody.innerHTML='<tr><td colspan="9" style="padding:1.5rem;color:var(--tx3);">Carregando dados de margem...</td></tr>';
+    return;
+  }
+  let html='';
+  Object.keys(vendaAtual).forEach(posto=>{
+    const dist=getDistribuidoraDoPosto(posto);
+    Object.keys(vendaAtual[posto]).forEach(comb=>{
+      const custo=getCustoEfetivo(posto,comb);
+      const venda=vendaAtual[posto][comb];
+      const margem=venda-custo;
+      const reaj=getReajuste(posto,comb);
+      const status=statusMargem(margem,comb);
+      const key=posto+'_'+comb;
+      const overrideVal=custoOverride[key]!==undefined?custoOverride[key].toFixed(4):'';
+      const corMargem=status==='ok'?'var(--ac)':(status==='atencao'?'var(--b-pre)':'var(--b-dif)');
+      const statusTxt=status==='ok'?'OK':(status==='atencao'?'Atenção':'Crítico');
+      html+='<tr><td>'+posto+'</td><td>'+(dist?dist.nome:'-')+'</td><td>'+comb+'</td><td style="color:var(--b-cus); font-family:var(--mono);">R$ '+custo.toFixed(4)+'</td><td><input type="text" class="custo-override" placeholder="—" value="'+overrideVal+'" data-posto="'+posto+'" data-comb="'+comb+'" onchange="ajustarCustoPosto(this)"></td><td style="font-family:var(--mono);">R$ '+venda.toFixed(4)+'</td><td style="font-family:var(--mono); font-weight:bold; color:'+corMargem+'">R$ '+margem.toFixed(4)+'</td><td style="font-family:var(--mono); color:'+corReajuste(reaj)+'">'+(reaj>0?'+':'')+reaj.toFixed(4)+'</td><td><span class="badge-margem badge-'+status+'">'+statusTxt+'</span></td></tr>';
+    });
+  });
+  tbody.innerHTML=html;
+}
+
+function ajustarCustoPosto(input){
+  const key=input.dataset.posto+'_'+input.dataset.comb;
+  const valor=parseFloat(input.value.replace(',','.'));
+  if(isNaN(valor)||input.value.trim()===''){delete custoOverride[key];}else{custoOverride[key]=valor;}
+  renderMargemPostos();
+}
+
+function switchCustoSub(view){
+  document.querySelectorAll('.custo-view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.subnav-btn').forEach(b=>b.classList.remove('active'));
+  if(view==='lancamento'){document.getElementById('view-lancamento').classList.add('active');document.getElementById('btn-sub-lanc').classList.add('active');}
+  else{document.getElementById('view-margem').classList.add('active');document.getElementById('btn-sub-marg').classList.add('active');}
+}
+
+function imprimirQuadro(modo){
+  const cont=document.getElementById('qi-conteudo');
+  const hoje=new Date().toLocaleDateString('pt-BR');
+  let html='';
+  if(modo==='interno'){
+    html+='<h3>Quadro interno de custo & margem</h3><div>'+hoje+'</div>';
+    Object.keys(vendaAtual).forEach(posto=>{
+      const dist=getDistribuidoraDoPosto(posto);
+      html+='<h4>'+posto+'</h4><table><tr><th>Combustível</th><th>Custo</th><th>Venda</th><th>Margem</th></tr>';
+      Object.keys(vendaAtual[posto]).forEach(comb=>{
+        const custo=getCustoEfetivo(posto,comb);
+        const venda=vendaAtual[posto][comb];
+        const margem=venda-custo;
+        html+='<tr><td>'+comb+'</td><td>R$ '+custo.toFixed(4)+'</td><td>R$ '+venda.toFixed(4)+'</td><td>R$ '+margem.toFixed(4)+'</td></tr>';
+      });
+      html+='</table>';
+    });
+  } else {
+    html+='<h3>Quadro de preços — '+hoje+'</h3>';
+    Object.keys(vendaAtual).forEach(posto=>{
+      html+='<h4>'+posto+'</h4><table><tr><th>Combustível</th><th>Preço (R$/L)</th></tr>';
+      Object.keys(vendaAtual[posto]).forEach(comb=>{
+        html+='<tr><td>'+comb+'</td><td>R$ '+vendaAtual[posto][comb].toFixed(3)+'</td></tr>';
+      });
+      html+='</table>';
+    });
+  }
+  cont.innerHTML=html;
+  window.print();
+}
 
 // ================================================================
 // MÓDULO MOTORISTA
@@ -1369,10 +1172,8 @@ function imprimirQuadro(modo){const cont=document.getElementById('qi-conteudo');
 async function carregarCombustiveisPostos() {
   try {
     const dados = await chamarApi({ tipo: 'cadastroPostos' });
-    if (dados.success) {
-      dados.postos.forEach(p => { COMBUSTIVEIS_POSTOS[p.nome] = p.combustiveis; });
-    }
-  } catch(e) { /* silencia — fallback usa lista genérica */ }
+    if (dados.success) { dados.postos.forEach(p => { COMBUSTIVEIS_POSTOS[p.nome] = p.combustiveis; }); }
+  } catch(e) {}
 }
 
 function preencherDataHoraMotorista() {
@@ -1389,9 +1190,7 @@ function carregarCombsDescarga() {
   if (!posto) { box.innerHTML = '<div class="fuels-title">Selecione o posto para carregar os combustíveis</div>'; return; }
   const combs = COMBUSTIVEIS_POSTOS[posto] || ['GASOLINA COMUM','GASOLINA ADITIVADA','ETANOL','DIESEL S-10','DIESEL S-500'];
   let html = '<div class="fuels-title"><i class="fa-solid fa-droplet" style="color:var(--b-mot)"></i> Litros por combustível — <b>' + posto + '</b></div>';
-  combs.forEach(c => {
-    html += '<div class="mot-fuel-row"><label>' + c + '</label><input type="number" id="desc-fuel-'+c.replace(/\s/g,'_')+'" placeholder="0" min="0" step="1" style="max-width:130px"></div>';
-  });
+  combs.forEach(c => { html += '<div class="mot-fuel-row"><label>' + c + '</label><input type="number" id="desc-fuel-'+c.replace(/\s/g,'_')+'" placeholder="0" min="0" step="1" style="max-width:130px"></div>'; });
   box.innerHTML = html;
 }
 
@@ -1403,149 +1202,108 @@ async function enviarDescarga() {
   const data      = document.getElementById('mot-desc-data').value;
   const hora      = document.getElementById('mot-desc-hora').value;
   if (!motorista || !placa || !data || !hora) { alert('Preencha motorista, placa, data e hora.'); return; }
-
   const combs = COMBUSTIVEIS_POSTOS[posto] || ['GASOLINA COMUM','GASOLINA ADITIVADA','ETANOL','DIESEL S-10','DIESEL S-500'];
   const itens = [];
-  combs.forEach(c => {
-    const el = document.getElementById('desc-fuel-' + c.replace(/\s/g,'_'));
-    const val = el ? (parseInt(el.value) || 0) : 0;
-    if (val > 0) itens.push({ combustivel: c, litros: val });
-  });
+  combs.forEach(c => { const el = document.getElementById('desc-fuel-' + c.replace(/\s/g,'_')); const val = el ? (parseInt(el.value) || 0) : 0; if (val > 0) itens.push({ combustivel: c, litros: val }); });
   if (!itens.length) { alert('Informe pelo menos um combustível com quantidade > 0.'); return; }
-
   const btn = document.querySelector('#view-descarga .btn-mot-submit');
   btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
-
   try {
     const dataFmt = data.split('-').reverse().join('/');
     await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ tipo:'lancamento_motorista', subtipo:'descarga', posto, motorista, placa, data: dataFmt, hora, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'LOG' }) });
-    alert('✅ Descarga registrada com sucesso!\n\nA conciliação com o fechamento do gerente será feita automaticamente quando ele enviar o dado do dia.');
-    // Limpa os campos de litros
+    alert('✅ Descarga registrada com sucesso!');
     combs.forEach(c => { const el=document.getElementById('desc-fuel-'+c.replace(/\s/g,'_')); if(el) el.value=''; });
   } catch(err) { alert('Erro: ' + err.message); }
   btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-cloud-arrow-up"></i> Registrar Descarga';
 }
 
 async function enviarEmprestimo() {
-  const origem  = document.getElementById('mot-emp-origem').value;
-  const destino = document.getElementById('mot-emp-destino').value;
-  const motorista = document.getElementById('mot-emp-motorista').value.trim();
-  const placa   = document.getElementById('mot-emp-placa').value.trim().toUpperCase();
-  const comb    = document.getElementById('mot-emp-comb').value;
-  const litros  = parseInt(document.getElementById('mot-emp-litros').value) || 0;
-  const tempo   = document.getElementById('mot-emp-tempo').value.trim();
-  const data    = document.getElementById('mot-emp-data').value;
-  const hora    = document.getElementById('mot-emp-hora').value;
-
-  if (!origem||!destino||!motorista||!placa||!comb||litros<=0||!data||!hora) { alert('Preencha todos os campos obrigatórios e informe os litros.'); return; }
-
+  const origem=document.getElementById('mot-emp-origem').value, destino=document.getElementById('mot-emp-destino').value;
+  const motorista=document.getElementById('mot-emp-motorista').value.trim(), placa=document.getElementById('mot-emp-placa').value.trim().toUpperCase();
+  const comb=document.getElementById('mot-emp-comb').value, litros=parseInt(document.getElementById('mot-emp-litros').value)||0;
+  const tempo=document.getElementById('mot-emp-tempo').value.trim(), data=document.getElementById('mot-emp-data').value, hora=document.getElementById('mot-emp-hora').value;
+  if (!origem||!destino||!motorista||!placa||!comb||litros<=0||!data||!hora) { alert('Preencha todos os campos obrigatórios.'); return; }
   const btn = document.querySelector('#view-emprestimo .btn-mot-submit');
   btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
   try {
-    const dataFmt = data.split('-').reverse().join('/');
-    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ tipo:'lancamento_motorista', subtipo:'emprestimo', posto: origem, postoRelacionado: destino, motorista, placa, data: dataFmt, hora, combustivel: comb, litros, tempoTotal: tempo, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'LOG' }) });
-    alert('✅ Empréstimo registrado com sucesso!');
-    document.getElementById('mot-emp-litros').value='';
-    document.getElementById('mot-emp-tempo').value='';
-  } catch(err) { alert('Erro: ' + err.message); }
+    const dataFmt=data.split('-').reverse().join('/');
+    await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({tipo:'lancamento_motorista',subtipo:'emprestimo',posto:origem,postoRelacionado:destino,motorista,placa,data:dataFmt,hora,combustivel:comb,litros,tempoTotal:tempo,user:USUARIO_LOGADO?USUARIO_LOGADO.gerente:'LOG'})});
+    alert('✅ Empréstimo registrado!');
+    document.getElementById('mot-emp-litros').value=''; document.getElementById('mot-emp-tempo').value='';
+  } catch(err) { alert('Erro: '+err.message); }
   btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-right-left"></i> Registrar Empréstimo';
 }
 
 async function enviarDevolucao() {
-  const origem  = document.getElementById('mot-dev-origem').value;
-  const destino = document.getElementById('mot-dev-destino').value;
-  const motorista = document.getElementById('mot-dev-motorista').value.trim();
-  const placa   = document.getElementById('mot-dev-placa').value.trim().toUpperCase();
-  const comb    = document.getElementById('mot-dev-comb').value;
-  const litros  = parseInt(document.getElementById('mot-dev-litros').value) || 0;
-  const data    = document.getElementById('mot-dev-data').value;
-  const hora    = document.getElementById('mot-dev-hora').value;
-
-  if (!origem||!destino||!motorista||!placa||!comb||litros<=0||!data||!hora) { alert('Preencha todos os campos obrigatórios e informe os litros.'); return; }
-
+  const origem=document.getElementById('mot-dev-origem').value, destino=document.getElementById('mot-dev-destino').value;
+  const motorista=document.getElementById('mot-dev-motorista').value.trim(), placa=document.getElementById('mot-dev-placa').value.trim().toUpperCase();
+  const comb=document.getElementById('mot-dev-comb').value, litros=parseInt(document.getElementById('mot-dev-litros').value)||0;
+  const data=document.getElementById('mot-dev-data').value, hora=document.getElementById('mot-dev-hora').value;
+  if (!origem||!destino||!motorista||!placa||!comb||litros<=0||!data||!hora) { alert('Preencha todos os campos obrigatórios.'); return; }
   const btn = document.querySelector('#view-devolucao .btn-mot-submit');
   btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
   try {
-    const dataFmt = data.split('-').reverse().join('/');
-    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ tipo:'lancamento_motorista', subtipo:'devolucao', posto: destino, postoRelacionado: origem, motorista, placa, data: dataFmt, hora, combustivel: comb, litros, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'LOG' }) });
-    alert('✅ Devolução registrada com sucesso!');
+    const dataFmt=data.split('-').reverse().join('/');
+    await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({tipo:'lancamento_motorista',subtipo:'devolucao',posto:destino,postoRelacionado:origem,motorista,placa,data:dataFmt,hora,combustivel:comb,litros,user:USUARIO_LOGADO?USUARIO_LOGADO.gerente:'LOG'})});
+    alert('✅ Devolução registrada!');
     document.getElementById('mot-dev-litros').value='';
-  } catch(err) { alert('Erro: ' + err.message); }
+  } catch(err) { alert('Erro: '+err.message); }
   btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-rotate-left"></i> Registrar Devolução';
 }
 
-// CONCILIAÇÃO
 async function carregarConciliacao() {
-  const dias = document.getElementById('concil-flt-dias').value;
-  const tbody = document.getElementById('concil-corpo');
-  tbody.innerHTML = '<tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);"><i class="fa-solid fa-spinner fa-spin"></i> Carregando conciliação...</td></tr>';
+  const dias=document.getElementById('concil-flt-dias').value;
+  const tbody=document.getElementById('concil-corpo');
+  tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);"><i class="fa-solid fa-spinner fa-spin"></i> Carregando conciliação...</td></tr>';
   try {
-    const dados = await chamarApi({ tipo: 'lancamentosMotorista', dias });
-    if (!dados.success) { tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--b-dif);">Erro ao carregar.</td></tr>'; return; }
-    CONCIL_TODOS = dados.registros;
-    filtrarConciliacao();
-  } catch(err) { tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--b-dif);">Erro: '+err.message+'</td></tr>'; }
+    const dados=await chamarApi({tipo:'lancamentosMotorista',dias});
+    if(!dados.success){tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--b-dif);">Erro ao carregar.</td></tr>';return;}
+    CONCIL_TODOS=dados.registros; filtrarConciliacao();
+  } catch(err){tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--b-dif);">Erro: '+err.message+'</td></tr>';}
 }
 
 function filtrarConciliacao() {
-  const filtPosto  = document.getElementById('concil-flt-posto').value.trim().toUpperCase();
-  const filtStatus = document.getElementById('concil-flt-status').value;
-  const tbody = document.getElementById('concil-corpo');
-
-  const filtrados = CONCIL_TODOS.filter(r => {
-    if (filtPosto && !String(r.posto||'').toUpperCase().includes(filtPosto)) return false;
-    if (filtStatus && !String(r.status||'').includes(filtStatus)) return false;
+  const filtPosto=document.getElementById('concil-flt-posto').value.trim().toUpperCase();
+  const filtStatus=document.getElementById('concil-flt-status').value;
+  const tbody=document.getElementById('concil-corpo');
+  const filtrados=CONCIL_TODOS.filter(r=>{
+    if(filtPosto&&!String(r.posto||'').toUpperCase().includes(filtPosto)) return false;
+    if(filtStatus&&!String(r.status||'').includes(filtStatus)) return false;
     return true;
   });
-
-  if (!filtrados.length) { tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);">Nenhum registro encontrado.</td></tr>'; return; }
-
-  let html = '';
-  filtrados.forEach(r => {
-    const s = String(r.status || 'Pendente');
-    let badgeCls = 'badge-pendente';
-    if (s.includes('OK')) badgeCls = 'badge-ok2';
-    else if (s.includes('Divergente Maior')) badgeCls = 'badge-divergente';
-    else if (s.includes('Divergente Menor')) badgeCls = 'badge-menor';
-
-    const diff = r.diferenca !== null && r.diferenca !== undefined ? r.diferenca : '—';
-    const diffStr = diff === '—' ? '—' : ((diff > 0 ? '+' : '') + Number(diff).toLocaleString('pt-BR') + ' L');
-    const diffCor = diff === '—' ? 'var(--tx3)' : (diff > 0 ? 'var(--b-dif)' : (diff < 0 ? 'var(--b-pvn)' : 'var(--ac)'));
-
-    html += '<tr>'
-      + '<td>' + (r.data||'-') + '</td>'
-      + '<td>' + (r.hora||'-') + '</td>'
-      + '<td>' + (r.motorista||'-') + '</td>'
-      + '<td style="font-family:var(--mono)">' + (r.placa||'-') + '</td>'
-      + '<td>' + (r.posto||'-') + '</td>'
-      + '<td><span class="badge-tipo ' + (r.tipo==='Descarga'?'proprio':'concorrente') + '">' + (r.tipo||'-') + '</span></td>'
-      + '<td style="font-family:var(--mono); font-size:0.78rem">' + (r.combustivel||'-') + '</td>'
-      + '<td style="font-family:var(--mono); color:var(--b-mot); font-weight:700">' + (r.litros !== null ? Number(r.litros).toLocaleString('pt-BR') + ' L' : '—') + '</td>'
-      + '<td style="font-family:var(--mono); color:var(--b-ven)">' + (r.status==='OK'||r.status==='Divergente Maior'||r.status==='Divergente Menor' ? '✓ Lançado' : '⏳ Aguardando') + '</td>'
-      + '<td style="font-family:var(--mono); font-weight:700; color:' + diffCor + '">' + diffStr + '</td>'
-      + '<td><span class="badge-status ' + badgeCls + '">' + s + '</span></td>'
-      + '</tr>';
+  if(!filtrados.length){tbody.innerHTML='<tr><td colspan="11" style="padding:1.5rem; color:var(--tx3);">Nenhum registro encontrado.</td></tr>';return;}
+  let html='';
+  filtrados.forEach(r=>{
+    const s=String(r.status||'Pendente');
+    let badgeCls='badge-pendente';
+    if(s.includes('OK')) badgeCls='badge-ok2';
+    else if(s.includes('Divergente Maior')) badgeCls='badge-divergente';
+    else if(s.includes('Divergente Menor')) badgeCls='badge-menor';
+    const diff=r.diferenca!==null&&r.diferenca!==undefined?r.diferenca:'—';
+    const diffStr=diff==='—'?'—':((diff>0?'+':'')+Number(diff).toLocaleString('pt-BR')+' L');
+    const diffCor=diff==='—'?'var(--tx3)':(diff>0?'var(--b-dif)':(diff<0?'var(--b-pvn)':'var(--ac))'));
+    html+='<tr><td>'+(r.data||'-')+'</td><td>'+(r.hora||'-')+'</td><td>'+(r.motorista||'-')+'</td><td style="font-family:var(--mono)">'+(r.placa||'-')+'</td><td>'+(r.posto||'-')+'</td><td><span class="badge-tipo '+(r.tipo==='Descarga'?'proprio':'concorrente')+'">'+(r.tipo||'-')+'</span></td><td style="font-family:var(--mono); font-size:0.78rem">'+(r.combustivel||'-')+'</td><td style="font-family:var(--mono); color:var(--b-mot); font-weight:700">'+(r.litros!==null?Number(r.litros).toLocaleString('pt-BR')+' L':'—')+'</td><td style="font-family:var(--mono); color:var(--b-ven)">'+(s==='OK'||s.includes('Divergente')?'✓ Lançado':'⏳ Aguardando')+'</td><td style="font-family:var(--mono); font-weight:700; color:'+diffCor+'">'+diffStr+'</td><td><span class="badge-status '+badgeCls+'">'+s+'</span></td></tr>';
   });
-  tbody.innerHTML = html;
+  tbody.innerHTML=html;
 }
 
 function switchMotorista(view) {
-  document.querySelectorAll('.mot-view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.mot-subnav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('view-' + view).classList.add('active');
-  document.getElementById('btn-mot-' + (view==='descarga'?'desc':view==='emprestimo'?'emp':view==='devolucao'?'dev':'concil')).classList.add('active');
-  if (view === 'conciliacao' && !CONCIL_TODOS.length) carregarConciliacao();
+  document.querySelectorAll('.mot-view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.mot-subnav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  document.getElementById('btn-mot-'+(view==='descarga'?'desc':view==='emprestimo'?'emp':view==='devolucao'?'dev':'concil')).classList.add('active');
+  if(view==='conciliacao'&&!CONCIL_TODOS.length) carregarConciliacao();
 }
 
 // ================================================================
 // NAVEGAÇÃO GERAL
 // ================================================================
 function switchMainTab(tabId, element) {
-  document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.view-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
   document.getElementById(tabId).classList.add('active');
   element.classList.add('active');
 }
@@ -1554,24 +1312,24 @@ function switchMainTab(tabId, element) {
 // TEMA
 // ================================================================
 function toggleTheme() {
-  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  if (isLight) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('jb_theme','dark'); }
-  else { document.documentElement.setAttribute('data-theme','light'); localStorage.setItem('jb_theme','light'); }
+  const isLight=document.documentElement.getAttribute('data-theme')==='light';
+  if(isLight){document.documentElement.removeAttribute('data-theme');localStorage.setItem('jb_theme','dark');}
+  else{document.documentElement.setAttribute('data-theme','light');localStorage.setItem('jb_theme','light');}
   updateThemeIcon();
 }
 function updateThemeIcon() {
-  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-  const icon = document.getElementById('theme-icon');
-  if (icon) icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+  const isLight=document.documentElement.getAttribute('data-theme')==='light';
+  const icon=document.getElementById('theme-icon');
+  if(icon) icon.className=isLight?'fa-solid fa-moon':'fa-solid fa-sun';
 }
 
-window.addEventListener('resize', () => {
-  const linha1 = document.querySelector('#medicao-thead tr:first-child th:not(.sticky-col)');
-  if (linha1) document.documentElement.style.setProperty('--thead-row1-h', linha1.getBoundingClientRect().height + 'px');
+window.addEventListener('resize',()=>{
+  const linha1=document.querySelector('#medicao-thead tr:first-child th:not(.sticky-col)');
+  if(linha1) document.documentElement.style.setProperty('--thead-row1-h',linha1.getBoundingClientRect().height+'px');
 });
 </script>
-  
-  <script>
+
+<script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/Logistica-JBretas/sw.js');

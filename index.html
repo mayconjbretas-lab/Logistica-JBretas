@@ -929,59 +929,50 @@ function onCelulaFocus(input) {
   // Preserva valor existente — só zera se célula estava vazia
   const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
   if (!raw || raw === '0') {
-    input._digitos = '';
     input.value = '0';
-  } else {
-    input._digitos = raw;
   }
-  input.select();
+  // Seleciona tudo para facilitar substituição rápida
+  requestAnimationFrame(() => input.select());
 }
 
 function onCelulaDigito(input) {
-  // Acumula dígitos da direita (5→5, 50→50, 500→500, 5000→5.000)
-  const digits = input.value.replace(/\D/g, '');
-  input._digitos = digits;
-  const num = parseInt(digits) || 0;
-  input.value = num === 0 ? '0' : num.toLocaleString('pt-BR');
-  // Salva o valor
+  // Modo livre: o browser gerencia o cursor, nós apenas lemos o resultado
+  // Remove pontos de milhar, pega só dígitos
+  const cursorPos = input.selectionStart;
+  const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+  const num = parseInt(raw) || 0;
+  const formatado = num === 0 ? '0' : num.toLocaleString('pt-BR');
+  // Ajusta cursor para posição correta após formatação
+  const diff = formatado.length - input.value.length;
+  input.value = formatado;
+  try { input.setSelectionRange(cursorPos + diff, cursorPos + diff); } catch(e) {}
   _salvarCelula(input, num === 0 ? null : num);
 }
 
 function onCelulaTecla(e, input) {
-  // Backspace: apaga último dígito
-  if (e.key === 'Backspace') {
-    e.preventDefault();
-    const d = (input._digitos || '').slice(0, -1);
-    input._digitos = d;
-    const num = parseInt(d) || 0;
-    input.value = num === 0 ? '0' : num.toLocaleString('pt-BR');
-    _salvarCelula(input, num === 0 ? null : num);
-    return;
-  }
-  // Delete/Escape: zera
-  if (e.key === 'Delete' || e.key === 'Escape') {
-    e.preventDefault();
-    input._digitos = '';
-    input.value = '0';
-    _salvarCelula(input, null);
-    return;
-  }
-  // Enter ou Tab ou seta baixo → move para próxima linha (mesmo campo/comb)
-  if (e.key === 'Enter' || e.key === 'ArrowDown') {
-    e.preventDefault();
-    _moverCelula(input, +1, 0);
-    return;
-  }
-  // Seta cima/baixo com Ctrl → incrementa/decrementa valor (edição por casa)
+  // Ctrl+seta cima/baixo → incrementa/decrementa valor
   if ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.ctrlKey) {
     e.preventDefault();
     const passo = e.shiftKey ? 100 : (e.altKey ? 10 : 1000);
     const delta = e.key === 'ArrowUp' ? passo : -passo;
-    const atual = parseInt((input._digitos || '').replace(/[^0-9]/g,'')) || 0;
+    const raw   = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+    const atual = parseInt(raw) || 0;
     const novo  = Math.max(0, atual + delta);
-    input._digitos = String(novo);
     input.value = novo === 0 ? '0' : novo.toLocaleString('pt-BR');
     _salvarCelula(input, novo === 0 ? null : novo);
+    return;
+  }
+  // Escape → zera
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    input.value = '0';
+    _salvarCelula(input, null);
+    return;
+  }
+  // Enter / seta baixo → próxima linha
+  if (e.key === 'Enter' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    _moverCelula(input, +1, 0);
     return;
   }
   // Seta cima → linha anterior
@@ -990,10 +981,9 @@ function onCelulaTecla(e, input) {
     _moverCelula(input, -1, 0);
     return;
   }
-  // Seta direita/esquerda → próxima/anterior célula na linha
-  if (e.key === 'ArrowRight') { e.preventDefault(); _moverCelula(input, 0, +1); return; }
-  if (e.key === 'ArrowLeft')  { e.preventDefault(); _moverCelula(input, 0, -1); return; }
-  // Tab → próxima célula da linha
+  // Seta esq/dir: deixa o browser mover o cursor DENTRO do número livremente
+  // (não interceptamos — comportamento nativo do input)
+  // Tab → próxima/anterior célula
   if (e.key === 'Tab') {
     e.preventDefault();
     _moverCelula(input, 0, e.shiftKey ? -1 : +1);
@@ -1026,9 +1016,14 @@ function _moverCelula(input, deltaDia, deltaCampo) {
 }
 
 function onCelulaBlur(input) {
-  // Ao sair: formata como número BR ou limpa
-  const num = parseInt((input._digitos || '').replace(/\D/g,'')) || 0;
+  // Remove highlight da linha
+  // (mantém se ainda há célula focada na mesma linha)
+  // Formata o valor ao sair
+  const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+  const num = parseInt(raw) || 0;
   input.value = num > 0 ? num.toLocaleString('pt-BR') : '';
+  // Salva valor final ao sair (caso tenha editado sem oninput disparar)
+  _salvarCelula(input, num > 0 ? num : null);
 }
 
 function _salvarCelula(input, valor) {

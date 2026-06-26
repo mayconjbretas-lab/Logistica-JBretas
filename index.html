@@ -168,15 +168,15 @@ body {
   overflow: auto; position: relative;
 }
 .ss-table { border-collapse: collapse; text-align: left; font-size: 0.85rem; width: max-content; min-width: 100%; }
-.ss-table th, .ss-table td { padding: 0.6rem 1.1rem; border: 1px solid var(--bd-col); text-align: center; }
+.ss-table th, .ss-table td { padding: 0.4rem 0.45rem; border: 1px solid var(--bd-col); text-align: center; }
 .ss-table tbody tr:nth-child(even) { background: var(--sf2); }
 .ss-table td.grp-end, .ss-table th.grp-end { border-right: 20px solid var(--bg); }
-.sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 75px; min-width: 75px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
+.sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 60px; min-width: 60px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
 th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .ss-table thead th { position: sticky; z-index: 18; }
 .ss-table thead tr:first-child th { top: 0; z-index: 20; }
 #medicao-thead tr:last-child th { top: var(--thead-row1-h, 42px); z-index: 19; }
-.ss-table thead tr:first-child th { font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; padding: 0.7rem 1.1rem; letter-spacing: 0.5px; }
+.ss-table thead tr:first-child th { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; font-weight: 700; padding: 0.45rem 0.45rem; letter-spacing: 0.3px; }
 .ss-table thead tr:last-child th { background: var(--sf2); color: var(--tx2); font-family: var(--mono); font-size: 0.72rem; font-weight: 700; }
 .h-med { background: linear-gradient(var(--b-med-d), var(--b-med-d)), var(--sf2) !important; color: var(--b-med) !important; border-bottom: 2px solid var(--b-med) !important; }
 .h-ven { background: linear-gradient(var(--b-ven-d), var(--b-ven-d)), var(--sf2) !important; color: var(--b-ven) !important; border-bottom: 2px solid var(--b-ven) !important; }
@@ -187,8 +187,8 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 .h-cus { background: linear-gradient(var(--b-cus-d), var(--b-cus-d)), var(--sf2) !important; color: var(--b-cus) !important; border-bottom: 2px solid var(--b-cus) !important; }
 .h-mot { background: linear-gradient(var(--b-mot-d), var(--b-mot-d)), var(--sf2) !important; color: var(--b-mot) !important; border-bottom: 2px solid var(--b-mot) !important; }
 .cell-in {
-  width: 72px; background: transparent; border: none; color: var(--tx); text-align: center;
-  font-family: var(--mono); font-size: 0.85rem; font-weight: 600; outline: none; padding: 3px; border-radius: 4px;
+  width: 58px; background: transparent; border: none; color: var(--tx); text-align: center;
+  font-family: var(--mono); font-size: 0.82rem; font-weight: 600; outline: none; padding: 2px; border-radius: 4px;
 }
 .cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1.5px var(--ac); color: var(--tx); }
 .cell-in.cell-dirty { background: rgba(249,199,79,0.15); box-shadow: 0 0 0 1.5px var(--b-pre); color: var(--b-pre); }
@@ -807,8 +807,8 @@ const CATEGORIAS_MEDICAO = [
   { chave: 'medicao',   titulo: '🛢️ MEDIÇÃO (L)',                classe: 'h-med', cor: 'var(--b-med)', editavel: true  },
   { chave: 'venda',     titulo: '⛽ VENDA DIÁRIA (L)',            classe: 'h-ven', cor: 'var(--b-ven)', editavel: true  },
   { chave: 'carga',     titulo: '🚚 CARGA RECEBIDA (L)',          classe: 'h-pvn', cor: 'var(--b-pvn)', editavel: true  },
-  { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',           classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
   { chave: 'diferenca', titulo: 'Δ DIFERENÇA (Real − Prev)',      classe: 'h-dif', cor: 'var(--b-dif)', editavel: false },
+  { chave: 'previsao',  titulo: '📐 PREVISÃO MED. (L)',           classe: 'h-fin', cor: 'var(--b-fin)', editavel: false },
   { chave: 'prePedido', titulo: '📦 PRÉ-PEDIDO (LOGÍSTICA) (L)',  classe: 'h-pre', cor: 'var(--b-pre)', editavel: true  },
   { chave: 'pedido',    titulo: '📋 PEDIDO FINAL (APROVADO) (L)', classe: 'h-cus', cor: 'var(--b-cus)', editavel: true  },
 ];
@@ -874,7 +874,7 @@ function montarLinhasMedicao(dados) {
           html += '<td' + tdCls + '><input type="text" inputmode="numeric" class="cell-in"' +
             ' data-dia="' + diaIdx + '" data-campo="' + cat.chave + '" data-comb="' + combAttr + '"' +
             ' value="' + fmtL(val).replace('—','') + '"' +
-            ' oninput="onCelulaEditada(this)" onblur="onCelulaBlur(this)"></td>';
+            ' onfocus="onCelulaFocus(this)" oninput="onCelulaDigito(this)" onkeydown="onCelulaTecla(event,this)" onblur="onCelulaBlur(this)"></td>';
         }
       });
     });
@@ -917,12 +917,101 @@ function recalcularPrevisaoEDiff(diaIdx) {
   });
 }
 
-function onCelulaEditada(input) {
+// ── Input estilo calculadora (igual fechamento) ──────────────────
+function onCelulaFocus(input) {
+  // Ao focar: seleciona tudo, mostra "0" se vazio
+  input._digitos = '';
+  input.value = '0';
+  input.select();
+}
+
+function onCelulaDigito(input) {
+  // Acumula dígitos da direita (5→5, 50→50, 500→500, 5000→5.000)
+  const digits = input.value.replace(/\D/g, '');
+  input._digitos = digits;
+  const num = parseInt(digits) || 0;
+  input.value = num === 0 ? '0' : num.toLocaleString('pt-BR');
+  // Salva o valor
+  _salvarCelula(input, num === 0 ? null : num);
+}
+
+function onCelulaTecla(e, input) {
+  // Backspace: apaga último dígito
+  if (e.key === 'Backspace') {
+    e.preventDefault();
+    const d = (input._digitos || '').slice(0, -1);
+    input._digitos = d;
+    const num = parseInt(d) || 0;
+    input.value = num === 0 ? '0' : num.toLocaleString('pt-BR');
+    _salvarCelula(input, num === 0 ? null : num);
+    return;
+  }
+  // Delete/Escape: zera
+  if (e.key === 'Delete' || e.key === 'Escape') {
+    e.preventDefault();
+    input._digitos = '';
+    input.value = '0';
+    _salvarCelula(input, null);
+    return;
+  }
+  // Enter ou Tab ou seta baixo → move para próxima linha (mesmo campo/comb)
+  if (e.key === 'Enter' || e.key === 'ArrowDown') {
+    e.preventDefault();
+    _moverCelula(input, +1, 0);
+    return;
+  }
+  // Seta cima → linha anterior
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    _moverCelula(input, -1, 0);
+    return;
+  }
+  // Seta direita/esquerda → próxima/anterior célula na linha
+  if (e.key === 'ArrowRight') { e.preventDefault(); _moverCelula(input, 0, +1); return; }
+  if (e.key === 'ArrowLeft')  { e.preventDefault(); _moverCelula(input, 0, -1); return; }
+  // Tab → próxima célula da linha
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    _moverCelula(input, 0, e.shiftKey ? -1 : +1);
+    return;
+  }
+}
+
+function _moverCelula(input, deltaDia, deltaCampo) {
+  const diaAtual   = parseInt(input.dataset.dia);
+  const combAtual  = input.dataset.comb;
+  const campoAtual = input.dataset.campo;
+  // Monta lista ordenada de todas as células editáveis
+  const todas = Array.from(document.querySelectorAll('#matriz-corpo .cell-in'));
+  const idx = todas.indexOf(input);
+  let proximo = null;
+  if (deltaDia !== 0 && deltaCampo === 0) {
+    // Mesma coluna, linha diferente — busca pelo mesmo campo+comb, dia ± 1
+    const alvo = diaAtual + deltaDia;
+    proximo = todas.find(el =>
+      parseInt(el.dataset.dia) === alvo &&
+      el.dataset.campo === campoAtual &&
+      el.dataset.comb === combAtual
+    );
+  } else {
+    // Célula adjacente na lista plana
+    const novoIdx = idx + deltaCampo;
+    if (novoIdx >= 0 && novoIdx < todas.length) proximo = todas[novoIdx];
+  }
+  if (proximo) { proximo.focus(); proximo.select(); }
+}
+
+function onCelulaBlur(input) {
+  // Ao sair: formata como número BR ou limpa
+  const num = parseInt((input._digitos || '').replace(/\D/g,'')) || 0;
+  input.value = num > 0 ? num.toLocaleString('pt-BR') : '';
+}
+
+function _salvarCelula(input, valor) {
   if (!DADOS_ATUAIS) return;
   const diaIdx = parseInt(input.dataset.dia);
   const campo  = input.dataset.campo;
   const comb   = input.dataset.comb;
-  const valor  = parseNumBR(input.value);
   input.classList.add('cell-dirty');
   const diaObj = DADOS_ATUAIS.dias[diaIdx];
   const cols = campo === 'venda' ? DADOS_ATUAIS.combustiveisVenda : DADOS_ATUAIS.grupos;
@@ -934,7 +1023,9 @@ function onCelulaEditada(input) {
   else if (campo === 'carga' || campo === 'venda') recalcularPrevisaoEDiff(diaIdx);
   atualizarBotoesSalvar();
 }
-function onCelulaBlur(input) { const valor = parseNumBR(input.value); input.value = fmtL(valor).replace('—', ''); }
+
+// Mantém compatibilidade (chamado por onCelulaDigito internamente)
+function onCelulaEditada(input) { /* substituído por onCelulaDigito */ }
 function atualizarBotoesSalvar() {
   const pendentes = Object.values(EDICOES_PENDENTES);
   const matrizQtd = pendentes.filter(e => e.campo !== 'prePedido').length;

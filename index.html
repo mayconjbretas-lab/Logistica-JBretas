@@ -170,6 +170,10 @@ body {
 .ss-table { border-collapse: collapse; text-align: left; font-size: 0.85rem; width: max-content; min-width: 100%; }
 .ss-table th, .ss-table td { padding: 0.4rem 0.45rem; border: 1px solid var(--bd-col); text-align: center; }
 .ss-table tbody tr:nth-child(even) { background: var(--sf2); }
+.ss-table tbody tr:hover { background: rgba(72,149,239,0.07) !important; }
+.ss-table tbody tr.linha-ativa { background: rgba(0,229,160,0.08) !important; outline: 1px solid rgba(0,229,160,0.25); }
+.cell-in:focus { background: var(--sf3); box-shadow: 0 0 0 1.5px var(--ac); color: var(--tx); }
+
 .ss-table td.grp-end, .ss-table th.grp-end { border-right: 20px solid var(--bg); }
 .sticky-col { position: sticky; left: 0; background: var(--sf); z-index: 5; font-weight: bold; width: 60px; min-width: 60px; box-shadow: 2px 0 5px rgba(0,0,0,0.2); }
 th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
@@ -919,15 +923,16 @@ function recalcularPrevisaoEDiff(diaIdx) {
 
 // ── Input estilo calculadora (igual fechamento) ──────────────────
 function onCelulaFocus(input) {
-  // Ao focar: preserva valor existente, inicializa _digitos com o número atual
-  // Se vazio mostra 0, senão mantém o que tem e apenas seleciona
+  // Highlight da linha ativa
+  document.querySelectorAll('#matriz-corpo tr.linha-ativa').forEach(tr => tr.classList.remove('linha-ativa'));
+  input.closest('tr').classList.add('linha-ativa');
+  // Preserva valor existente — só zera se célula estava vazia
   const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
   if (!raw || raw === '0') {
     input._digitos = '';
     input.value = '0';
   } else {
     input._digitos = raw;
-    // mantém o valor formatado já exibido
   }
   input.select();
 }
@@ -965,6 +970,18 @@ function onCelulaTecla(e, input) {
   if (e.key === 'Enter' || e.key === 'ArrowDown') {
     e.preventDefault();
     _moverCelula(input, +1, 0);
+    return;
+  }
+  // Seta cima/baixo com Ctrl → incrementa/decrementa valor (edição por casa)
+  if ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && e.ctrlKey) {
+    e.preventDefault();
+    const passo = e.shiftKey ? 100 : (e.altKey ? 10 : 1000);
+    const delta = e.key === 'ArrowUp' ? passo : -passo;
+    const atual = parseInt((input._digitos || '').replace(/[^0-9]/g,'')) || 0;
+    const novo  = Math.max(0, atual + delta);
+    input._digitos = String(novo);
+    input.value = novo === 0 ? '0' : novo.toLocaleString('pt-BR');
+    _salvarCelula(input, novo === 0 ? null : novo);
     return;
   }
   // Seta cima → linha anterior
@@ -1026,9 +1043,40 @@ function _salvarCelula(input, valor) {
   if (idx === -1) return;
   diaObj[campo][idx] = valor;
   EDICOES_PENDENTES[diaIdx + '|' + campo + '|' + comb] = { dia: diaIdx, campo, comb, valor };
-  if (campo === 'medicao') recalcularPrevisaoEDiff(diaIdx + 1);
-  else if (campo === 'carga' || campo === 'venda') recalcularPrevisaoEDiff(diaIdx);
+
+  if (campo === 'medicao') {
+    // Ao mudar medição de hoje: recalcula diff do PRÓPRIO dia e previsão de amanhã
+    _atualizarDiffDia(diaIdx);
+    recalcularPrevisaoEDiff(diaIdx + 1);
+  } else if (campo === 'carga' || campo === 'venda') {
+    recalcularPrevisaoEDiff(diaIdx);
+    _atualizarDiffDia(diaIdx + 1); // amanhã também pode mudar
+  }
   atualizarBotoesSalvar();
+}
+
+// Recalcula e atualiza a DIFERENÇA visual de um dia específico
+// diff = med_hoje − prev_hoje (igual à planilha)
+function _atualizarDiffDia(diaIdx) {
+  if (!DADOS_ATUAIS) return;
+  const dia = DADOS_ATUAIS.dias[diaIdx];
+  if (!dia) return;
+  const grupos = DADOS_ATUAIS.grupos;
+  grupos.forEach((g, i) => {
+    const medHoje = dia.medicao[i];
+    const prevHoje = dia.previsao[i];
+    let diffVal = null;
+    if (medHoje !== null && medHoje !== undefined && prevHoje !== null && prevHoje !== undefined) {
+      diffVal = Number(medHoje) - Number(prevHoje);
+    }
+    dia.diferenca[i] = diffVal;
+    const diffEl = document.getElementById('diff_' + diaIdx + '_' + i);
+    if (diffEl) {
+      const cor = diffVal > 0 ? 'var(--b-ven)' : (diffVal < 0 ? 'var(--b-dif)' : 'var(--tx3)');
+      diffEl.style.color = cor;
+      diffEl.textContent = diffVal === null ? '—' : ((diffVal > 0 ? '+' : '') + fmtL(diffVal));
+    }
+  });
 }
 
 // Mantém compatibilidade (chamado por onCelulaDigito internamente)
@@ -1052,12 +1100,35 @@ async function salvarAlteracoesMatriz() {
   const btn = document.getElementById('btn-salvar-matriz');
   btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
   try {
-    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ tipo:'editar_matriz', posto, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'ADM Logística' }) });
+    // Envia sem esperar resposta (no-cors) — mais rápido
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST', mode: 'no-cors', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ tipo:'editar_matriz', posto, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'ADM Logística' })
+    });
+    // Não espera — já limpa e dá feedback imediato
     Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo !== 'prePedido') delete EDICOES_PENDENTES[k]; });
     limparDestaqueEdicoes(); atualizarBotoesSalvar();
-    await carregarMedicao(posto);
-  } catch(err) { alert('Erro ao salvar: ' + err.message); btn.disabled = false; atualizarBotoesSalvar(); }
+    // NÃO recarrega a página — dados já estão corretos em memória (DADOS_ATUAIS)
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Salvo!';
+    setTimeout(() => { btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações'; }, 2000);
+  } catch(err) {
+    mostrarErroMatriz('Erro ao salvar: ' + err.message);
+    btn.disabled = false; atualizarBotoesSalvar();
+  }
+}
+
+function mostrarErroMatriz(msg) {
+  const sub = document.getElementById('medicao-subtitle');
+  const orig = sub.textContent;
+  sub.innerHTML = '• <span style="color:var(--b-dif)">' + msg +
+    ' <button onclick="forcarRecarregar()" style="background:var(--b-dif);color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:0.7rem;cursor:pointer;margin-left:6px;">↻ Tentar novamente</button></span>';
+  setTimeout(() => { sub.textContent = orig; }, 8000);
+}
+
+function forcarRecarregar() {
+  const posto = document.getElementById('global-posto').value;
+  carregarMedicao(posto);
 }
 
 async function enviarPrePedido() {
@@ -1079,20 +1150,31 @@ async function enviarPrePedido() {
 
 async function carregarMedicao(posto) {
   const subtitle = document.getElementById('medicao-subtitle');
-  const tbody = document.getElementById('matriz-corpo');
-  subtitle.textContent = '• Carregando ' + posto + '...';
-  tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--tx3);">Carregando dados do Apps Script...</td></tr>';
+  const tbody    = document.getElementById('matriz-corpo');
+  subtitle.innerHTML = '• <i class="fa-solid fa-spinner fa-spin" style="color:var(--ac)"></i> Carregando ' + posto + '...';
+  tbody.innerHTML = '<tr><td colspan="99" style="padding:2rem; color:var(--tx3); text-align:center;">' +
+    '<i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem; color:var(--ac)"></i><br><br>Conectando ao Apps Script...</td></tr>';
   EDICOES_PENDENTES = {}; atualizarBotoesSalvar();
   try {
     const dados = await chamarApi({ tipo:'mesCompleto', posto });
-    if (dados.erro) { subtitle.textContent = '• Erro: ' + dados.erro; tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">' + dados.erro + '</td></tr>'; return; }
+    if (dados.erro) {
+      subtitle.innerHTML = '• <span style="color:var(--b-dif)">Erro</span>';
+      tbody.innerHTML = '<tr><td colspan="99" style="padding:2rem; color:var(--b-dif); text-align:center;">' +
+        '<i class="fa-solid fa-triangle-exclamation" style="font-size:2rem"></i><br><br>' + dados.erro +
+        '<br><br><button onclick="forcarRecarregar()" style="background:var(--b-dif);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:var(--mono);font-size:0.8rem;cursor:pointer;margin-top:8px;">↻ Tentar novamente</button></td></tr>';
+      return;
+    }
     DADOS_ATUAIS = dados;
-    subtitle.textContent = '• ' + dados.posto + ' — ' + dados.mes + '/' + dados.ano;
+    subtitle.innerHTML = '• ' + dados.posto + ' — ' + dados.mes + '/' + dados.ano +
+      ' <button onclick="forcarRecarregar()" title="Atualizar dados do servidor" style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;color:var(--tx2);font-size:0.65rem;padding:1px 7px;cursor:pointer;margin-left:8px;font-family:var(--mono);">↻</button>';
     montarCabecalhoMedicao(dados.grupos, dados.combustiveisVenda);
     montarLinhasMedicao(dados);
   } catch(err) {
-    subtitle.textContent = '• Falha ao conectar';
-    tbody.innerHTML = '<tr><td style="padding:1.5rem; color:var(--b-dif);">Erro: ' + err.message + '</td></tr>';
+    const msg = err.message.includes('404') ? 'Erro 404 — planilha aberta por outra pessoa ou Apps Script em manutenção.' : err.message;
+    subtitle.innerHTML = '• <span style="color:var(--b-dif)">Falha ao conectar</span>';
+    tbody.innerHTML = '<tr><td colspan="99" style="padding:2rem; color:var(--b-dif); text-align:center;">' +
+      '<i class="fa-solid fa-wifi" style="font-size:2rem"></i><br><br>' + msg +
+      '<br><br><button onclick="forcarRecarregar()" style="background:var(--b-dif);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-family:var(--mono);font-size:0.8rem;cursor:pointer;margin-top:8px;">↻ Tentar novamente</button></td></tr>';
   }
 }
 function onPostoChange() { carregarMedicao(document.getElementById('global-posto').value); }

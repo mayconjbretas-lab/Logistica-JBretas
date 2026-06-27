@@ -854,9 +854,58 @@ window.addEventListener('DOMContentLoaded', () => {
 // ================================================================
 // API HELPER
 // ================================================================
+// chamarApi — roteia para nova API (JWT) ou Apps Script (fallback)
 async function chamarApi(params) {
+  const tipo = params.tipo || '';
+
+  // Endpoints já migrados para a nova API
+  const migrados = ['mesCompleto', 'coletaRecentes', 'cadastroPostos', 'lancamentosMotorista'];
+
+  if (migrados.includes(tipo) && JWT_TOKEN) {
+    return chamarNovaApi(params);
+  }
+
+  // Fallback: Apps Script (endpoints ainda não migrados)
   const qs = new URLSearchParams(params).toString();
   const resp = await fetch(APPS_SCRIPT_URL + '?' + qs);
+  if (!resp.ok) throw new Error('HTTP ' + resp.status);
+  return resp.json();
+}
+
+// chamarNovaApi — chama Railway com JWT no header
+async function chamarNovaApi(params) {
+  const tipo  = params.tipo;
+  const posto = params.posto || '';
+  const dias  = params.dias  || '';
+
+  let url = API_URL;
+  let options = {
+    method:  'GET',
+    headers: {
+      'Content-Type':  'application/json',
+      'Authorization': 'Bearer ' + JWT_TOKEN,
+    },
+  };
+
+  if (tipo === 'mesCompleto') {
+    url += '/medicao/' + encodeURIComponent(posto);
+  } else if (tipo === 'coletaRecentes') {
+    url += '/coletas?dias=' + (dias || '15');
+    if (posto) url += '&posto=' + encodeURIComponent(posto);
+  } else if (tipo === 'cadastroPostos') {
+    url += '/postos';
+  } else if (tipo === 'lancamentosMotorista') {
+    url += '/motorista?dias=' + (dias || '30');
+    if (posto) url += '&posto=' + encodeURIComponent(posto);
+  }
+
+  const resp = await fetch(url, options);
+
+  // Token expirado — faz logout
+  if (resp.status === 401) {
+    fazerLogout();
+    throw new Error('Sessão expirada. Faça login novamente.');
+  }
   if (!resp.ok) throw new Error('HTTP ' + resp.status);
   return resp.json();
 }
@@ -1209,7 +1258,7 @@ async function carregarMedicao(posto) {
   const tbody    = document.getElementById('matriz-corpo');
   subtitle.innerHTML = '• <i class="fa-solid fa-spinner fa-spin" style="color:var(--ac)"></i> Carregando ' + posto + '...';
   tbody.innerHTML = '<tr><td colspan="99" style="padding:2rem; color:var(--tx3); text-align:center;">' +
-    '<i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem; color:var(--ac)"></i><br><br>Conectando ao Apps Script...</td></tr>';
+    '<i class="fa-solid fa-spinner fa-spin" style="font-size:1.5rem; color:var(--ac)"></i><br><br>Conectando ao servidor...</td></tr>';
   EDICOES_PENDENTES = {}; atualizarBotoesSalvar();
   try {
     const dados = await chamarApi({ tipo:'mesCompleto', posto });
@@ -1226,7 +1275,7 @@ async function carregarMedicao(posto) {
     montarCabecalhoMedicao(dados.grupos, dados.combustiveisVenda);
     montarLinhasMedicao(dados);
   } catch(err) {
-    const msg = err.message.includes('404') ? 'Erro 404 — planilha aberta por outra pessoa ou Apps Script em manutenção.' : err.message;
+    const msg = err.message.includes('404') ? 'Erro 404 — servidor temporariamente indisponível. Tente novamente.' : err.message;
     subtitle.innerHTML = '• <span style="color:var(--b-dif)">Falha ao conectar</span>';
     tbody.innerHTML = '<tr><td colspan="99" style="padding:2rem; color:var(--b-dif); text-align:center;">' +
       '<i class="fa-solid fa-wifi" style="font-size:2rem"></i><br><br>' + msg +

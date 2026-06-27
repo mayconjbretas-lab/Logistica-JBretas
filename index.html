@@ -672,6 +672,10 @@ th.sticky-col { top: 0; z-index: 25 !important; background: var(--sf2); }
 // CONFIGURAÇÃO
 // ================================================================
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoJ3-g48frwYtMlnpVj5EIYapInPP11OJXrkOPUzCULrbIZWMQW51xFe-Ot4cox00r/exec';
+const API_URL = 'https://jbretas-api-service-production.up.railway.app';
+
+// Token JWT da sessão atual — preenchido após login na nova API
+let JWT_TOKEN = null;
 
 // Perfis autorizados neste app
 const PERFIS_PERMITIDOS = ['ADM', 'LOGISTICA'];
@@ -735,16 +739,38 @@ async function fazerLogin() {
   loadEl.style.display = 'block';
 
   try {
-    const qs = new URLSearchParams({ tipo: 'login', email, senha }).toString();
-    const resp = await fetch(APPS_SCRIPT_URL + '?' + qs);
+    // ── Nova API (Railway + Supabase) ──────────────────────────
+    const resp = await fetch(API_URL + '/auth/login', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email, senha }),
+    });
     const data = await resp.json();
 
-    if (data.erro || !data.usuario) { mostrarErroLogin('Credenciais inválidas. Verifique e tente novamente.'); return; }
+    if (!data.success || !data.usuario) {
+      mostrarErroLogin(data.erro || 'Credenciais inválidas. Verifique e tente novamente.');
+      return;
+    }
 
-    const perfil = data.usuario.postoKey;
-    if (!PERFIS_PERMITIDOS.includes(perfil)) { mostrarErroLogin('Acesso não autorizado para este perfil neste módulo.'); return; }
+    // Perfis permitidos no Logística
+    const perfil = data.usuario.perfil;
+    if (!PERFIS_PERMITIDOS.includes(perfil)) {
+      mostrarErroLogin('Acesso não autorizado para este perfil neste módulo.');
+      return;
+    }
 
-    USUARIO_LOGADO = data.usuario;
+    // Salva token JWT para chamadas autenticadas
+    JWT_TOKEN = data.token;
+
+    // Monta objeto compatível com o restante do sistema
+    USUARIO_LOGADO = {
+      id:       data.usuario.id,
+      gerente:  data.usuario.nome,
+      email:    data.usuario.email,
+      perfil:   data.usuario.perfil,
+      postoKey: data.usuario.perfil,
+      nomePosto: data.usuario.posto?.nome || data.usuario.perfil,
+    };
 
     if (document.getElementById('lembrar-me').checked) {
       try { localStorage.setItem('jb_log_creds', JSON.stringify({ email, senha })); } catch(e) {}
@@ -752,6 +778,7 @@ async function fazerLogin() {
       try { localStorage.removeItem('jb_log_creds'); } catch(e) {}
     }
     try { sessionStorage.setItem('jb_log_user', JSON.stringify(USUARIO_LOGADO)); } catch(e) {}
+    try { sessionStorage.setItem('jb_jwt', JWT_TOKEN); } catch(e) {}
 
     await entrarNoApp();
   } catch(err) {
@@ -789,8 +816,10 @@ async function entrarNoApp() {
 
 function fazerLogout() {
   USUARIO_LOGADO = null;
+  JWT_TOKEN = null;
   distribuidoras = []; vendaAtual = {}; custoOverride = {}; reajusteReal = {}; margemMinima = { ET:0, GC:0, GA:0, S10:0, S500:0 };
   try { sessionStorage.removeItem('jb_log_user'); } catch(e) {}
+  try { sessionStorage.removeItem('jb_jwt'); } catch(e) {}
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('main-topbar').style.display = 'none';
   document.getElementById('main-app').style.display = 'none';
@@ -811,7 +840,13 @@ window.addEventListener('DOMContentLoaded', () => {
   } catch(e) {}
   try {
     const stored = sessionStorage.getItem('jb_log_user');
-    if (stored) { USUARIO_LOGADO = JSON.parse(stored); entrarNoApp(); return; }
+    const token  = sessionStorage.getItem('jb_jwt');
+    if (stored) {
+      USUARIO_LOGADO = JSON.parse(stored);
+      JWT_TOKEN = token || null;
+      entrarNoApp();
+      return;
+    }
   } catch(e) {}
   updateThemeIcon();
 });

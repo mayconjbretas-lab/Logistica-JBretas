@@ -859,13 +859,14 @@ async function chamarApi(params) {
   const tipo = params.tipo || '';
 
   // Endpoints já migrados para a nova API
-  const migrados = ['mesCompleto', 'coletaRecentes', 'cadastroPostos', 'lancamentosMotorista'];
+  // mesCompleto ainda usa Apps Script até popular o Supabase com dados históricos
+  const migrados = ['coletaRecentes', 'cadastroPostos', 'lancamentosMotorista'];
 
   if (migrados.includes(tipo) && JWT_TOKEN) {
     return chamarNovaApi(params);
   }
 
-  // Fallback: Apps Script (endpoints ainda não migrados)
+  // Apps Script — medição e demais endpoints ainda não migrados
   const qs = new URLSearchParams(params).toString();
   const resp = await fetch(APPS_SCRIPT_URL + '?' + qs);
   if (!resp.ok) throw new Error('HTTP ' + resp.status);

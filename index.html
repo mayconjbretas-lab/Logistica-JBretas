@@ -1206,15 +1206,26 @@ async function salvarAlteracoesMatriz() {
   const btn = document.getElementById('btn-salvar-matriz');
   btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
   try {
-    // Envia sem esperar resposta (no-cors) — mais rápido
+    // Nova API — salva no Supabase com JWT
+    const resp = await fetch(API_URL + '/medicao', {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + JWT_TOKEN,
+      },
+      body: JSON.stringify({ posto, itens }),
+    });
+    const result = await resp.json();
+    if (!result.success) throw new Error(result.erro || 'Erro ao salvar');
+
+    // Também salva no Apps Script para manter planilha sincronizada
     fetch(APPS_SCRIPT_URL, {
       method: 'POST', mode: 'no-cors', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ tipo:'editar_matriz', posto, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'ADM Logística' })
     });
-    // Não espera — já limpa e dá feedback imediato
+
     Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo !== 'prePedido') delete EDICOES_PENDENTES[k]; });
     limparDestaqueEdicoes(); atualizarBotoesSalvar();
-    // NÃO recarrega a página — dados já estão corretos em memória (DADOS_ATUAIS)
     btn.disabled = false;
     btn.innerHTML = '<i class="fa-solid fa-check"></i> Salvo!';
     setTimeout(() => { btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações'; }, 2000);

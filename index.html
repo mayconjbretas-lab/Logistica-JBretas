@@ -1250,18 +1250,42 @@ function forcarRecarregar() {
 
 async function enviarPrePedido() {
   const posto = document.getElementById('global-posto').value;
-  const itens = Object.values(EDICOES_PENDENTES).filter(e => e.campo === 'prePedido')
-    .map(e => ({ data: DADOS_ATUAIS.dias[e.dia].data, combustivel: e.comb, valor: e.valor }));
+  const itensRaw = Object.values(EDICOES_PENDENTES).filter(e => e.campo === 'prePedido');
+  const itens = itensRaw.map(e => ({
+    data:        DADOS_ATUAIS.dias[e.dia].data,
+    campo:       'prePedido',
+    combustivel: e.comb,
+    valor:       e.valor
+  }));
   if (!itens.length || !posto) return;
   const btn = document.getElementById('btn-enviar-prepedido');
   btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
   try {
-    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+    // Salva no Supabase via nova API
+    const resp = await fetch(API_URL + '/medicao', {
+      method:  'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer ' + JWT_TOKEN,
+      },
+      body: JSON.stringify({ posto, itens }),
+    });
+    const result = await resp.json();
+    if (!result.success) throw new Error(result.erro || 'Erro ao salvar pré-pedido');
+
+    // Sync com Apps Script
+    fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ tipo:'pre_pedido', posto, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'ADM' }) });
+
     Object.keys(EDICOES_PENDENTES).forEach(k => { if (EDICOES_PENDENTES[k].campo === 'prePedido') delete EDICOES_PENDENTES[k]; });
     limparDestaqueEdicoes(); atualizarBotoesSalvar();
-    alert('✅ Pré-Pedido enviado com sucesso.');
-  } catch(err) { alert('Erro: ' + err.message); }
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fa-solid fa-check"></i> Enviado!';
+    setTimeout(() => { btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Enviar Pré-Pedido'; }, 2000);
+  } catch(err) {
+    alert('Erro: ' + err.message);
+    btn.disabled = false;
+  }
   atualizarBotoesSalvar();
 }
 
@@ -1507,7 +1531,14 @@ async function enviarDescarga() {
   btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
   try {
     const dataFmt = data.split('-').reverse().join('/');
-    await fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
+    // Nova API
+    const respDesc = await fetch(API_URL + '/motorista/lancamento', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + JWT_TOKEN },
+      body: JSON.stringify({ subtipo:'descarga', posto, motorista, placa, data: dataFmt, hora, itens })
+    });
+    // Sync Apps Script
+    fetch(APPS_SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ tipo:'lancamento_motorista', subtipo:'descarga', posto, motorista, placa, data: dataFmt, hora, itens, user: USUARIO_LOGADO ? USUARIO_LOGADO.gerente : 'LOG' }) });
     alert('✅ Descarga registrada com sucesso!');
     combs.forEach(c => { const el=document.getElementById('desc-fuel-'+c.replace(/\s/g,'_')); if(el) el.value=''; });
@@ -1525,7 +1556,12 @@ async function enviarEmprestimo() {
   btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
   try {
     const dataFmt=data.split('-').reverse().join('/');
-    await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+    await fetch(API_URL + '/motorista/lancamento', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + JWT_TOKEN },
+      body: JSON.stringify({ subtipo:'emprestimo', posto:origem, postoRelacionado:destino, motorista, placa, data:dataFmt, hora, combustivel:comb, litros, tempoTotal:tempo })
+    });
+    fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({tipo:'lancamento_motorista',subtipo:'emprestimo',posto:origem,postoRelacionado:destino,motorista,placa,data:dataFmt,hora,combustivel:comb,litros,tempoTotal:tempo,user:USUARIO_LOGADO?USUARIO_LOGADO.gerente:'LOG'})});
     alert('✅ Empréstimo registrado!');
     document.getElementById('mot-emp-litros').value=''; document.getElementById('mot-emp-tempo').value='';
@@ -1543,7 +1579,12 @@ async function enviarDevolucao() {
   btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Registrando...';
   try {
     const dataFmt=data.split('-').reverse().join('/');
-    await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+    await fetch(API_URL + '/motorista/lancamento', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + JWT_TOKEN },
+      body: JSON.stringify({ subtipo:'devolucao', posto:destino, postoRelacionado:origem, motorista, placa, data:dataFmt, hora, combustivel:comb, litros })
+    });
+    fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({tipo:'lancamento_motorista',subtipo:'devolucao',posto:destino,postoRelacionado:origem,motorista,placa,data:dataFmt,hora,combustivel:comb,litros,user:USUARIO_LOGADO?USUARIO_LOGADO.gerente:'LOG'})});
     alert('✅ Devolução registrada!');
     document.getElementById('mot-dev-litros').value='';

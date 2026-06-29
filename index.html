@@ -860,7 +860,7 @@ async function chamarApi(params) {
 
   // Endpoints já migrados para a nova API
   // mesCompleto ainda usa Apps Script até popular o Supabase com dados históricos
-  const migrados = ['mesCompleto', 'coletaRecentes', 'cadastroPostos', 'lancamentosMotorista'];
+  const migrados = ['coletaRecentes', 'cadastroPostos', 'lancamentosMotorista'];
 
   if (migrados.includes(tipo) && JWT_TOKEN) {
     return chamarNovaApi(params);
